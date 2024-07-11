@@ -1,0 +1,46 @@
+{
+    "systemName": "RANY-E-Commerce",
+    "dashbourd": "Dashbourd",
+
+    "user": "Users",
+    "role": "Roles",
+    "permission": "Permissions",
+
+    "Create": "Create",
+    "Update": "Update",
+    "Delete": "Delete",
+    "Save": "Save",
+
+    "ID": "ID",
+    "Name": "Name",
+    "Email": "Email",
+    "Action": "Action",
+
+    "Comfimpassword": "Comfirm Password",
+    "Password": "Password",
+
+    "comfimdelete": "Are you want to delete?",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "Category": "Category",
+    "Description": "Descriptions",
+    "Hello":"Hello",
+
+    "Image": "Images",
+    "Products": "Products",
+    "Cost": "Cost",
+    "Price": "Price",
+    "Quantity": "Quantity",
+    "Published":"Published",
+    "Unpublish":"Unpublish",
+    "StockIn":"In Stock",
+    "StockOut":"Out of Stock",
+    "Status": "Status",
+    "Select": "--- Select ---",
+
+    "Click to upload": "Click to upload",
+    "Supplier": "Supplier",
+    "Phone": "Phone",
+    "Address": "Address"
+
+}
