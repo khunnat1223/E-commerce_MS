@@ -21,7 +21,7 @@ const props = defineProps({
 const form = useForm ({
     category : props.category?.category,
     description: props.category?.description,
-    
+
 });
 
 </script>
@@ -91,14 +91,14 @@ const form = useForm ({
                             <path fill-rule="evenodd" d="M19.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
                         </svg>
                         <span class="m-1">
-                            
+
                                 <span class="font-sans">{{ $t("Update") }}</span>
-                            
+
                         </span>
                     </div>
                 </div>
-                
-               
+
+
             </div>
             <div class="mt-6 bg-slate-200 p-6 rounded-lg">
                 <h1 class="pl-4 pb-6 text-xl">{{ $t("Update") }}</h1>
@@ -113,12 +113,12 @@ const form = useForm ({
               v-model="form.category"
               required
               autofocus
-              
+
             />
 
             <InputError class="mt-2" :message="form.errors.name" />
-          </div>
-          <div>
+          </div >
+          <div class="mt-2">
             <span>{{ $t("Description") }}</span>
 
             <TextInput
@@ -133,41 +133,41 @@ const form = useForm ({
             <InputError class="mt-2" :message="form.errors.name" />
           </div>
                     <div class="flex items-center mt-4">
-                    
-                        <PrimaryButton 
+
+                        <PrimaryButton
                         >
                            {{ $t("Update") }}
                         </PrimaryButton>
                     </div>
                 </form>
-                
+
             </div>
 
             <!-- <div class="shadow mt-2 overflow-hidden rounded border-b p-6 bg-slate-200 border-gray-200">
                 <h1 class="pl-4 pb-6 text-xl">{{ $t("permissionlist") }}</h1>
                 <Table class="min-w-full  bg-slate-200">
-                    
+
                     <template #header>
                         <TableRow>
                             <TableHeaderCell class=" rounded-tl-md text-hovercolorBG" >{{ $t("id") }}</TableHeaderCell>
                             <TableHeaderCell class=" text-hovercolorBG">{{ $t("username") }}</TableHeaderCell>
                             <TableHeaderCell class="rounded-tr-md text-hovercolorBG">{{ $t("action") }}</TableHeaderCell>
-                        </TableRow> 
+                        </TableRow>
                     </template>
                     <template #default>
                         <TableRow v-for="rolePermission in role.permissions" :key="rolePermission.id" class="border-b">
                             <TableDataCell>{{ rolePermission.id }}</TableDataCell>
                             <TableDataCell>{{ rolePermission.name }}</TableDataCell>
                             <TableDataCell>
-                        
+
                                 <span class="text-yellow-500 flex">
                                     <Link :href="route('role.permissions.destroy', [role.id, rolePermission.id])" method="DELETE" as="button">
                                        Revoke
                                     </Link>
                                 </span>
-                            
+
                             </TableDataCell>
-                        </TableRow> 
+                        </TableRow>
                     </template>
                 </Table>
             </div> -->

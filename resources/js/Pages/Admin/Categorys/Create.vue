@@ -114,12 +114,12 @@ const form = useForm({
               v-model="form.category"
               required
               autofocus
-              
+
             />
 
             <InputError class="mt-2" :message="form.errors.name" />
           </div>
-          <div>
+          <div class="mt-2">
             <span>{{ $t("Description") }}</span>
 
             <TextInput

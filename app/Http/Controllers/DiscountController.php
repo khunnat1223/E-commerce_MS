@@ -34,17 +34,15 @@ class DiscountController extends Controller
         return Inertia::render('Admin/Discounts/Create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        // Save discount
-        $image = Request::file('image')->store('discounts','public');
+        $image = $request->file('image') ? $request->file('image')->store('discounts', 'public') : null;
         Discount::create([
-            'title' => Request::input('title'),
-            'percentage' => Request::input('discount'),
-            'description' => Request::input('description'),
-            'image' => $image
+            'title' => $request->title,
+            'percentage' => $request->discount,
+            'description' => $request->description,
+            'image' => $image,
         ]);
-        // Discount::create($request->all());
 
         return redirect()->route('discounts.index')->with('success', 'Discount created successfully!');
     }

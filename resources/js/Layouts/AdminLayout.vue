@@ -4,7 +4,7 @@ import SidebarLink from "@/Components/SidebarLink.vue";
 import { Link } from "@inertiajs/vue3";
 import { usePermission } from "@/composables/permission";
 
-import { reactive} from "vue";
+import { reactive } from "vue";
 import { router } from "@inertiajs/vue3";
 import { loadLanguageAsync } from "laravel-vue-i18n";
 
@@ -17,9 +17,14 @@ import { useDark, useToggle } from "@vueuse/core";
 const { hasRole } = usePermission();
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
+const notification = ref(null);
 
 onMounted(() => {
   initFlowbite();
+  //   window.Echo.channel('payments')
+  //     .listen('PaymentMade', (event) => {
+  //       notification.value = event.payment;
+  //     });
 });
 
 const items = reactive({
@@ -43,6 +48,12 @@ const showingNavigationDropdown = ref(false);
     <nav
       class="bg-white border-b border-gray-200 px-2 py-2 dark:bg-gray-800 dark:shadow-md dark:shadow-gray-700 dark:border-gray-700 fixed left-0 md:left-72 right-0 md:right-8 top-0 z-50 shadow-md rounded-md"
     >
+      <!-- <div>
+    <h1>Admin Dashboard</h1>
+    <div v-if="notification">
+      <p>New Payment: ${{ notification.amount }}</p>
+    </div> -->
+      <!-- </div> -->
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
           <button
@@ -81,7 +92,7 @@ const showingNavigationDropdown = ref(false);
           </button>
 
           <a
-          :href="route('home.index')"
+            :href="route('home.index')"
             :active="false"
             class="flex items-center justify-between mr-2 text-yellow-700 dark:text-yellow-400 dark:hover:bg-gray-700 rounded-lg hover:text-yellow-900 hover:bg-gray-200 p-2"
           >
@@ -100,7 +111,7 @@ const showingNavigationDropdown = ref(false);
               />
             </svg>
           </a>
-          <span class="text-yellow-700 dark:text-yellow-500 "
+          <span class="text-yellow-700 dark:text-yellow-500"
             >{{ $t("Hello") }}! : {{ $page.props.auth.user.name }}</span
           >
         </div>
@@ -436,7 +447,7 @@ const showingNavigationDropdown = ref(false);
             <span class="sr-only">Open user menu</span>
             <img
               class="w-8 h-8 rounded-full"
-              src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              src="https://github.com/khunnat1223/E-commerce/blob/main/448305362_474965324937676_8317306443117965696_n.jpg?raw=true"
               alt="user photo"
             />
           </button>
@@ -594,7 +605,7 @@ const showingNavigationDropdown = ref(false);
     <!-- Sidebar -->
 
     <aside
-      class="fixed top-14 md:top-0 left-0 shadow-xl z-40 w-64 h-full pt-4 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+      class="fixed overflow-auto top-14 md:top-0 left-0 shadow-xl z-40 w-64 h-full pt-4 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
       aria-label="Sidenav"
       id="drawer-navigation"
     >
@@ -604,11 +615,11 @@ const showingNavigationDropdown = ref(false);
         <div>
           <div class="flex justify-center pb-2">
             <img
-              src="https://img.freepik.com/free-vector/shopping-payment-online-process-computer-smartphone-tablet_1150-65523.jpg?w=740"
-              class="rounded-full h-20 hover:scale-110 hover:shadow-lg hover:shadow-gray-400 border-yellow-700 border-2"
+              src="https://github.com/khunnat1223/E-commerce/blob/main/Rany%20Book%20Shop%20LOGO%20.png?raw=true"
+              class="w-28 hover:scale-110 -mt-5 hover:shadow-lg hover:shadow-gray-400"
             />
           </div>
-          <div class="hover:scale-110 cursor-default">
+          <div class="hover:scale-110 -mt-4 cursor-default">
             {{ $t("systemName") }}
           </div>
         </div>
@@ -617,25 +628,30 @@ const showingNavigationDropdown = ref(false);
         class="overflow-y-auto py-2 px-2 h-full bg-white dark:bg-gray-800 dark:text-white"
       >
         <ul class="space-y-1 pb-2">
-        <li>
+          <li>
             <SidebarLink
               :href="route('admin.index')"
               :active="false"
               class="dark:hover:bg-gray-700 dark:text-white"
             >
               <svg
-                class="w-6 h-6 fill-current inline-block dark:text-white dark:hover:bg-gray-700"
-                fill="currentColor"
-                viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
               >
                 <path
-                  d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                ></path>
+                  d="M11.47 3.841a.75.75 0 0 1 1.06 0l8.69 8.69a.75.75 0 1 0 1.06-1.061l-8.689-8.69a2.25 2.25 0 0 0-3.182 0l-8.69 8.69a.75.75 0 1 0 1.061 1.06l8.69-8.689Z"
+                />
+                <path
+                  d="m12 5.432 8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 0 1-.75-.75v-4.5a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75V21a.75.75 0 0 1-.75.75H5.625a1.875 1.875 0 0 1-1.875-1.875v-6.198a2.29 2.29 0 0 0 .091-.086L12 5.432Z"
+                />
               </svg>
+
               <span class="font-sans">{{ $t("dashbourd") }}</span>
             </SidebarLink>
           </li>
+          <!-- suppliers -->
           <li>
             <SidebarLink
               :href="route('suppliers.index')"
@@ -643,183 +659,288 @@ const showingNavigationDropdown = ref(false);
               class="dark:hover:bg-gray-700 dark:text-white"
             >
               <svg
-                class="w-5 h-5"
-                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
                 viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
               >
                 <path
-                  stroke="currentColor"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm16 14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2ZM4 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6Zm16-2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6Z"
+                  d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z"
                 />
               </svg>
 
               <span class="font-sans">{{ $t("Supplier") }}</span>
             </SidebarLink>
           </li>
-          <li>
-            <SidebarLink
-              :href="route('categorys.index')"
-              :active="route().current('categorys.index')"
-              class="dark:hover:bg-gray-700 dark:text-white"
-            >
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm16 14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2ZM4 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6Zm16-2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6Z"
-                />
-              </svg>
-
-              <span class="font-sans">{{ $t("Category") }}</span>
-            </SidebarLink>
-          </li>
-
-          <li>
-            <SidebarLink
-              :href="route('discounts.index')"
-              :active="route().current('discounts.index')"
-              class="dark:hover:bg-gray-700 dark:text-white"
-            >
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm16 14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2ZM4 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6Zm16-2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6Z"
-                />
-              </svg>
-
-              <span class="font-sans">{{ $t("Discount") }}</span>
-            </SidebarLink>
-          </li>
-
-          <li>
-            <SidebarLink
-              :href="route('products.index')"
-              :active="route().current('products.index')"
-              class="dark:hover:bg-gray-700 dark:text-white"
-            >
-              <svg
-                class="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm16 14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2ZM4 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6Zm16-2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6Z"
-                />
-              </svg>
-
-              <span class="font-sans">{{ $t("Product") }}</span>
-            </SidebarLink>
-          </li>
         </ul>
         <ul
           class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700"
         >
-            <template v-if="hasRole('admin')">
-              <li>
-                <SidebarLink
-                  :href="route('users.index')"
-                  :active="route().current('users.index')"
-                  class="dark:hover:bg-gray-700 dark:text-white"
+          <template v-if="hasRole('admin')">
+            <!-- Category -->
+            <li>
+              <SidebarLink
+                :href="route('categorys.index')"
+                :active="route().current('categorys.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="w-5 h-5"
-                  >
-                    <path
-                      d="M10 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 18a9.953 9.953 0 0 1-5.385-1.572ZM16.25 5.75a.75.75 0 0 0-1.5 0v2h-2a.75.75 0 0 0 0 1.5h2v2a.75.75 0 0 0 1.5 0v-2h2a.75.75 0 0 0 0-1.5h-2v-2Z"
-                    />
-                  </svg>
-                  <span class="font-sans">{{ $t("user") }}</span>
-                </SidebarLink>
-              </li>
-              <li>
-                <SidebarLink
-                  :href="route('roles.index')"
-                  :active="route().current('roles.index')"
-                  class="dark:hover:bg-gray-700 dark:text-white"
+                  <path
+                    fill-rule="evenodd"
+                    d="M1.5 9.832v1.793c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875V9.832a3 3 0 0 0-.722-1.952l-3.285-3.832A3 3 0 0 0 16.215 3h-8.43a3 3 0 0 0-2.278 1.048L2.222 7.88A3 3 0 0 0 1.5 9.832ZM7.785 4.5a1.5 1.5 0 0 0-1.139.524L3.881 8.25h3.165a3 3 0 0 1 2.496 1.336l.164.246a1.5 1.5 0 0 0 1.248.668h2.092a1.5 1.5 0 0 0 1.248-.668l.164-.246a3 3 0 0 1 2.496-1.336h3.165l-2.765-3.226a1.5 1.5 0 0 0-1.139-.524h-8.43Z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    d="M2.813 15c-.725 0-1.313.588-1.313 1.313V18a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-1.688c0-.724-.588-1.312-1.313-1.312h-4.233a3 3 0 0 0-2.496 1.336l-.164.246a1.5 1.5 0 0 1-1.248.668h-2.092a1.5 1.5 0 0 1-1.248-.668l-.164-.246A3 3 0 0 0 7.046 15H2.812Z"
+                  />
+                </svg>
+
+                <span class="font-sans">{{ $t("Category") }}</span>
+              </SidebarLink>
+            </li>
+
+            <!-- products -->
+
+            <li>
+              <SidebarLink
+                :href="route('products.index')"
+                :active="route().current('products.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="w-5 h-5"
-                  >
-                    <path
-                      d="M13.024 9.25c.47 0 .827-.433.637-.863a4 4 0 0 0-4.094-2.364c-.468.05-.665.576-.43.984l1.08 1.868a.75.75 0 0 0 .649.375h2.158ZM7.84 7.758c-.236-.408-.79-.5-1.068-.12A3.982 3.982 0 0 0 6 10c0 .884.287 1.7.772 2.363.278.38.832.287 1.068-.12l1.078-1.868a.75.75 0 0 0 0-.75L7.839 7.758ZM9.138 12.993c-.235.408-.039.934.43.984a4 4 0 0 0 4.094-2.364c.19-.43-.168-.863-.638-.863h-2.158a.75.75 0 0 0-.65.375l-1.078 1.868Z"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      d="m14.13 4.347.644-1.117a.75.75 0 0 0-1.299-.75l-.644 1.116a6.954 6.954 0 0 0-2.081-.556V1.75a.75.75 0 0 0-1.5 0v1.29a6.954 6.954 0 0 0-2.081.556L6.525 2.48a.75.75 0 1 0-1.3.75l.645 1.117A7.04 7.04 0 0 0 4.347 5.87L3.23 5.225a.75.75 0 1 0-.75 1.3l1.116.644A6.954 6.954 0 0 0 3.04 9.25H1.75a.75.75 0 0 0 0 1.5h1.29c.078.733.27 1.433.556 2.081l-1.116.645a.75.75 0 1 0 .75 1.298l1.117-.644a7.04 7.04 0 0 0 1.523 1.523l-.645 1.117a.75.75 0 1 0 1.3.75l.644-1.116a6.954 6.954 0 0 0 2.081.556v1.29a.75.75 0 0 0 1.5 0v-1.29a6.954 6.954 0 0 0 2.081-.556l.645 1.116a.75.75 0 0 0 1.299-.75l-.645-1.117a7.042 7.042 0 0 0 1.523-1.523l1.117.644a.75.75 0 0 0 .75-1.298l-1.116-.645a6.954 6.954 0 0 0 .556-2.081h1.29a.75.75 0 0 0 0-1.5h-1.29a6.954 6.954 0 0 0-.556-2.081l1.116-.644a.75.75 0 0 0-.75-1.3l-1.117.645a7.04 7.04 0 0 0-1.524-1.523ZM10 4.5a5.475 5.475 0 0 0-2.781.754A5.527 5.527 0 0 0 5.22 7.277 5.475 5.475 0 0 0 4.5 10a5.475 5.475 0 0 0 .752 2.777 5.527 5.527 0 0 0 2.028 2.004c.802.458 1.73.719 2.72.719a5.474 5.474 0 0 0 2.78-.753 5.527 5.527 0 0 0 2.001-2.027c.458-.802.719-1.73.719-2.72a5.475 5.475 0 0 0-.753-2.78 5.528 5.528 0 0 0-2.028-2.002A5.475 5.475 0 0 0 10 4.5Z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
+                  <path
+                    d="M12.378 1.602a.75.75 0 0 0-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03ZM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 0 0 .372-.648V7.93ZM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 0 0 .372.648l8.628 5.033Z"
+                  />
+                </svg>
 
-                  <span class="font-sans">{{ $t("role") }}</span>
-                </SidebarLink>
-              </li>
-              <li>
-                <SidebarLink
-                  :href="route('permissions.index')"
-                  :active="route().current('permissions.index')"
-                  class="dark:hover:bg-gray-700 dark:text-white"
+                <span class="font-sans">{{ $t("Product") }}</span>
+              </SidebarLink>
+            </li>
+            <!-- Delivery -->
+            <li>
+              <SidebarLink
+                :href="route('deliverys.index')"
+                :active="route().current('deliverys.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    class="w-5 h-5"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M14.5 1A4.5 4.5 0 0 0 10 5.5V9H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5V5.5a3 3 0 1 1 6 0v2.75a.75.75 0 0 0 1.5 0V5.5A4.5 4.5 0 0 0 14.5 1Z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
+                  <path
+                    d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 1 1 6 0h3a.75.75 0 0 0 .75-.75V15Z"
+                  />
+                  <path
+                    d="M8.25 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0ZM15.75 6.75a.75.75 0 0 0-.75.75v11.25c0 .087.015.17.042.248a3 3 0 0 1 5.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 0 0-3.732-10.104 1.837 1.837 0 0 0-1.47-.725H15.75Z"
+                  />
+                  <path d="M19.5 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                </svg>
 
-                  <span class="font-sans">{{ $t("permission") }}</span>
-                </SidebarLink>
-              </li>
-            </template>
+                <span class="font-sans">{{ $t("Deliverys") }}</span>
+              </SidebarLink>
+            </li>
+          </template>
+        </ul>
+        <ul
+          class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700"
+        >
+          <template v-if="hasRole('admin')">
+            <li>
+              <SidebarLink
+                :href="route('orders.index')"
+                :active="route().current('orders.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-800 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+                  />
+                </svg>
 
+                <span class="font-sans">{{ $t("Order") }}</span>
+              </SidebarLink>
+            </li>
+            <li>
+              <SidebarLink
+                :href="route('reports.index')"
+                :active="route().current('reports.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.125 3C3.089 3 2.25 3.84 2.25 4.875V18a3 3 0 0 0 3 3h15a3 3 0 0 1-3-3V4.875C17.25 3.839 16.41 3 15.375 3H4.125ZM12 9.75a.75.75 0 0 0 0 1.5h1.5a.75.75 0 0 0 0-1.5H12Zm-.75-2.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5H12a.75.75 0 0 1-.75-.75ZM6 12.75a.75.75 0 0 0 0 1.5h7.5a.75.75 0 0 0 0-1.5H6Zm-.75 3.75a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5H6a.75.75 0 0 1-.75-.75ZM6 6.75a.75.75 0 0 0-.75.75v3c0 .414.336.75.75.75h3a.75.75 0 0 0 .75-.75v-3A.75.75 0 0 0 9 6.75H6Z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 0 1-3 0V6.75Z"
+                  />
+                </svg>
+
+                <span class="font-sans">{{ $t("Reports") }}</span>
+              </SidebarLink>
+            </li>
+            <li>
+              <SidebarLink
+                :href="route('staffs.index')"
+                :active="route().current('staffs.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4.5 3.75a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V6.75a3 3 0 0 0-3-3h-15Zm4.125 3a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Zm-3.873 8.703a4.126 4.126 0 0 1 7.746 0 .75.75 0 0 1-.351.92 7.47 7.47 0 0 1-3.522.877 7.47 7.47 0 0 1-3.522-.877.75.75 0 0 1-.351-.92ZM15 8.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15ZM14.25 12a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H15a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 0-1.5H15Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+
+                <span class="font-sans">{{ $t("Staff") }}</span>
+              </SidebarLink>
+            </li>
+          </template>
+        </ul>
+        <ul
+          class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700"
+        >
+          <template v-if="hasRole('admin')">
+            <li>
+              <SidebarLink
+                :href="route('users.index')"
+                :active="route().current('users.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    d="M10 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM1.615 16.428a1.224 1.224 0 0 1-.569-1.175 6.002 6.002 0 0 1 11.908 0c.058.467-.172.92-.57 1.174A9.953 9.953 0 0 1 7 18a9.953 9.953 0 0 1-5.385-1.572ZM16.25 5.75a.75.75 0 0 0-1.5 0v2h-2a.75.75 0 0 0 0 1.5h2v2a.75.75 0 0 0 1.5 0v-2h2a.75.75 0 0 0 0-1.5h-2v-2Z"
+                  />
+                </svg>
+                <span class="font-sans">{{ $t("user") }}</span>
+              </SidebarLink>
+            </li>
+            <li>
+              <SidebarLink
+                :href="route('roles.index')"
+                :active="route().current('roles.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    d="M13.024 9.25c.47 0 .827-.433.637-.863a4 4 0 0 0-4.094-2.364c-.468.05-.665.576-.43.984l1.08 1.868a.75.75 0 0 0 .649.375h2.158ZM7.84 7.758c-.236-.408-.79-.5-1.068-.12A3.982 3.982 0 0 0 6 10c0 .884.287 1.7.772 2.363.278.38.832.287 1.068-.12l1.078-1.868a.75.75 0 0 0 0-.75L7.839 7.758ZM9.138 12.993c-.235.408-.039.934.43.984a4 4 0 0 0 4.094-2.364c.19-.43-.168-.863-.638-.863h-2.158a.75.75 0 0 0-.65.375l-1.078 1.868Z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="m14.13 4.347.644-1.117a.75.75 0 0 0-1.299-.75l-.644 1.116a6.954 6.954 0 0 0-2.081-.556V1.75a.75.75 0 0 0-1.5 0v1.29a6.954 6.954 0 0 0-2.081.556L6.525 2.48a.75.75 0 1 0-1.3.75l.645 1.117A7.04 7.04 0 0 0 4.347 5.87L3.23 5.225a.75.75 0 1 0-.75 1.3l1.116.644A6.954 6.954 0 0 0 3.04 9.25H1.75a.75.75 0 0 0 0 1.5h1.29c.078.733.27 1.433.556 2.081l-1.116.645a.75.75 0 1 0 .75 1.298l1.117-.644a7.04 7.04 0 0 0 1.523 1.523l-.645 1.117a.75.75 0 1 0 1.3.75l.644-1.116a6.954 6.954 0 0 0 2.081.556v1.29a.75.75 0 0 0 1.5 0v-1.29a6.954 6.954 0 0 0 2.081-.556l.645 1.116a.75.75 0 0 0 1.299-.75l-.645-1.117a7.042 7.042 0 0 0 1.523-1.523l1.117.644a.75.75 0 0 0 .75-1.298l-1.116-.645a6.954 6.954 0 0 0 .556-2.081h1.29a.75.75 0 0 0 0-1.5h-1.29a6.954 6.954 0 0 0-.556-2.081l1.116-.644a.75.75 0 0 0-.75-1.3l-1.117.645a7.04 7.04 0 0 0-1.524-1.523ZM10 4.5a5.475 5.475 0 0 0-2.781.754A5.527 5.527 0 0 0 5.22 7.277 5.475 5.475 0 0 0 4.5 10a5.475 5.475 0 0 0 .752 2.777 5.527 5.527 0 0 0 2.028 2.004c.802.458 1.73.719 2.72.719a5.474 5.474 0 0 0 2.78-.753 5.527 5.527 0 0 0 2.001-2.027c.458-.802.719-1.73.719-2.72a5.475 5.475 0 0 0-.753-2.78 5.528 5.528 0 0 0-2.028-2.002A5.475 5.475 0 0 0 10 4.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+
+                <span class="font-sans">{{ $t("role") }}</span>
+              </SidebarLink>
+            </li>
+            <li>
+              <SidebarLink
+                :href="route('permissions.index')"
+                :active="route().current('permissions.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="w-5 h-5"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M14.5 1A4.5 4.5 0 0 0 10 5.5V9H3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1.5V5.5a3 3 0 1 1 6 0v2.75a.75.75 0 0 0 1.5 0V5.5A4.5 4.5 0 0 0 14.5 1Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+
+                <span class="font-sans">{{ $t("permission") }}</span>
+              </SidebarLink>
+            </li>
+          </template>
+        </ul>
+        <ul
+          class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700"
+        >
+          <template v-if="hasRole('admin')">
+            <li>
+              <SidebarLink
+                :href="route('banners.index')"
+                :active="route().current('banners.index')"
+                class="dark:hover:bg-gray-700 dark:text-white"
+              >
+                <svg
+                  class="w-5 h-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm16 14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2ZM4 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6Zm16-2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6Z"
+                  />
+                </svg>
+
+                <span class="font-sans">{{ $t("Banner") }}</span>
+              </SidebarLink>
+            </li>
+          </template>
         </ul>
       </div>
     </aside>
 
-    <main class="p-4 md:ml-64 h-auto pt-20 ">
+    <main class="p-4 md:ml-64 h-auto pt-20">
       <slot />
     </main>
   </div>

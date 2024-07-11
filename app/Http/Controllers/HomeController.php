@@ -6,22 +6,35 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
+use App\Models\Banner;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $banners = Banner::all()->map(function ($banner) {
+            return [
+                'id' => $banner->id,
+                'image' => asset('storage/' . $banner->image)
+            ];
+        });
+        $query = Product::with('category', 'product_images');
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+        $query->where('published',1);
+        $products = $query->paginate(8);
 
-        $products = Product::with('category', 'product_images')->limit(8)->get();
-        return Inertia::render('HomePage/Index',
-            [
-                'products' => $products,
-                'canLogin' => app('router')->has('login'),
-                'canRegister' => app('router')->has('register'),
-                'laravelVersion' => Application::VERSION,
-                'phpVersion' => PHP_VERSION,
-                // 'categories' =>CategoryResource::collection($categories),
-            ]
-        );
+        return Inertia::render('HomePage/Index', [
+            'banners' => $banners,
+            'products' => $products,
+            'canLogin' => app('router')->has('login'),
+            'canRegister' => app('router')->has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+        ]);
     }
+
+
 }

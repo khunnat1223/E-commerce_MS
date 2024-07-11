@@ -23,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'provider_id',
+        'provider',
+        'provider_token',
     ];
 
     /**
@@ -46,5 +49,8 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    function user_address() {
+        return $this->hasMany(UserAddress::class);
     }
 }

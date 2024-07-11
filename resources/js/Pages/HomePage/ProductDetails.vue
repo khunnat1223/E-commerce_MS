@@ -3,7 +3,7 @@ import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import Footer from "@/Pages/Footer.vue";
 import Header from "@/Pages/Header.vue";
-import FilterCategory from "@/Pages/FilterCategory.vue";
+// import FilterCategory from "@/Pages/FilterCategory.vue";
 // initialize components based on data attribute selectors
 onMounted(() => {
     initFlowbite();

@@ -6,16 +6,18 @@ import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
-import { usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
-import { Plus } from '@element-plus/icons-vue';
-import { router } from '@inertiajs/vue3'
+import { usePage } from "@inertiajs/vue3";
+import { ref } from "vue";
+
+import { Plus } from "@element-plus/icons-vue";
+import { router } from "@inertiajs/vue3";
 
 // const categories = usePage().props.categories;
 // defineProps(["categories"]);
 defineProps({
-    categories:Array,
-})
+  categories: Array,
+  suppliers: Array,
+});
 const form = useForm({
   description: "",
   title: "",
@@ -23,61 +25,82 @@ const form = useForm({
   cost: "",
   qty: "",
   category_id: "",
+  supplier_id: "",
+  discount: "",
+  sellingprice: "",
   product_images: [],
+  total_cost: "",
+  total_price: "",
 });
+
+const Cdiscount = () => {
+  form.price = form.sellingprice - form.sellingprice * (form.discount / 100);
+  form.total_price = form.sellingprice * form.qty;
+};
+const CtotalCost = () => {
+  form.total_cost = form.cost * form.qty;
+};
 // const product_images = ref([])
 const productImages = ref([]);
-const dialogImageUrl = ref('');
+const dialogImageUrl = ref("");
 
 const handleFileChange = (file) => {
-    productImages.value.push(file);
-}
+  productImages.value.push(file);
+};
 
-const handleRemove= (file) => {
-  console.log(file)
-}
+const handleRemove = (file) => {
+  console.log(file);
+};
 
-const handlePictureCardPreview  = (file) => {
-  dialogImageUrl.value = file.url
-  dialogVisible.value = true
-}
+const handlePictureCardPreview = (file) => {
+  dialogImageUrl.value = file.url;
+  dialogVisible.value = true;
+};
 const Addimage = async () => {
-    if(title.value == "" || price.value == "" || cost.value == "" || category_id.value == "" ){
-        alert("Please Input Value");
-    }else {
-      const formData = new FormData();
-    formData.append('title', title.value);
-    formData.append('price', price.value);
-    formData.append('cost', cost.value);
-    formData.append('qty', qty.value);
-    formData.append('description', description.value);
-    formData.append('category_id', category_id.value);
+  if (
+    title.value == "" ||
+    price.value == "" ||
+    cost.value == "" ||
+    category_id.value == ""
+  ) {
+    alert("Please Input Value");
+  } else {
+    const formData = new FormData();
+    formData.append("title", title.value);
+    formData.append("price", price.value);
+    formData.append("cost", cost.value);
+    formData.append("qty", qty.value);
+    formData.append("description", description.value);
+    formData.append("category_id", category_id.value);
+    formData.append("supplier_id", supplier_id.value);
+    formData.append("discount", discount.value);
+    formData.append("sellingprice", sellingprice.value);
+    formData.append("total_cost", total_cost.value);
+    formData.append("total_price", total_price.value);
     // Append each image to the form data
     for (const image of productImages.value) {
-        formData.append('product_images[]', image.raw);
+      formData.append("product_images[]", image.raw);
     }
 
     try {
-        await router.post('store',formData, {
-            onSuccess: page => {
-                Swal.fire({
-                    toast: true,
-                    icon: 'success',
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    title: page.props.flash.success
-                })
-                dialogVisible.value = false;
-                resetFormData();
-            },
-        })
+      await router.post("store", formData, {
+        onSuccess: (page) => {
+          Swal.fire({
+            toast: true,
+            icon: "success",
+            position: "top-end",
+            showConfirmButton: false,
+            title: page.props.flash.success,
+          });
+          dialogVisible.value = false;
+          resetFormData();
+        },
+      });
     } catch (err) {
-        console.log(err)
+      console.log(err);
     }
-    }
+  }
 };
-
-
 </script>
 
 <template>
@@ -186,87 +209,42 @@ const Addimage = async () => {
 
                 <InputError class="mt-2" :message="form.errors.title" />
               </div>
-              <div>
-                <div>
+
+              <div class="md:flex justify-between ms:block md:w-full mx:w-full">
+                <div class="md:mr-2 w-1/2">
                   <span>{{ $t("Category") }}</span>
                   <select
                     id="category_id"
                     v-model="form.category_id"
                     class="bg-gray-50 border my-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
-                    <option disabled value="">{{ $t('Select') }}</option>
+                    <option disabled value="">{{ $t("Select") }}</option>
                     <option
                       v-for="category in categories"
                       :key="category.id"
                       :value="category.id"
                     >
-                      {{ category.category}}
+                      {{ category.category }}
                     </option>
                   </select>
-
                 </div>
-
-
-                <InputError class="mt-2" :message="form.errors.category_id" />
-              </div>
-
-              <div class="md:flex justify-between ms:block md:w-full mx:w-full">
-                <div class="md:mr-2">
-                  <span>{{ $t("Cost") }}</span>
-                  <TextInput
-                    id="cost"
-                    name="cost"
-                    type="number"
-                    class="mt-1 mb-2 block w-full"
-                    v-model="form.cost"
-                    autocomplete="cost"
-                  />
+                <div class="w-1/2">
+                  <span>{{ $t("Supplier") }}</span>
+                  <select
+                    id="supplier_id"
+                    v-model="form.supplier_id"
+                    class="bg-gray-50 border my-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  >
+                    <option disabled value="">{{ $t("Select") }}</option>
+                    <option
+                      v-for="supplier in suppliers"
+                      :key="supplier.id"
+                      :value="supplier.id"
+                    >
+                      {{ supplier.name }}
+                    </option>
+                  </select>
                 </div>
-                <div>
-                  <span>{{ $t("Price") }}</span>
-
-                  <TextInput
-                    id="price"
-                    type="number"
-                    class="mt-1 mb-2 block w-full"
-                    v-model="form.price"
-                    autocomplete="price"
-                  />
-
-                  <InputError class="mt-2" :message="form.errors.cost" />
-                </div>
-              </div>
-
-              <div>
-                <span>{{ $t("Quantity") }}</span>
-
-                <TextInput
-                  id="qty"
-                  type="number"
-                  class="mt-1 mb-2 block w-full"
-                  v-model="form.qty"
-                  required
-                  autocomplete="qty"
-                />
-
-                <InputError class="mt-2" :message="form.errors.qty" />
-              </div>
-            </div>
-            <div class="md:w-1/2 md:ml-3 ms:w-full">
-              <div class="flex items-center justify-center w-full"></div>
-
-
-              <div>
-                <span>{{ $t("Description") }}</span>
-
-                <TextArea
-                  v-model="form.description"
-                  id="description"
-                  type="text"
-                  class="mt-1 mb-2 h-24 block w-full"
-                />
-
-                <InputError class="mt-2" :message="form.errors.description" />
               </div>
               <div>
                 <span>{{ $t("Image") }}</span>
@@ -280,16 +258,131 @@ const Addimage = async () => {
                 >
                   <el-icon><Plus /></el-icon>
                 </el-upload>
-
                 <InputError class="mt-2" :message="form.errors.name" />
               </div>
+
             </div>
+            <div class="md:w-1/2 md:ml-3 ms:w-full">
+              <div class="md:flex justify-between ms:block md:w-full mx:w-full">
+
+
+                    <div class="w-1/2 mr-2">
+                      <span>{{ $t("Cost") }}</span>
+                      <TextInput
+                        @mouseout="CtotalCost"
+                        id="cost"
+                        name="cost"
+                        type="number"
+                        class="mt-1 mb-2 block w-full"
+                        v-model="form.cost"
+                        autocomplete="cost"
+                      />
+                    </div>
+
+                    <div class="w-1/2">
+                      <span>{{ $t("Selling") }}</span>
+                      <TextInput
+                        @mouseout="Cdiscount"
+                        id="sellingprice"
+                        type="number"
+                        class="mt-1 w-full mb-2 block"
+                        v-model="form.sellingprice"
+                        autocomplete="sellingprice"
+                      />
+                      <InputError class="mt-2" :message="form.errors.cost" />
+                    </div>
+
+              </div>
+              <div class="md:flex justify-between ms:block md:w-full mx:w-full">
+                <div class="flex w-1/2">
+                  <div class="md:mr-2">
+                    <span>{{ $t("Discount") }}</span>
+                    <TextInput
+                      @mouseout="Cdiscount"
+                      id="discount"
+                      type="number"
+                      class="mt-1 mb-2 block w-full"
+                      v-model="form.discount"
+                      autocomplete="discount"
+                    />
+                  </div>
+                  <div>
+                    <span>{{ $t("Quantity") }}</span>
+                    <TextInput
+                      id="qty"
+                      @mouseout="CtotalCost"
+                      type="number"
+                      class="mt-1 mb-2 block w-full"
+                      v-model="form.qty"
+                      required
+                      autocomplete="qty"
+                    />
+                    <InputError class="mt-2" :message="form.errors.qty" />
+                  </div>
+                </div>
+
+                <div class="w-1/2 ml-2">
+                  <span>{{ $t("Price") }}</span>
+                  <TextInput
+                    id="price"
+                    type="number"
+                    class="mt-1 mb-2 block w-full"
+                    v-model="form.price"
+                    autocomplete="price"
+                    disabled
+                  />
+                  <InputError class="mt-2" :message="form.errors.cost" />
+                </div>
+              </div>
+              <div>
+                <span>{{ $t("Description") }}</span>
+
+                <TextArea
+                  v-model="form.description"
+                  id="description"
+                  type="text"
+                  class="mt-1 mb-2 h-24 block w-full"
+                />
+
+                <InputError class="mt-2" :message="form.errors.description" />
+              </div>
+              <div class=" border-t-2 border-white mt-5 pt-5">
+                <div>
+                  <div class="flex space-x-5">
+                    <div>
+                      Total Cost:
+                      <TextInput
+                        class="w-24 bg-gray-200"
+                        id="total_cost"
+                        v-model="form.total_cost"
+                        disabled
+                      />
+                      $
+                    </div>
+                    <div>
+                      Total Price:
+                      <TextInput
+                        id="total_price"
+                        class="w-24 bg-gray-200"
+                        v-model="form.total_price"
+                        disabled
+                      />
+                      $
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
-          <div class="flex items-center mt-4">
-            <PrimaryButton @click="UpdateProduct">
-              {{ $t("Save") }}
-            </PrimaryButton>
-          </div>
+          <div class="flex items-center -mt-5">
+                <PrimaryButton @click="UpdateProduct">
+                  {{ $t("Save") }}
+                </PrimaryButton>
+              </div>
         </form>
       </div>
     </div>

@@ -11,6 +11,12 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\Product;
+use App\Models\Staff;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Supplier;
 
 
 class AdminController extends Controller
@@ -22,8 +28,15 @@ class AdminController extends Controller
             'users' =>User::count(),
             'roles'=>Role::count(),
             'permissions'=>Permission::count(),
+            'products'=>Product::count(),
+            'staffs'=>Staff::count(),
+            'categorys'=>Category::count(),
+            'orders'=>Order::count(),
+            'suppliers'=>Supplier::count(),
+            'payments'=>Payment::sum('amount'),
+            'productCost'=>Product::sum('total_cost'),
         ]
     );
-       
+
     }
 }

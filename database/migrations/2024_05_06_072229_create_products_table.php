@@ -3,7 +3,6 @@
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Supplier;
-use App\Models\Discount;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,15 +21,19 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->decimal('cost',10,2);
+            $table->integer('discount')->nullable();
+            $table->decimal('sellingprice')->nullable();
             $table->decimal('price',10,2);
+            $table->decimal('total_cost')->nullable();
+            $table->decimal('total_price')->nullable();
             $table->integer('qty');
             $table->boolean('published')->default(0);
             $table->boolean('inStock')->default(0);
-            $table->foreignIdFor(Supplier::class, 'supplier_id');
-            $table->foreignIdFor(Discount::class, 'discount_id');
+            $table->foreignIdFor(Supplier::class, 'supplier_id')->nullable();
             $table->foreignIdFor(Category::class, 'category_id');
-            $table->foreignIdFor(User::class, 'create_by');
-            $table->foreignIdFor(User::class, 'update_by');
+            $table->foreignIdFor(User::class, 'create_by')->nullable();
+            $table->foreignIdFor(User::class, 'update_by')->nullable();
+            $table->foreignIdFor(User::class,'deleted_by')->nullable();
             $table->timestamps();
         });
     }

@@ -4,6 +4,10 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use App\Helper\Cart;
+use App\Http\Resources\CartResource;
+use Illuminate\Foundation\Application;
+// use Tightenco\Ziggy\Ziggy;
 
 use App\Http\Resources\UserSharedResource;
 
@@ -36,12 +40,27 @@ class HandleInertiaRequests extends Middleware
             'auth.user' => fn () => $request->user()
                 ? new UserSharedResource($request->user())
                 : null,
-            // 'auth.user.roles' => fn () => $request->user()
-            //     ? $request-> user()-> getRoleNames()
-            //     : null,
-            // 'auth.user.permissions' => fn () => $request->user()
-            //     ? $request-> user()-> getPermissionNames()
-            //     : null,
+
+                // 'ziggy' => fn () => [
+                //     ...(new Ziggy)->toArray(),
+                //     'location' => $request->url(),
+                // ],
+            // 'auth' => [
+            //     'user' => $request->user(),
+            // ],
+                'cart' => new CartResource(Cart::getProductsAndCartItems()),
+
+                'flash' => [
+                    'success' => fn () => $request->session()->get('success'),
+                    'error' => fn () => $request->session()->get('error'),
+                    'warning' => fn () => $request->session()->get('warning'),
+                    'info' => fn () => $request->session()->get('info')
+                ],
+
+                'canLogin' => app('router')->has('login'),
+                'canRegister' => app('router')->has('register'),
+                'laravelVersion' => Application::VERSION,
+                'phpVersion' => PHP_VERSION,
         ]);
 
     }

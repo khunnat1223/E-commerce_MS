@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Discount;
+use App\Models\Supplier;
 use Inertia\inertia;
 use Inertia\Response;
 use App\Models\ProductImage;
@@ -12,34 +14,71 @@ use Illuminate\Http\RedirectResponse;
 use App\Policies\ProductPolicy;
 use App\Http\Resources\CategoryResource;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\DiscountResource;
+use App\Http\Resources\SupplierResource;
+// Excel
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 class ProductController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $query = Product::with('category', 'product_images');
 
-        $products = Product::with('category', 'product_images')->get();
-        $categories = Category::all();
+ // Apply published filter
+ if ($request->has('published') && $request->input('published') !== '') {
+    $published = $request->input('published');
+    $query->where('published', $published);
+}
 
-        return Inertia::render(
-            'Admin/Products/ProductIndex',
-            [
-                'products' => $products,
-                'categories' =>CategoryResource::collection($categories),
-            ]
-        );
+// Apply inStock filter
+if ($request->has('inStock')) {
+    if ($request->input('inStock') == 1) {
+        $query->where('qty', '>', 0);
+    } else if ($request->input('inStock') == 0) {
+        $query->where('qty', '<=', 0);
     }
+}
+
+  // Apply search filter
+    if ($request->has('search') && !empty($request->search)) {
+        $query->where('title', 'like', '%' . $request->search . '%');
+    }
+    // Paginate the results
+    $products = $query->paginate(7);
+
+    // Fetch related data
+    $categories = Category::all();
+    $discounts = Discount::all();
+    $suppliers = Supplier::all();
+
+    // Return the data to the Inertia.js component
+    return Inertia::render('Admin/Products/ProductIndex', [
+        'products' => $products,
+        'categories' => CategoryResource::collection($categories),
+        'discounts' => DiscountResource::collection($discounts),
+        'suppliers' => SupplierResource::collection($suppliers),
+    ]);
+}
+
 
     public function create(): Response
     {
 
         Gate::authorize('create', Product::class);
+        $dicounts = Discount::all();
+        $supplier = Supplier::all();
         $categories = Category::all();
         return Inertia::render('Admin/Products/Create',[
             'categories' =>CategoryResource::collection($categories),
+           'discounts' =>DiscountResource::collection($dicounts),
+            'suppliers' =>SupplierResource::collection($supplier),
         ]);
 
     }
@@ -54,6 +93,11 @@ class ProductController extends Controller
         $product->qty = $request->qty;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
+        $product->supplier_id = $request->supplier_id;
+        $product->discount = $request->discount;
+        $product->sellingprice = $request->sellingprice;
+        $product->total_price = $request->total_price;
+        $product->total_cost = $request->total_cost;
         $product->save();
 
         if ($request->hasFile('product_images')) {
@@ -78,6 +122,9 @@ class ProductController extends Controller
         return Inertia::render('Admin/Products/Edit',[
             'product' => new ProductResource($product),
             'categories'=> CategoryResource::collection(Category::all()),
+            // 'discounts' =>DiscountResource::collection(Discount::all()),
+            'suppliers' =>SupplierResource::collection(Supplier::all()),
+
             ]);
     }
 
@@ -97,11 +144,16 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         $product->title = $request->title;
+        $product->cost = $request->cost;
         $product->price = $request->price;
         $product->qty = $request->qty;
-        $product->cost = $request->cost;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
+        $product->supplier_id = $request->supplier_id;
+        $product->discount = $request->discount;
+        $product->sellingprice = $request->sellingprice;
+        $product->total_price = $request->total_price;
+        $product->total_cost = $request->total_cost;
 
         // Check if product images were uploaded
         if ($request->hasFile('product_images')) {
@@ -128,9 +180,50 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        Gate::authorize('delete', $product);
-        $product->delete();
-        return back();
-    }
+            Gate::authorize('delete', $product);
+            DB::transaction(function () use ($product) {
+                // Delete dependent rows
+                DB::table('cart_items')->where('product_id', $product->id)->delete();
+
+                // Delete the product
+                $product->delete();
+            });
+
+            return back()->with('success', 'Product and related cart items deleted successfully.');
+     }
+     public function updateToPublished(Request $request, $id)
+     {
+         $product = Product::findOrFail($id);
+         $product->update([
+             'published' => 1,
+         ]);
+         return redirect()->route('products.index')->with('success', 'Product published successfully.');
+     }
+     public function updateToUnpublished(Request $request, $id)
+     {
+         $product = Product::findOrFail($id);
+         $product->update([
+             'published' => 0,
+         ]);
+         return redirect()->route('products.index')->with('success', 'Product published successfully.');
+     }
+
+     public function show($id):Response
+{
+    $product = Product::with(['category', 'product_images'])->findOrFail($id);
+                return Inertia::render('Admin/Products/ProductDetail', [
+                    // 'product' => new ProductResource($product),
+                'products' => $product,
+    ]);
 }
+
+// Excel
+public function export()
+    {
+        return Excel::download(new ProductExport,'product.xlsx');
+    }
+
+}
+
+
 

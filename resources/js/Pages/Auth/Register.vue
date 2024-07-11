@@ -23,11 +23,33 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
+        <div class="flex rounded-lg  bg-gray-200 shadow-slate-400 shadow-lg">
 
+     <!-- Sign Up Section -->
+     <div
+        class="w-96 rounded-r-3xl rounded-lg bg-gradient-to-r text-center justify-center from-orange-400 to-yellow-400 text-white p-8"
+      >
+        <img
+          src="https://github.com/sa-sa-creator/Images/blob/main/RanyLogo.png?raw=true"
+          class="justify-center w-36 ml-20 mt-4"
+          alt=""
+        />
+        <h2 class="text-3xl font-bold -mt-2 mb-3">Welcome Back!</h2>
+        <p class="mb-14">To keep connected with us please login with your personal info</p>
+        <Link
+          :href="route('login')"
+          type="button"
+          class="bg-white text-orange-500 p-2 px-28 rounded-md hover:bg-gray-200 hover:text-gray-800 hover:scale-110 hover:shadow-lg hover:shadow-yellow-300"
+        >
+        Sign In</Link
+        >
+
+        <!-- <button @click="handleSignUpClick" class="bg-white text-orange-500 p-2 px-6 rounded-md hover:bg-gray-200 hover:text-gray-800 hover:scale-110 hover:shadow-lg hover:shadow-yellow-300">Register</button> -->
+      </div>
+      <div class="w-96 p-7 pt-10">
+        <h2 class="text-3xl font-bold mb-4 text-center">Create Account</h2>
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
-
                 <TextInput
                     id="name"
                     type="text"
@@ -36,13 +58,13 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="name"
+                    placeholder="Username"
                 />
 
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
 
                 <TextInput
                     id="email"
@@ -50,14 +72,14 @@ const submit = () => {
                     class="mt-1 block w-full"
                     v-model="form.email"
                     required
-                    autocomplete="username"
+                    autocomplete="email"
+                    placeholder="Email"
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
 
                 <TextInput
                     id="password"
@@ -65,6 +87,7 @@ const submit = () => {
                     class="mt-1 block w-full"
                     v-model="form.password"
                     required
+                    placeholder="Password"
                     autocomplete="new-password"
                 />
 
@@ -72,7 +95,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+
 
                 <TextInput
                     id="password_confirmation"
@@ -80,6 +103,7 @@ const submit = () => {
                     class="mt-1 block w-full"
                     v-model="form.password_confirmation"
                     required
+                    placeholder="Confirm Password"
                     autocomplete="new-password"
                 />
 
@@ -87,17 +111,67 @@ const submit = () => {
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <Link
-                    :href="route('login')"
-                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                >
-                    Already registered?
-                </Link>
 
-                <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+
+                <!-- <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Register
-                </PrimaryButton>
+                </PrimaryButton> -->
+                <button
+              class="w-full justify-center h-12 rounded-md bg-[#F7BE38] text-white hover:bg-[#F7BE38]/90 focus:ring-4 focus:outline-none focus:ring-[#F7BE38]/50 font-medium text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#F7BE38]/50 me-2 mb-2"
+              :disabled="form.processing"
+            >
+            Sign Up
+            </button>
             </div>
         </form>
+        <div class="flex items-center justify-center mb-4">
+    <div class="border-t  ms-2 border-gray-300 flex-grow mr-3"></div>
+    <span class="text-gray-500 ">or</span>
+    <div class="border-t border-gray-300 flex-grow ml-3"></div>
+</div>
+        <div class="flex justify-center">
+            <div class="flex my-4 w-full">
+            <div>
+              <a
+                class="w-full justify-center h-12 rounded-md bg-blue-600 text-white active:bg-blueGray-50 text-blueGray-700 px-4 py-2 outline-none focus:outline-none mr-4 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-sm ease-linear transition-all duration-150"
+                type="button"
+                href="/auth/facebook/redirect"
+              >
+                <svg
+                  class="w-6 h-6 text-white dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Fackebook
+              </a>
+            </div>
+            <a
+              class="w-full justify-center h-12 ml-2 rounded-md bg-white active:bg-blueGray-50 text-blueGray-700 px-4 py-2 outline-none focus:outline-none mr-1  uppercase shadow hover:shadow-md inline-flex items-center font-bold text-sm ease-linear transition-all duration-150"
+              type="button"
+              href="/auth/google/redirect"
+            >
+              <img
+                alt="..."
+                class="w-5 mr-1"
+                src="https://demos.creative-tim.com/notus-js/assets/img/google.svg"
+              />Google
+            </a>
+          </div>
+
+        </div>
+
+
+        </div>
+        </div>
     </GuestLayout>
 </template>

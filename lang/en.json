@@ -28,8 +28,9 @@
 
     "Image": "Images",
     "Products": "Products",
-    "Cost": "Cost",
-    "Price": "Price",
+    "Cost": "Cost $",
+    "Price": "Price $",
+    "Selling": "Selling Price $",
     "Quantity": "Quantity",
     "Published":"Published",
     "Unpublish":"Unpublish",

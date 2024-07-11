@@ -1,5 +1,6 @@
 import './bootstrap';
 import '../css/app.css';
+import "flowbite";
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -9,11 +10,16 @@ import { i18nVue } from 'laravel-vue-i18n';
 import { InertiaProgress } from '@inertiajs/progress';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
 
 // import messages from './locales';
 
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+window.Pusher = Pusher;
+
 
 
 createInertiaApp({
@@ -30,10 +36,17 @@ createInertiaApp({
                 return await langs[`../../lang/${lang}.json`]();
                 }
                 })
-                .mount('#app');
+                .mount('#app')
+                // .window.Echo = new Echo({
+                //     broadcaster: 'pusher',
+                //     key: process.env.MIX_PUSHER_APP_KEY,
+                //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+                //     encrypted: true
+                // });
 
 
     },
+
     progress: {
         color: '#4B5563',
     },

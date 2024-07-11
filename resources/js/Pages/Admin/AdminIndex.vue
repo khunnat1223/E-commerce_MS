@@ -2,7 +2,18 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 
-defineProps(["users", "roles", "permissions"]);
+defineProps([
+  "users",
+  "roles",
+  "permissions",
+  "staffs",
+  "products",
+  "categorys",
+  "orders",
+  "payments",
+  "suppliers",
+  "productCost",
+]);
 </script>
 
 <template>
@@ -15,11 +26,11 @@ defineProps(["users", "roles", "permissions"]);
       </h2>
     </template>
 
-    <div class="m-4 flex flex-wrap justify-between ">
+    <div class="m-4 flex flex-wrap justify-between">
       <div
-        class="mb-4 w-52 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-yellow-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-yellow-900/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="mb-4 w-60 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-yellow-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-yellow-900/40"
       >
-        <div class="flex px-2 py-5 ">
+        <div class="flex px-2 py-5">
           <div class="bg-yellow-800 text-white rounded-full h-14 w-14 p-4 mr-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -37,15 +48,15 @@ defineProps(["users", "roles", "permissions"]);
             </svg>
           </div>
           <div class="">
-            <span class="text-yellow-600 text-3xl"> {{ users }} </span>
-            <div class="text-green-950 text-md">{{ $t("user") }}</div>
+            <span class="text-yellow-600 text-3xl"> {{ staffs }} </span>
+            <div class="text-green-950 text-md">{{ $t("Staff") }}</div>
           </div>
         </div>
       </div>
       <div
-        class="mb-4 w-52 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-blue-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="mb-4 w-60 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-blue-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
-        <div class="flex px-2 py-5 ">
+        <div class="flex px-2 py-5">
           <div class="bg-blue-600 text-white rounded-full h-14 w-14 p-4 mr-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +80,7 @@ defineProps(["users", "roles", "permissions"]);
         </div>
       </div>
       <div
-        class="mb-4 w-52 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-yellow-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="mb-4 w-60 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-yellow-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <div class="flex px-2 py-5">
           <div class="bg-yellow-400 text-white rounded-full h-14 w-14 p-4 mr-2">
@@ -95,7 +106,7 @@ defineProps(["users", "roles", "permissions"]);
         </div>
       </div>
       <div
-        class="mb-4 w-52 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        class="mb-4 w-60 h-24 rounded-lg font-bold dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <div class="flex px-2 py-5">
           <div class="bg-green-600 text-white rounded-full h-14 w-14 p-4 mr-2">
@@ -115,8 +126,151 @@ defineProps(["users", "roles", "permissions"]);
             </svg>
           </div>
           <div class="">
-            <span class="text-green-600 text-3xl">200K</span>
+            <span class="text-green-600 text-3xl">{{ users }}</span>
             <div class="text-green-950 text-md">{{ $t("user") }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mx-4 md:flex mx:flex block justify-between space-x-10">
+      <div
+        class="md:w-1/2 mx:w-1/2 w-full  rounded-lg font-bold dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
+      >
+        <h1 class="p-5 text-xl">Product Information</h1>
+        <div class="flex bg-gray-200 space-x-8">
+          <div class="flex w-60 h-24 px-5 py-5">
+            <div
+              class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+            >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-6"
+              >
+                <path
+                  d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z"
+                />
+              </svg>
+            </div>
+            <div class="">
+              <span class="text-green-800 text-3xl">{{ suppliers }}</span>
+              <div class="text-green-950 text-md">{{ $t("Supplier") }}</div>
+            </div>
+          </div>
+          <div class="flex w-60 h-24 px-5 py-5">
+            <div
+              class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+            >
+            <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M1.5 9.832v1.793c0 1.036.84 1.875 1.875 1.875h17.25c1.035 0 1.875-.84 1.875-1.875V9.832a3 3 0 0 0-.722-1.952l-3.285-3.832A3 3 0 0 0 16.215 3h-8.43a3 3 0 0 0-2.278 1.048L2.222 7.88A3 3 0 0 0 1.5 9.832ZM7.785 4.5a1.5 1.5 0 0 0-1.139.524L3.881 8.25h3.165a3 3 0 0 1 2.496 1.336l.164.246a1.5 1.5 0 0 0 1.248.668h2.092a1.5 1.5 0 0 0 1.248-.668l.164-.246a3 3 0 0 1 2.496-1.336h3.165l-2.765-3.226a1.5 1.5 0 0 0-1.139-.524h-8.43Z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    d="M2.813 15c-.725 0-1.313.588-1.313 1.313V18a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-1.688c0-.724-.588-1.312-1.313-1.312h-4.233a3 3 0 0 0-2.496 1.336l-.164.246a1.5 1.5 0 0 1-1.248.668h-2.092a1.5 1.5 0 0 1-1.248-.668l-.164-.246A3 3 0 0 0 7.046 15H2.812Z"
+                  />
+                </svg>
+            </div>
+            <div class="">
+              <span class="text-green-800 text-3xl">{{ categorys }}</span>
+              <div class="text-green-950 text-md">{{ $t("Category") }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="flex bg-gray-200 grid-cols-2 space-x-8">
+          <div class="flex w-60 h-24 px-5 py-5">
+            <div
+              class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+            >
+            <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    d="M12.378 1.602a.75.75 0 0 0-.756 0L3 6.632l9 5.25 9-5.25-8.622-5.03ZM21.75 7.93l-9 5.25v9l8.628-5.032a.75.75 0 0 0 .372-.648V7.93ZM11.25 22.18v-9l-9-5.25v8.57a.75.75 0 0 0 .372.648l8.628 5.033Z"
+                  />
+                </svg>
+            </div>
+            <div class="">
+              <span class="text-green-800 text-3xl">{{ products }}</span>
+              <div class="text-green-950 text-md">{{ $t("Products") }}</div>
+            </div>
+          </div>
+          <div class="flex w-60 h-24 px-5 py-5">
+            <div
+              class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+            >
+            <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6"
+                >
+                  <path
+                    d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 1 1 6 0h3a.75.75 0 0 0 .75-.75V15Z"
+                  />
+                  <path
+                    d="M8.25 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0ZM15.75 6.75a.75.75 0 0 0-.75.75v11.25c0 .087.015.17.042.248a3 3 0 0 1 5.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 0 0-3.732-10.104 1.837 1.837 0 0 0-1.47-.725H15.75Z"
+                  />
+                  <path d="M19.5 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+                </svg>
+            </div>
+            <div class="">
+              <span class="text-green-800 text-3xl">{{ orders }}</span>
+              <div class="text-green-950 text-md">{{ $t("Order") }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="md:w-1/2 mx:w-1/2 w-full  rounded-lg font-bold dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
+      >
+        <h1 class="p-5 text-xl">Revenue and Expenses</h1>
+        <div class="flex bg-gray-200">
+          <div class="block space-y-4">
+            <div class="flex w-64 h-24 px-5 py-5">
+              <div
+                class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+              >
+              <svg class="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M4 5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H4Zm0 6h16v6H4v-6Z" clip-rule="evenodd"/>
+  <path fill-rule="evenodd" d="M5 14a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Zm5 0a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2h-5a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+</svg>
+
+              </div>
+              <div class="">
+                <span class="text-green-800 text-3xl">$ {{ productCost }}</span>
+                <div class="text-green-950 text-md">{{ $t("ប្រាក់ចំណាយ") }}</div>
+              </div>
+            </div>
+            <div class="flex w-64 h-20 ml-5">
+              <div
+                class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+              >
+              <svg class="w-6 h-6  dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+  <path fill-rule="evenodd" d="M11 16.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Zm4.5 2.5v-1.5H14v-2h1.5V14h2v1.5H19v2h-1.5V19h-2Z" clip-rule="evenodd"/>
+  <path d="M3.987 4A2 2 0 0 0 2 6v9a2 2 0 0 0 2 2h5v-2H4v-5h16V6a2 2 0 0 0-2-2H3.987Z"/>
+  <path fill-rule="evenodd" d="M5 12a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+</svg>
+
+              </div>
+              <div class="">
+                <span class="text-green-800 text-3xl">$ {{ payments }}</span>
+                <div class="text-green-950 text-md">{{ $t("ប្រាក់ចំណូល") }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="">
+                <img  src="https://www.bigtime.net/wp-content/uploads/2024/05/How-to-Improve-Profitability-at-a-Professional-Services-Company.png" class="h-40 -ml-5 mt-5" alt="">
           </div>
         </div>
       </div>
