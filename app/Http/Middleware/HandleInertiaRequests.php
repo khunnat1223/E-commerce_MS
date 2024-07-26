@@ -45,9 +45,9 @@ class HandleInertiaRequests extends Middleware
                 //     ...(new Ziggy)->toArray(),
                 //     'location' => $request->url(),
                 // ],
-            // 'auth' => [
-            //     'user' => $request->user(),
-            // ],
+                // 'auth' => [
+                //     'user' => $request->user(),
+                // ],
                 'cart' => new CartResource(Cart::getProductsAndCartItems()),
 
                 'flash' => [

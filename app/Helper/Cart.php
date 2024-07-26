@@ -90,8 +90,7 @@ class Cart{
             Cart_item::insert($newCartItems);
         }
     }
-
-
+    
     public static function getProductsAndCartItems()
     {
         $cartItems = self::getCartItems();

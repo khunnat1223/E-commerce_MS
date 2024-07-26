@@ -11,6 +11,7 @@ use App\Http\Requests\CreateCategoryRequest;
 use Illuminate\Http\RedirectResponse;
 use App\Policies\CategoryPolicy;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Notification;
 
 class CategoryController extends Controller
 {
@@ -20,6 +21,8 @@ class CategoryController extends Controller
 
         return Inertia::render('Admin/Categorys/CategoryIndex',
         [
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'categorys' =>CategoryResource::collection($categorys),
         ]);
 

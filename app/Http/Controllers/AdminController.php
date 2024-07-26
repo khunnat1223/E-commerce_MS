@@ -17,6 +17,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Supplier;
+use App\Models\Notification;
 
 
 class AdminController extends Controller
@@ -25,6 +26,9 @@ class AdminController extends Controller
     {
          return Inertia::render('Admin/AdminIndex',
         [
+            'paymant'=>Payment::count(),
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'users' =>User::count(),
             'roles'=>Role::count(),
             'permissions'=>Permission::count(),
@@ -35,8 +39,12 @@ class AdminController extends Controller
             'suppliers'=>Supplier::count(),
             'payments'=>Payment::sum('amount'),
             'productCost'=>Product::sum('total_cost'),
+
         ]
     );
 
+    }
+    public function clear(){
+        Notification::truncate();
     }
 }

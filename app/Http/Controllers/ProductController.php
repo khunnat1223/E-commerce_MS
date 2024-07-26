@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Discount;
 use App\Models\Supplier;
 use Inertia\inertia;
 use Inertia\Response;
@@ -22,6 +21,7 @@ use App\Http\Resources\SupplierResource;
 // Excel
 use App\Exports\ProductExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Notification;
 
 
 
@@ -31,10 +31,10 @@ class ProductController extends Controller
 {
     $query = Product::with('category', 'product_images');
 
- // Apply published filter
- if ($request->has('published') && $request->input('published') !== '') {
-    $published = $request->input('published');
-    $query->where('published', $published);
+// Apply published filter
+if ($request->has('published') && $request->input('published') !== '') {
+$published = $request->input('published');
+$query->where('published', $published);
 }
 
 // Apply inStock filter
@@ -52,17 +52,16 @@ if ($request->has('inStock')) {
     }
     // Paginate the results
     $products = $query->paginate(7);
-
     // Fetch related data
     $categories = Category::all();
-    $discounts = Discount::all();
     $suppliers = Supplier::all();
 
     // Return the data to the Inertia.js component
     return Inertia::render('Admin/Products/ProductIndex', [
+        'notifications' =>Notification::get(),
+        'contnitification' =>Notification::count(),
         'products' => $products,
         'categories' => CategoryResource::collection($categories),
-        'discounts' => DiscountResource::collection($discounts),
         'suppliers' => SupplierResource::collection($suppliers),
     ]);
 }
@@ -72,12 +71,10 @@ if ($request->has('inStock')) {
     {
 
         Gate::authorize('create', Product::class);
-        $dicounts = Discount::all();
         $supplier = Supplier::all();
         $categories = Category::all();
         return Inertia::render('Admin/Products/Create',[
             'categories' =>CategoryResource::collection($categories),
-           'discounts' =>DiscountResource::collection($dicounts),
             'suppliers' =>SupplierResource::collection($supplier),
         ]);
 
@@ -210,11 +207,17 @@ if ($request->has('inStock')) {
 
      public function show($id):Response
 {
+    $categories = Category::all();
+$suppliers = Supplier::all();
     $product = Product::with(['category', 'product_images'])->findOrFail($id);
                 return Inertia::render('Admin/Products/ProductDetail', [
                     // 'product' => new ProductResource($product),
                 'products' => $product,
-    ]);
+                'notifications' =>Notification::get(),
+                'contnitification' =>Notification::count(),
+                'categories' => CategoryResource::collection($categories),
+                'suppliers' => SupplierResource::collection($suppliers),
+     ]);
 }
 
 // Excel

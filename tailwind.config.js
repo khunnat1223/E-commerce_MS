@@ -14,7 +14,10 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['khmer os battambang','century', ...defaultTheme.fontFamily.sans],
+                sans: ['khmer os battambang','Century', ...defaultTheme.fontFamily.sans],
+                // khmer: ['"Khmer M1"', '"Roboto"'],
+                khmer: ['"Roboto"', '"Khmer M1"'],
+
             },
         },
     },

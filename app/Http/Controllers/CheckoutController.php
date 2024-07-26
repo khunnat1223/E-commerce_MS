@@ -9,6 +9,8 @@ use App\Models\Cart_item;
 use App\Models\OrderItem;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\Notification;
+
 use App\Models\UserAddress;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +19,9 @@ use Inertia\Inertia;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
-use Illuminate\Support\Facades\Notification;
 use App\Notifications\PaymentNotification;
 use App\Events\PaymentMade;
+use App\Models\Delivery;
 
 class CheckoutController extends Controller
 {
@@ -29,12 +31,14 @@ class CheckoutController extends Controller
         if($user){
                 $cartItems =Cart_item::where('user_id',$user->id)->get();
                 $cartAddress = UserAddress::where('user_id',$user->id)->where('isMain',1)->first();
+                $delivery = Delivery::get();
                 //  $cartAddress = UserAddress::where('user_id',$user->id);
                 if($cartItems->count() > 0){
                     return Inertia::render(
                         'HomePage/Checkout',[
                             'cartItems' => $cartItems,
-                            'userAddress' => $cartAddress
+                            'userAddress' => $cartAddress,
+                            'deliverys' => $delivery,
                         ]
                     );
                 }
@@ -137,6 +141,7 @@ class CheckoutController extends Controller
         $order->total_price = $request->input('total', 0);
         $order->created_by = $user->id;
         $order->user_address_id = $mainAddress->id;
+        $order->created_date =now();
         $order->save();
 
         // Process order items
@@ -164,6 +169,7 @@ class CheckoutController extends Controller
             'imagepay' => $imagepay,
             'status' => '1',
             'type' => 'QRCode',
+            'created_date' => now(),
             'created_by' => $user->id,
             'updated_by' => $user->id,
         ];
@@ -171,10 +177,15 @@ class CheckoutController extends Controller
         // Notify admin
         $payment = Payment::create($paymentData);
 
-        // event(new PaymentMade($payment));
-
-        // Notification::route('mail', 'admin@example.com')
-        //     ->notify(new PaymentNotification($payment));
+        //Notification
+        $notificationData = [
+            'order_id' => $order->id,
+            'name'=>$user ->name,
+            'address' => $request->address,
+            'amount' => $request->input('total', 0),
+            'created_date' => now(),
+        ];
+        $notification = Notification::create($notificationData);
 
     }
 

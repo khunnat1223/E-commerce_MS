@@ -17,11 +17,11 @@ class ProductExport implements FromCollection, WithHeadings
     // }
     public function headings():array
     {
-        return ['Product',"Cost", "Selling Price","Quantity"];
+        return ['Product',"Cost","Unit Price",'Discount', "Selling Price","Quantity","Amount","Total Price"];
     }
 
     public function collection()
     {
-        return Product::select('title','cost','sellingprice','qty')->get();
+        return Product::select('title','cost','price','discount','sellingprice','qty','total_cost','total_price')->get();
     }
 }

@@ -419,7 +419,7 @@ const updateProduct = async () => {
             </div>
           </div>
 
-          <div class="flex items-center -mt-10">
+          <div class="flex items-center -mt-10 relative">
             <PrimaryButton>
               {{ $t("Update") }}
             </PrimaryButton>

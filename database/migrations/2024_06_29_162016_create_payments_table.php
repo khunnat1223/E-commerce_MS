@@ -15,15 +15,17 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->references('id')->on('orders');
-            $table->decimal('amount', 10, 2);
-            $table->string('status', 45);
-            $table->string('type', 45);
-            $table->string('address');
-            $table->string('phone');
+            $table->decimal('amount', 10, 2)->nullable();
+            $table->string('status', 45)->nullable();
+            $table->string('type', 45)->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
             $table->string('imagepay')->nullable();
             $table->string('delivery')->nullable();
             $table->foreignIdFor(User::class, 'created_by')->nullable();
             $table->foreignIdFor(User::class, 'updated_by')->nullable();
+            $table->datetime('created_date')->nullable();
+            $table->datetime('updated_date')->nullable();
             $table->timestamps();
         });
     }

@@ -37,18 +37,10 @@ createInertiaApp({
                 }
                 })
                 .mount('#app')
-                // .window.Echo = new Echo({
-                //     broadcaster: 'pusher',
-                //     key: process.env.MIX_PUSHER_APP_KEY,
-                //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-                //     encrypted: true
-                // });
-
 
     },
-
     progress: {
         color: '#4B5563',
     },
 });
-InertiaProgress.init();
+InertiaProgress.init({ color: '#4B5563' });

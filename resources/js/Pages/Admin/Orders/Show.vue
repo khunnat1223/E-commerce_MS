@@ -5,7 +5,8 @@ import { Head } from "@inertiajs/vue3";
 import { Link, useForm } from "@inertiajs/vue3";
 import { usePermission } from "@/composables/permission";
 import moment from "moment";
-import { defineProps } from "vue";
+// import { defineProps } from "vue";
+import { defineProps } from 'vue';
 import { router } from "@inertiajs/vue3";
 
 import Table from "@/Components/Table.vue";
@@ -13,9 +14,11 @@ import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
 import TableDataCell from "@/Components/TableDataCell.vue";
 
-defineProps({
-  order: Object,
-});
+const props = defineProps({
+  order: {
+    type: Object,
+    required: true
+  }});
 const i = 1;
 const formatNumber = (number) => {
   return number.toString().padStart(4, "0");
@@ -147,13 +150,13 @@ const formaTableDataCellate = (date) => {
             <div class="font-bold">
               {{ $t('Phone') }}
               <span class="font-normal capitalize">{{
-                order.user_address_id.phone
+                order.user_address.phone
               }}</span>
             </div>
             <div class="font-bold">
                 {{ $t('Date') }}
               <span class="font-normal capitalize">
-                {{ formaTableDataCellate(order.updated_at) }}</span
+                {{ formaTableDataCellate(order.updated_date) }}</span
               >
             </div>
           </div>
@@ -229,8 +232,8 @@ const formaTableDataCellate = (date) => {
             <div class="text-left">
               <h1 class="font-bold">{{ $t('pamentInfor') }}</h1>
               <h1 class="font-bold">
-                {{ $t('Type') }} <span class="font-normal">{{ order.payment.type }}</span>
-              </h1>
+      {{ $t('Type') }} <span class="font-normal">{{ order.payment.type }}</span>
+    </h1>
               <h1 class="font-bold">
                 {{ $t('Status') }}:
                 <span class="font-normal">
@@ -249,7 +252,7 @@ const formaTableDataCellate = (date) => {
               <h1 class="font-bold">
                 {{ $t('Address')}}:
                 <span class="font-normal">
-                  {{ order.user_address_id.address }}</span
+                  {{ order.user_address.address }}</span
                 >
               </h1>
             </div>

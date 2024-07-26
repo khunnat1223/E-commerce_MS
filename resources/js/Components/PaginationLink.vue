@@ -27,7 +27,7 @@ const makeLabel = (label) => {
           :is="link.url ? 'a' : 'span'"
           :href="link.url"
           v-html="makeLabel(link.label)"
-          class="border-x border-slate-50 w-12 h-12 grid place-items-center bg-white cursor-pointer"
+          class="border-x border-slate-50 dark:border-gray-700 w-12 h-12 grid place-items-center bg-white dark:bg-gray-800 hover:bg-gray-300 dark:text-white hover:dark:bg-gray-500 cursor-pointer"
           :class="{
             'hover:bg-slate-300': link.url,
             'text-zinc-400': !link.url,
@@ -36,8 +36,8 @@ const makeLabel = (label) => {
         />
       </div>
     </div>
-    <p class="text-slate-600 text-sm mt-3">
-      Showing {{ paginator.from }} to {{ paginator.to }} of {{ paginator.total }} results
+    <p class="text-slate-600 text-sm mt-3 shadow-lg p-3 rounded-md dark:text-white dark:bg-gray-800">
+      {{$t('Showing')}} {{ paginator.from }} {{$t('to')}} {{ paginator.to }} {{$t('of')}} {{ paginator.total }}
     </p>
   </div>
 </template>

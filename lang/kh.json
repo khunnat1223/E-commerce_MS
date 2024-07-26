@@ -41,7 +41,7 @@
     "Select": "--- ជ្រើសរើស ---",
 
     "Title": "ចំណង់ជើង",
-    "Discount":"បញ្ចុះតម្លៃ  %",
+    "Discount":"បញ្ចុះតម្លៃ",
 
     "Click to upload": "ចុចទីនេះដើម្បីជ្រើសរើសរូបភាព",
     "Supplier": "អ្នកផ្គត់ផ្គង់",
@@ -56,18 +56,17 @@
     "Position": "មុខដំណែង",
     "Salary":"ប្រាក់ខែ",
 
-
     "Order": "បញ្ជាទិញ",
     "Detail": "ព័ត៌មានលម្អិត",
     "orderID": "ការបញ្ជាទិញ #",
     "billTo": "វិ​ក័​យ​ប​ត្រ​ទៅ៖",
     "locationShop":"ផ្ទះលេខ ៩៩១ ក្រុមទី ១៧ ផ្លូវជាតិលេខ ០៥ ភូមិអន្លង់វិល ឃុំអន្លង់វិល ស្រុកសង្កែ ខេត្តបាត់ដំបង",
-    "Customer":"អតិថិជន៖ ",
+    "Customer":"អតិថិជន ",
     "Customers":"អតិថិជន ",
     "Parcel ID":"ល.រ កញ្ចប់",
     "Date":"កាលបរិច្ឆេទ",
     "pamentInfor":"ព័ត៌មានការបង់ប្រាក់៖",
-    "Type": "តាមរយៈ ៖",
+    "Type": "មធ្យោបាយ",
     "ShopOwner": "ម្ចាស់ហាង",
     "ShopName": "ហាង រ៉ានី",
     "No":"លេខរៀង",
@@ -81,7 +80,7 @@
     "Paid": "បានបង់ប្រាក់",
     "SubTotal": "ប្រាក់បង់សរុប",
     "Please Wait...!": "សូមមេត្តារង់ចាំ...!",
-    "Sented":"បានផ្ញើររួចរាល់",
+    "Sent":"បានផ្ញើររួចរាល់",
     "Payment": "ការទូទាត់",
 
     "Delivery":"ដឹកជញ្ជូន",
@@ -90,6 +89,71 @@
     "Banner":"រចនាប័ទ្មបដា",
     "Products": "ទំនិញ",
     "Filter By Pub": "ច្រោះទិន្នន័យ",
-    "salary": "ប្រាក់ខែ"
+    "salary": "ប្រាក់ខែ",
+
+
+
+
+    "All Products":"ទំនិញទាំងអស់",
+    "All categories":"ទំនិញគ្រប់ប្រភេទ",
+    "Filter Products": "តាមប្រភេទំនិញ",
+    "Cart Lists": "រាយមុខទំនិញកម្មម៉ង",
+    "Order summary":"ព័ត៌មានការបញ្ជាទិញ",
+    "Subtotal": "តម្លៃដើម",
+    "Proceed to Checkout":"បន្តទៅកាន់ការបង់ប្រាក់",
+    "or":"ឬ",
+    "Continue Shopping":"បន្តទិញទំនិញ",
+    "Payments": "ទូទាត់ប្រាក់",
+    "Upload": "បញ្ចូលរូបភាព",
+    "Billing Address":"ទីតាំង",
+    "Your Phone Number":"លេខអ្នកទទួលឥវ៉ាន់",
+    "Delivery By":"ដឹកជញ្ជូល",
+    "Add Address to Payments":"សូមបញ្ចូលទីតាំង និងលេខទួរស័ព្ទដើម្បីបង់ប្រាក់",
+    "Rany Shop": "ហាងរ៉ានី",
+    "Follow Us": "តាម​ពួក​យើង",
+    "Contact Us": "ទាក់ទង​មក​ពួក​យើង",
+    "Filter Product":"ស្វែងរកទំនិញ",
+    "From":"ចាប់ពីតម្លៃ",
+    "To": "ដល់តម្លៃ",
+    "Categories":"ប្រភេទទំនិញ",
+    "Personal Information":"ព័ត៌មានផ្ទាល់ខ្លួន",
+    "Phone Number":"លេខទូរស័ព្ទ",
+    "Orders History":"ប្រវត្តិការបញ្ជាទិញ",
+    "Ongoing Orders":"កំពុងបញ្ជាទិញ",
+    "Completed Orders":"ការបញ្ជាទិញបានបញ្ចប់",
+    "Setting":"ការកំណត់",
+    "Change Password":"ប្តូរពាក្យសម្ងាត់",
+    "Language":"ភាសា",
+    "Logout":"ចាកចេញ",
+    "Change Your Password":"ប្តូរពាក្យសម្ងាត់",
+    "Current Password":"ពាក្យសម្ងាត់បច្ចុប្បន្ន",
+    "New Password":"ពាក្យសម្ងាត់ថ្មី",
+    "Comfirm Password":"បញ្ជាក់ពាក្យសម្ងាត់",
+    "Home":"ផ្ទាំងដើម",
+    "History":"ប្រវត្តិការបញ្ជាទិញ",
+    "Filter":"ច្រោះទិន្នន័យ",
+    "All":"ទាំងអស់",
+    "Orders":"កំពុងកម្មម៉ង",
+    "Complete": "បញ្ចប់",
+    "ORDER ID": "ល.រ បញ្ជាទិញ",
+    "Prices":"តម្លៃ",
+    "Total Price":"តម្លៃសរុប",
+    "Order completed":"ការបញ្ជាទិញបានបញ្ចប់",
+    "Profile":"ប្រវត្តិរូប",
+    "Product Information":"ព័ត៌មានទំនិញ",
+    "Revenue and Expenses":"ចំណូល និង ចំណាយ",
+    "Login":"ចូល",
+    "Register":"ចុះឈ្មោះ",
+    "Showing": "បង្ហាញ",
+    "of":"នៃ",
+    "to":"ដល់",
+    "Welcome to Rany Shop!":"សូមស្វាគមន៍មកកាន់ហាងរ៉ានី",
+    "Discover the best deals and newest arrivals at RANY SHOP. We offer a wide range of products to meet all your needs and desires. Browse through our extensive catalog and find exactly what you’re looking for.":"ស្វែងរកការផ្តល់ជូនដ៏ល្អបំផុត និងការមកដល់ថ្មីបំផុតនៅ ហាងរ៉ានី។ យើងផ្តល់ជូននូវផលិតផលជាច្រើនប្រភេទ ដើម្បីបំពេញតម្រូវការ និងបំណងប្រាថ្នារបស់អ្នក។ រកមើលតាមកាតាឡុកដ៏ទូលំទូលាយរបស់យើង ហើយស្វែងរកអ្វីដែលអ្នកកំពុងស្វែងរក។"
+
+
+
+
+
+
 
 }

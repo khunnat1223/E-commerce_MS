@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('status', 45)->nullable();
             $table->foreignIdFor(UserAddress::class)->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignIdFor(User::class, 'created_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
-        $table->foreignIdFor(User::class, 'updated_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->foreignIdFor(User::class, 'updated_by')->nullable()->constrained('users')->cascadeOnUpdate()->nullOnDelete();
+            $table->datetime('created_date')->nullable();
+            $table->datetime('updated_date')->nullable();
             $table->timestamps();
         });
     }

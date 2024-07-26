@@ -15,12 +15,11 @@
                             aria-label="logo"
                         >
                             <img
-                                src="https://github.com/sa-sa-creator/Images/blob/main/RanyLogo.png?raw=true"
+                                src="/RanyLogo.png"
                                 class="w-12"
                                 alt=""
                             />
-
-                            Rany Shop
+                            <span class="font-khmer ">{{ $t("Rany Shop") }}</span>
                         </a>
                     </div>
                     <!-- logo - end -->
@@ -29,9 +28,9 @@
                 <!-- nav - start -->
                 <div>
                     <div
-                        class="mb-4 font-bold tracking-widest text-white uppercase"
+                        class="mb-4 font-khmer tracking-widest text-white uppercase"
                     >
-                        Follow Us
+                       {{$t('Follow Us')}}
                     </div>
 
                     <nav class="flex flex-col gap-4">
@@ -204,9 +203,9 @@
                 <!-- nav - start -->
                 <div>
                     <div
-                        class="mb-4 font-bold tracking-widest text-slate-200 uppercase"
+                        class="mb-4 font-khmer tracking-widest text-slate-200 uppercase"
                     >
-                        Contact Us
+                        {{$t('Contact Us')}}
                     </div>
 
 

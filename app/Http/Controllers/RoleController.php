@@ -13,6 +13,8 @@ use Spatie\Permission\Models\Permission;
 use App\Http\Requests\CreateRoleRequest;
 
 
+use App\Models\Notification;
+
 class RoleController extends Controller
 {
     /**
@@ -22,8 +24,10 @@ class RoleController extends Controller
     {
 
         return Inertia::render('Admin/Roles/RoleIndex',[
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'roles' =>RoleResource::collection(Role::all())
-            
+
         ]);
     }
 
@@ -32,7 +36,7 @@ class RoleController extends Controller
      */
     public function create():Response
     {
-        
+
         return Inertia::render('Admin/Roles/Create',[
 
             'permissions' =>PermissionResource::collection(Permission::all())

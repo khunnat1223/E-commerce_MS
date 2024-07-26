@@ -7,15 +7,10 @@ import { usePermission } from "@/composables/permission";
 // import { usePage } from '@inertiajs/inertia-vue3';
 import { router } from "@inertiajs/vue3";
 
-import Table from "@/Components/Table.vue";
-import TableRow from "@/Components/TableRow.vue";
-import TableHeaderCell from "@/Components/TableHeaderCell.vue";
-import TableDataCell from "@/Components/TableDataCell.vue";
-
 import moment from "moment";
 
 defineProps({
-    products: Array,
+  products: Array,
 });
 
 const i = 1;
@@ -31,8 +26,6 @@ const form = useForm({});
 const OrderId = ref("");
 
 const { hasPermission } = usePermission();
-
-
 </script>
 
 <template>
@@ -93,78 +86,124 @@ const { hasPermission } = usePermission();
             </span>
           </div>
         </div>
-
-        <Link
-          v-if="hasPermission('Create Product')"
-          :href="route('products.create')"
-          class="middle none center rounded-lg hover:scale-110 hover:skew-y-3 border-2 border-yellow-600 py-2 px-6 font-sans text-sm text-yellow-600 shadow-md transition-all hover:shadow-lg hover:shadow-yellow-700"
-          data-ripple-light="true"
-        >
-          {{ $t("Create") }}
-        </Link>
       </div>
+
       <div class="shadow-md bg-gray-200 rounded-md p-5">
         <h1 class="text-2xl mb-4">{{ $t("Product") }}/ {{ $t("Detail") }}</h1>
-        <div class="flex justify-between">
-          <div>
+        <div class="flex justify-center space-x-5">
+          <div class="w-96flex justify-center">
+            <div class="block">
+              <div>
+                <img
+                  v-if="products.product_images.length > 0"
+                  class="w-56 h-56 rounded-xl"
+                  :src="`/${products.product_images[0].image}`"
+                  alt=""
+                />
+                <img
+                  v-else
+                  class="w-56 h-56 rounded-xl"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                  alt=""
+                />
+              </div>
+              <div class="mt-2 flex flex-wrap">
+                <!-- Loop through the product_images array -->
+                <img
+                  v-for="(image, index) in products.product_images"
+                  :key="index"
+                  class="w-24 h-24 rounded-xl m-1"
+                  :src="`/${image.image}`"
+                  alt=""
+                />
+                <!-- Placeholder image for the case when there are no images -->
+                <img
+                  v-if="products.product_images.length === 0"
+                  class="w-56 h-56 rounded-xl"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="w-96">
             <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Product Name") }} :</h1>
-              <p class="text-lg">{{ products.title }}</p>
+              <p class="text-3xl">{{ products.title }}</p>
             </div>
             <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Category") }} :</h1>
-              <p class="text-lg">{{ products.category_id }}</p>
+              <p class="text-sm">{{ products.description }}</p>
             </div>
             <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Cost") }} :</h1>
-              <p class="text-lg">{{ products.cost }}</p>
-            </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Selling") }} :</h1>
-              <p class="text-lg">{{ products.sellingprice }}</p>
-            </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Discount") }} :</h1>
-              <p class="text-lg">{{ products.discount }}</p>
-            </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Selling Price") }} :</h1>
-              <p class="text-lg">{{ products.price }}</p>
-            </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Quantity") }} :</h1>
               <p class="text-lg">{{ products.qty }}</p>
-            </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Total") }} :</h1>
-              <p class="text-lg">{{ products.total_cost }}</p>
-            </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Total Price") }} :</h1>
-              <p class="text-lg">{{ products.total_price }}</p>
-            </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Status") }} :</h1>
-              <p class="text-lg" v-if="products.inStock ==0 ">
-                {{$t('StockIn')}}
+              <p
+                class="text-lg ml-2 text-green-600"
+                v-if="products.inStock == 0"
+              >
+                {{ $t("StockIn") }}
               </p>
-              <p class="text-lg" v-else>
-                {{ $t('StockOut') }}
+              <p class="text-lg ml-2 text-red-600" v-else>
+                {{ $t("Stock Out") }}
               </p>
             </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Published") }} :</h1>
-              <p class="text-lg" v-if="products.published == 0 ">
-                {{$t('Unpublish')}}
-              </p>
-              <p class="text-lg" v-else>
-                {{$t('Published')}}
-              </p>
+
+            <div class="border-t-2 border-white mt-5">
+              <span class="text-xl">Price:</span>
+              <div
+                class="bg-white shadow-md rounded-md p-2 flex justify-start space-x-5"
+              >
+                <div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">{{ $t("Cost") }} :</h1>
+                    <p class="text-lg">${{ products.cost }}</p>
+                  </div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">
+                      {{ $t("Discount") }} :
+                    </h1>
+                    <p class="text-lg">{{ products.discount }}%</p>
+                  </div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">{{ $t("Total") }} :</h1>
+                    <p class="text-lg">${{ products.total_cost }}</p>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">
+                      {{ $t("Selling") }} :
+                    </h1>
+                    <p class="text-lg">${{ products.sellingprice }}</p>
+                  </div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">
+                      {{ $t("Selling ") }} :
+                    </h1>
+                    <p class="text-lg">${{ products.price }}</p>
+                  </div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">
+                      {{ $t("Total Price") }} :
+                    </h1>
+                    <p class="text-lg">${{ products.total_price }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex mb-2 mt-3">
+                <h1 class="font-bold text-lg mr-2">{{ $t("Status") }} :</h1>
+                <p class="text-lg" v-if="products.published == 0">
+                  {{ $t("Unpublish") }}
+                </p>
+                <p class="text-lg text-green-500" v-else>
+                  {{ $t("Published") }}
+                </p>
+              </div>
             </div>
-            <div class="flex mb-2">
-              <h1 class="font-bold text-lg mr-2">{{ $t("Supplier Name") }} :</h1>
-              <p class="text-lg">{{ products.supplier_id }}</p>
-            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <div class="flex justify-between">
+            <div></div>
           </div>
         </div>
       </div>

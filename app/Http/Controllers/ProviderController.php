@@ -15,7 +15,7 @@ class ProviderController extends Controller
 
     public function callback($provider){
         try {
-          $socialUser = Socialite::driver($provider)->user();
+        $socialUser = Socialite::driver($provider)->user();
           $user= User::updateOrCreate([
            'provider_id' => $socialUser->id,
            'provider'=>$provider
@@ -28,7 +28,7 @@ class ProviderController extends Controller
           ]);
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect('/home');
         } catch (\Exception $e) {
             return redirect()->route('login')->with('success','This email is used, Login different email. hhhh');
     }

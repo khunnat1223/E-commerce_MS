@@ -33,8 +33,8 @@ const deleteUser = (id) => {
 form.delete(route('users.destroy', UserID.value),{
   onSuccess: () => closeModal()
 });
-
 }
+
 </script>
 
 
@@ -138,7 +138,7 @@ form.delete(route('users.destroy', UserID.value),{
                       />
                     </svg>
                   </Link>
-                  
+
                   <button
                     @click="ComfimDeleteUser(user.id)"
                   >

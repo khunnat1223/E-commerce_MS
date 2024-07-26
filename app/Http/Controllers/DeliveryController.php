@@ -8,6 +8,7 @@ use Inertia\Response;
 use Inertia\Inertia;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Notification;
 
 class DeliveryController extends Controller
 {
@@ -16,6 +17,8 @@ class DeliveryController extends Controller
         $deliverys = Delivery::all();
         return Inertia::render('Admin/Deliverys/DeliveryIndex',
         [
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'deliverys' => $deliverys,
         ]);
 

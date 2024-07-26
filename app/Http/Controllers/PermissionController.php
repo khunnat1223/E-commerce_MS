@@ -10,11 +10,15 @@ use App\Http\Resources\PermissionResource;
 use Spatie\Permission\Models\Permission;
 use App\Http\Requests\CreatePermissionRequest;
 
+use App\Models\Notification;
+
 class PermissionController extends Controller
 {
     public function index(): Response
     {
         return Inertia::render('Admin/Permissions/PermissionIndex',[
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
            'permission' => PermissionResource::collection(Permission::all())
         ]);
     }
@@ -74,7 +78,7 @@ class PermissionController extends Controller
         $image = ProductImage::where('id', $id)->delete();
         return redirect()->route('admin.products.index')->with('success', 'Image deleted successfully.');
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

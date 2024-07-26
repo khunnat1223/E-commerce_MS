@@ -19,18 +19,18 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
-            $table->decimal('cost',10,2);
+            $table->text('description')->nullable();
+            $table->decimal('cost',10,2)->nullable();
             $table->integer('discount')->nullable();
             $table->decimal('sellingprice')->nullable();
-            $table->decimal('price',10,2);
+            $table->decimal('price',10,2)->nullable();
             $table->decimal('total_cost')->nullable();
             $table->decimal('total_price')->nullable();
-            $table->integer('qty');
+            $table->integer('qty')->nullable();
             $table->boolean('published')->default(0);
             $table->boolean('inStock')->default(0);
             $table->foreignIdFor(Supplier::class, 'supplier_id')->nullable();
-            $table->foreignIdFor(Category::class, 'category_id');
+            $table->foreignIdFor(Category::class, 'category_id')->nullable();
             $table->foreignIdFor(User::class, 'create_by')->nullable();
             $table->foreignIdFor(User::class, 'update_by')->nullable();
             $table->foreignIdFor(User::class,'deleted_by')->nullable();

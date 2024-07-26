@@ -13,21 +13,19 @@ return new class extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->id();
-            $table->string('phone', 255)->nullable();;
+            $table->string('phone', 255)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('profile', 225)->nullable();
             $table->string('delivery')->nullable();
             $table->boolean('isMain')->default(1);
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->nullable(); // Make it nullable initially
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('user_addresses');
     }
+
 };

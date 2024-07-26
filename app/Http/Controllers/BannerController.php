@@ -8,12 +8,16 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\Notification;
+
 class BannerController extends Controller
 {
     public function index()
     {
 
         return Inertia::render('Admin/Banners/BannerIndex', [
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'banners' => Banner::all()->map(function ($banner){
                 return [
                     'id' => $banner->id,

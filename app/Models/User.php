@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class User extends Authenticatable
@@ -49,8 +50,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+        $user = User::with(['roles', 'permissions', 'userInfor'])->find($id);
     }
+    
     function user_address() {
         return $this->hasMany(UserAddress::class);
+    }
+    public function userInfor(): HasOne
+    {
+        return $this->hasOne(UserInfor::class);
+    }
+
+    // Other existing methods...
+
+    public function profile()
+    {
+        return $this->hasOne(UserInfor::class);
     }
 }

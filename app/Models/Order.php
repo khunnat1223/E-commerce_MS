@@ -10,9 +10,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['total_price', 'status', 'user_address_id',  'created_by', 'updated_by'];
     use HasFactory;
-    public function user_address_id()
+
+    protected $fillable = [
+        'total_price',
+        'status',
+        'user_address_id',
+        'updated_date',
+        'created_date',
+        'created_by',
+        'updated_by'
+    ];
+
+    public function userAddress()
     {
         return $this->belongsTo(UserAddress::class, 'user_address_id');
     }
@@ -22,13 +32,13 @@ class Order extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    function order_items()  {
+    public function orderItems()
+    {
         return $this->hasMany(OrderItem::class);
     }
 
-     // Relationship with the payment
-     public function payment()
-     {
-         return $this->hasOne(Payment::class);
-     }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }

@@ -44,29 +44,33 @@ class CartController extends Controller
         // return Inertia::render('HomePage/CartList');
     }
 
-    public function store(Request $request, Product $product){
-        $quantity = $request->post('quantity',1);
+    public function store(Request $request, Product $product)
+    {
+        $quantity = $request->post('quantity', 1);
         $user = $request->user();
 
-        if($user){
-            $cartItem = Cart_item::where(['user_id' => $user->id, "product_id" => $product->id])->first();
-            if($cartItem){
-                $cartItem->increment('quantity');
-            }
-            else{
+        if ($user) {
+            $cartItem = Cart_item::where(['user_id' => $user->id, 'product_id' => $product->id])->first();
+
+            if ($cartItem) {
+                // Update the quantity
+                $cartItem->increment('quantity', $quantity);
+            } else {
+                // Create a new cart item
                 Cart_item::create([
                     'user_id' => $user->id,
                     'product_id' => $product->id,
-                    'quantity' =>1,
-
+                    'quantity' => $quantity,
                 ]);
             }
-        }
-        else{
+        } else {
+            // Handle guest users
             $cartItems = Cart::getCookieCartItems();
             $isProductExists = false;
-            foreach ($cartItems as $item) {
+
+            foreach ($cartItems as &$item) {
                 if ($item['product_id'] === $product->id) {
+                    // Update the quantity
                     $item['quantity'] += $quantity;
                     $isProductExists = true;
                     break;
@@ -81,10 +85,13 @@ class CartController extends Controller
                     'price' => $product->price,
                 ];
             }
+
             Cart::setCookieCartItems($cartItems);
         }
-        return redirect()->back()->with('success', 'cart added successfully');
+
+        return redirect()->back()->with('success', 'Cart updated successfully');
     }
+
     public function update(Request $request, Product $product)
     {
         $quantity = $request->integer('quantity');

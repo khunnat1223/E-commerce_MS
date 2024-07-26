@@ -21,6 +21,12 @@ use App\Http\Resources\PermissionResource;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+use Illuminate\Support\Facades\DB;
+
+use App\Models\Notification;
+
+
+
 class UserController extends Controller
 {
     /**
@@ -30,6 +36,8 @@ class UserController extends Controller
     {
         return Inertia::render('Admin/Users/UserIndex',
         [
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'users' =>UserResource::collection(User::all()),
         ]);
     }
@@ -115,9 +123,16 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user):  RedirectResponse
+    public function destroy(User $user): RedirectResponse
     {
-        $user->delete();
+        DB::transaction(function () use ($user) {
+            // Set related addresses' user_id to NULL
+            $user->user_address()->update(['user_id' => NULL]);
+
+            // Delete the user
+            $user->delete();
+        });
+
         return to_route('users.index');
     }
 }

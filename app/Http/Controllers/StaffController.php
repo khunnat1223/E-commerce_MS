@@ -7,12 +7,15 @@ use Inertia\Inertia;
 use App\Models\Staff;
 use Inertia\Response;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
 
 class StaffController extends Controller
 {
     public function index()
     {
         return Inertia::render('Admin/Staffs/StaffIndex', [
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'staffs' => Staff::all()->map(function ($staff){
                 return [
                     'id' => $staff->id,

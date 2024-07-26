@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Models\Supplier;
 use Inertia\Response;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Notification;
 // use Illuminate\Support\Facades\Request;
 
 class SupplierController extends Controller
@@ -14,8 +15,12 @@ class SupplierController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Suppliers/SuppliertIndex', [
+            'notifications' =>Notification::get(),
+            'contnitification' =>Notification::count(),
             'suppliers' => Supplier::all()->map(function ($supplier){
+
                 return [
+
                     'id' => $supplier->id,
                     'name' => $supplier->name,
                     'email' => $supplier->email,

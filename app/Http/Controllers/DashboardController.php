@@ -12,10 +12,21 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $orders = Order::with(['order_items.product.category', 'order_items.product.product_images'])
-                       ->where('created_by', $user->id)
-                       ->get();
+
+        // Build the query
+        $query = Order::with(['orderItems.product.category', 'orderItems.product.product_images'])
+            ->where('created_by', $user->id);
+
+        // Apply status filter if it's not "All"
+        if ($request->has('status') && $request->input('status') !== '' && $request->input('status') !== 'All') {
+            $status = $request->input('status');
+            $query->where('status', $status);
+        }
+
+        // Execute the query
+        $orders = $query->get();
+
         return Inertia::render('HomePage/Dashboard', ['orders' => $orders]);
-        
     }
+
 }

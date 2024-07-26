@@ -8,13 +8,15 @@ use App\Models\Order;
 
 class Payment extends Model
 {
-    protected $fillable = ['order_id', 'status', 'amount', 'type', 'address','phone','delivery','imagepay', 'created_by', 'updated_by'];
     use HasFactory;
-    // public function order()
-    // {
-    //     return $this->hasOne(Order::class, 'id', 'order_id');
-    // }
-    function order()  {
+
+    protected $fillable = [
+        'order_id', 'status', 'amount', 'type', 'address', 'phone',
+        'delivery', 'imagepay', 'created_date', 'created_by', 'updated_by'
+    ];
+
+    public function order()
+    {
         return $this->belongsTo(Order::class);
     }
 }

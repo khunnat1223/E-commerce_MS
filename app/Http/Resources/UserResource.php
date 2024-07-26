@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\PermissionResource;
+use App\Models\UserInfor;
 
 class UserResource extends JsonResource
 {
@@ -22,7 +23,10 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'permissions' =>  PermissionResource::collection($this->whenLoaded('permissions')),
+            'userInfor' => new UserInforResource($this->whenLoaded('userInfor')),
+
 
         ];
+
     }
 }

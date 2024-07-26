@@ -6,18 +6,28 @@ import { Link, useForm } from "@inertiajs/vue3";
 import { usePermission } from "@/composables/permission";
 // import { usePage } from '@inertiajs/inertia-vue3';
 import { router } from "@inertiajs/vue3";
-
 import Table from "@/Components/Table.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
 import TableDataCell from "@/Components/TableDataCell.vue";
-
-
+import PaginationLink from "@/Components/PaginationLink.vue";
 import moment from "moment";
-
-defineProps({
-  payments: Array,
+// const notification = usePage().props.notifications;
+const props = defineProps({
+  payments: Object,
+  filters: Object,
 });
+
+// Setup reactive form fields for dates
+const start_date = ref(props.filters.start_date || "");
+const end_date = ref(props.filters.end_date || "");
+// Function to filter records
+const filterRecords = () => {
+  router.get(route("reports.index"), {
+    start_date: start_date.value,
+    end_date: end_date.value,
+  });
+};
 
 const i = 1;
 
@@ -46,7 +56,13 @@ const updateOrderCencal = async (id) => {
      router.put("/admin/payments/update-to-cancel/" + OrderId.value, {
     });
 };
+const exportPayments = () => {
+      window.location.href = `/reports/download?start_date=${start_date.value}&end_date=${end_date.value}`;
+    };
 
+const toggleImageScale = (payment)=> {
+      payment.isScaled = !payment.isScaled;
+    };
 
 </script>
 
@@ -111,51 +127,106 @@ const updateOrderCencal = async (id) => {
           </div>
         </div>
 
-        <!-- <Link
-          v-if="hasPermission('Create Product')"
-          :href="route('reports.create')"
-          class="middle none center rounded-lg hover:scale-110 hover:skew-y-3 border-2 border-yellow-600 py-2 px-6 font-sans text-sm text-yellow-600 shadow-md transition-all hover:shadow-lg hover:shadow-yellow-700"
-          data-ripple-light="true"
-        >
-          {{ $t("Create") }}
-        </Link> -->
+      </div>
+      <div class="flex justify-between">
+        <div class="flex space-x-2">
+          <div class="flex ">
+            <button
+              @click="exportPayments"
+              class="middle none center flex items-center justify-center rounded-lg w-24 h-10 hover:scale-110 hover:skew-y-3 border-2 border-green-600 font-sans text-sm text-green-600 shadow-md transition-all hover:shadow-lg hover:shadow-green-700"
+              data-ripple-light="true"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="size-4 mr-1"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z"
+                />
+              </svg>
 
+              {{ $t("Excel") }}
+            </button>
+          </div>
+
+        </div>
+ <!-- Filter Form -->
+ <form @submit.prevent="filterRecords">
+          <div class="flex justify-end space-x-3 mb-2">
+            <div class="relative max-w-sm">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="date"
+                v-model="start_date"
+                placeholder="Start Date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+            <div class="relative max-w-sm">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="date"
+                v-model="end_date"
+                placeholder="End Date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <button type="submit" class="mt-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6 text-yellow-600"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </form>
 
       </div>
 
-<form class=" mx-auto ">
-    <div class="flex">
-        <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-        <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">All categories <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-  </svg></button>
-        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-            <li>
-                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-            </li>
-            <li>
-                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-            </li>
-            <li>
-                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-            </li>
-            <li>
-                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-            </li>
-            </ul>
-        </div>
-        <div class="relative w-full">
-            <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Search Mockups, Logos, Design Templates..." required />
-            <button type="submit" class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                </svg>
-                <span class="sr-only">Search</span>
-            </button>
-        </div>
-    </div>
-</form>
       <div>
         <!-- <p>{{ $en.test }}</p> -->
       </div>
@@ -164,77 +235,32 @@ const updateOrderCencal = async (id) => {
           <template #header>
             <TableRow>
               <TableHeaderCell>{{ $t("Parcel ID") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("Image") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Date") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Type") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Total") }}</TableHeaderCell>
-              <TableHeaderCell class="text-center">{{ $t("Action") }}</TableHeaderCell>
+              <!-- <TableHeaderCell class="text-center">{{ $t("Action") }}</TableHeaderCell> -->
             </TableRow>
           </template>
           <template #default>
-            <TableRow v-for="payment in payments" :key="payment.id" class="border-b">
+            <TableRow v-for="payment in payments.data" :key="payment.id" class="border-b">
               <TableDataCell># {{ formatNumber(payment.id) }}</TableDataCell>
-              <TableDataCell>{{ formatDate(payment.create_at) }}</TableDataCell>
+              <TableDataCell>
+                <img v-if="payment.imagepay" :src="payment.imagepay"  class="w-14 h-14 rounded bg-gray-200 text-sm text-center"
+                :class="{ 'w-14 h-14 rounded bg-gray-200 text-sm text-center  scaled-image': payment.isScaled }"
+                @click="toggleImageScale(payment)"
+                 alt="No Image">
+            </TableDataCell>
+              <TableDataCell>{{ formatDate(payment.created_date) }}</TableDataCell>
               <TableDataCell>{{ payment.type }}</TableDataCell>
-              <!-- <TableDataCell> -->
-                <!-- <span v-if="payment.status  == 0" class="bg-red-100 text-red-800 text-sm font-medium  px-2.5 py-0.5 rounded-full -mt-2 -mb-2" >{{ $t("Unpaid") }}!</span>
-                <span v-else class="bg-green-100 text-green-800 text-sm font-medium  px-2.5 py-0.5 -mt-2 -mb-2 rounded-full ">{{ $t("Paid") }}</span> -->
-              <!-- </TableDataCell> -->
-              <!-- <TableDataCell> -->
-                <!-- <span v-if="payment.status  == 0" class="bg-yellow-100 text-red-800 text-sm font-medium  px-2.5 py-0.5 rounded-full -mt-2 -mb-2" >{{ $t("Please Wait...!") }}</span>
-                <span v-else class="bg-blue-100 text-blue-800 text-sm font-medium  px-2.5 py-0.5 -mt-2 -mb-2 rounded-full ">{{ $t("Sented") }}</span> -->
-            <!-- </TableDataCell> -->
               <TableDataCell>${{ payment.amount }}</TableDataCell>
-              <TableDataCell class="">
-                <span class="text-yellow-500 flex justify-end">
-                  <Link
-                    v-if="hasPermission('Update Product')"
-                    :href="route('reports.show', payment.id)"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      class="size-5"
-                    >
-                      <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 0 1 0-1.113ZM17.25 12a5.25 5.25 0 1 1-10.5 0 5.25 5.25 0 0 1 10.5 0Z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </Link>
-                  <span class="mx-1">||</span>
-
-                  <button
-                    v-if="hasPermission('Delete Product')"
-                    @click="updateOrder(order.id)"
-                    class="text-green-700 ml-1"
-                  >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                    <path d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 1 1 6 0h3a.75.75 0 0 0 .75-.75V15Z" />
-                    <path d="M8.25 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0ZM15.75 6.75a.75.75 0 0 0-.75.75v11.25c0 .087.015.17.042.248a3 3 0 0 1 5.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 0 0-3.732-10.104 1.837 1.837 0 0 0-1.47-.725H15.75Z" />
-                    <path d="M19.5 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
-                </svg>
-
-
-                  </button>
-                  <span class="mx-1">||</span>
-                  <button
-                    v-if="hasPermission('Delete Product')"
-                    @click="updateOrderCencal(order.id)"
-                    class="text-green-700 ml-1"
-                  >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 text-red-600">
-  <path fill-rule="evenodd" d="M2.515 10.674a1.875 1.875 0 0 0 0 2.652L8.89 19.7c.352.351.829.549 1.326.549H19.5a3 3 0 0 0 3-3V6.75a3 3 0 0 0-3-3h-9.284c-.497 0-.974.198-1.326.55l-6.375 6.374ZM12.53 9.22a.75.75 0 1 0-1.06 1.06L13.19 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L15.31 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-1.72 1.72-1.72-1.72Z" clip-rule="evenodd" />
-</svg>
-
-                  </button>
-                </span>
-              </TableDataCell>
             </TableRow>
           </template>
         </Table>
+        <div class="pr-4">
+          <!-- pagination -->
+          <PaginationLink :paginator="payments" />
+        </div>
       </div>
     </div>
 

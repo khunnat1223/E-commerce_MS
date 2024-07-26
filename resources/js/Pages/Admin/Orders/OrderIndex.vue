@@ -1,57 +1,68 @@
 <script setup>
 import { ref } from "vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Head } from "@inertiajs/vue3";
-import { Link, useForm } from "@inertiajs/vue3";
+import { Head, Link, useForm, router } from "@inertiajs/vue3";
 import { usePermission } from "@/composables/permission";
-// import { usePage } from '@inertiajs/inertia-vue3';
-import { router } from "@inertiajs/vue3";
 
 import Table from "@/Components/Table.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
 import TableDataCell from "@/Components/TableDataCell.vue";
+import PaginationLink from "@/Components/PaginationLink.vue";
 
 
 import moment from "moment";
 
-defineProps({
+// Define props
+const props = defineProps({
   orders: Array,
+  filters: Object,
 });
 
-const i = 1;
+// Setup reactive form fields for dates
+const start_date = ref(props.filters.start_date || "");
+const end_date = ref(props.filters.end_date || "");
 
+// Function to format dates
 const formatDate = (date) => {
   return moment(date).format("DD/MMM/YYYY");
 };
+
+// Function to format numbers with leading zeros
 const formatNumber = (number) => {
   return number.toString().padStart(4, "0");
 };
 
+// Use Inertia.js form for submitting data
 const form = useForm({});
-const OrderId = ref('');
-
-
+const OrderId = ref("");
 const { hasPermission } = usePermission();
 
+// Function to update order status
 const updateOrder = (id) => {
-    OrderId.value = id;
-    form.put(route("orders.update", OrderId.value), {
-        onFinish: () => {
-        },
-      });
-}
-const updateOrderCencal = async (id) => {
-    OrderId.value = id;
-     router.put("/admin/orders/update-to-cancel/" + OrderId.value, {
-    });
+  OrderId.value = id;
+  form.put(route("orders.update", OrderId.value), {
+    onFinish: () => {},
+  });
 };
 
+// Function to cancel order
+const updateOrderCancel = async (id) => {
+  OrderId.value = id;
+  router.put("/admin/orders/update-to-cancel/" + OrderId.value, {});
+};
 
+// Function to filter records
+const filterRecords = () => {
+  router.get(route("orders.index"), {
+    start_date: start_date.value,
+    end_date: end_date.value,
+  });
+};
 </script>
 
 <template>
-  <Head title="orders" />
+  <Head title="Orders" />
 
   <AdminLayout>
     <div class="px-8 w-full">
@@ -75,14 +86,12 @@ const updateOrderCencal = async (id) => {
                 d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
               />
             </svg>
-
             <span class="m-1">
               <a :href="route('admin.index')" :active="false">
                 <span class="font-sans">{{ $t("dashbourd") }}</span>
               </a>
             </span>
           </div>
-
           <div
             class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200"
           >
@@ -105,24 +114,81 @@ const updateOrderCencal = async (id) => {
             </svg>
             <span class="m-1">
               <Link :href="route('orders.index')" :active="false">
-                <span class="font-sans">{{ $t("Order") }}</span>
+                <span class="font-sans">{{ $t("Orders") }}</span>
               </Link>
             </span>
           </div>
         </div>
 
-        <Link
-          v-if="hasPermission('Create Product')"
-          :href="route('orders.create')"
-          class="middle none center rounded-lg hover:scale-110 hover:skew-y-3 border-2 border-yellow-600 py-2 px-6 font-sans text-sm text-yellow-600 shadow-md transition-all hover:shadow-lg hover:shadow-yellow-700"
-          data-ripple-light="true"
-        >
-          {{ $t("Create") }}
-        </Link>
+        <!-- Filter Form -->
+        <form @submit.prevent="filterRecords">
+          <div class="flex justify-end space-x-3">
+            <div class="relative max-w-sm">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="date"
+                v-model="start_date"
+                placeholder="Start Date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+            <div class="relative max-w-sm">
+              <div
+                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="date"
+                v-model="end_date"
+                placeholder="End Date"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <button type="submit" class="mt-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="size-6 text-yellow-600"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div>
-        <!-- <p>{{ $en.test }}</p> -->
-      </div>
+
       <div class="shadow overflow-auto rounded">
         <Table class="w-full">
           <template #header>
@@ -133,22 +199,44 @@ const updateOrderCencal = async (id) => {
               <TableHeaderCell>{{ $t("Payment") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Status") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Total") }}</TableHeaderCell>
-              <TableHeaderCell class="text-center">{{ $t("Action") }}</TableHeaderCell>
+              <TableHeaderCell class="text-center">{{
+                $t("Action")
+              }}</TableHeaderCell>
             </TableRow>
           </template>
           <template #default>
-            <TableRow v-for="order in orders" :key="order.id" class="border-b">
+            <TableRow
+              v-for="order in orders.data"
+              :key="order.id"
+              class="border-b"
+            >
               <TableDataCell># {{ formatNumber(order.id) }}</TableDataCell>
-              <TableDataCell>{{ formatDate(order.create_at) }}</TableDataCell>
+              <TableDataCell>{{ formatDate(order.created_at) }}</TableDataCell>
               <TableDataCell>{{ order.created_by.name }}</TableDataCell>
               <TableDataCell>
-                <span v-if="order.payment.status  == 0" class="bg-red-100 text-red-800 text-sm font-medium  px-2.5 py-0.5 rounded-full -mt-2 -mb-2" >{{ $t("Unpaid") }}!</span>
-                <span v-else class="bg-green-100 text-green-800 text-sm font-medium  px-2.5 py-0.5 -mt-2 -mb-2 rounded-full ">{{ $t("Paid") }}</span>
+                <span
+                  v-if="order.status.payment == 0"
+                  class="bg-red-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded-full -mt-2 -mb-2"
+                  >{{ $t("Unpaid") }}!</span
+                >
+                <span
+                  v-else
+                  class="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 -mt-2 -mb-2 rounded-full"
+                  >{{ $t("Paid") }}</span
+                >
               </TableDataCell>
               <TableDataCell>
-                <span v-if="order.status  == 0" class="bg-yellow-100 text-red-800 text-sm font-medium  px-2.5 py-0.5 rounded-full -mt-2 -mb-2" >{{ $t("Please Wait...!") }}</span>
-                <span v-else class="bg-blue-100 text-blue-800 text-sm font-medium  px-2.5 py-0.5 -mt-2 -mb-2 rounded-full ">{{ $t("Sented") }}</span>
-            </TableDataCell>
+                <span
+                  v-if="order.status == 0"
+                  class="bg-yellow-100 text-red-800 text-sm font-medium px-2.5 py-0.5 rounded-full -mt-2 -mb-2"
+                  >{{ $t("Please Wait...!") }}</span
+                >
+                <span
+                  v-else
+                  class="bg-blue-100 text-blue-800 text-sm font-medium px-2.5 py-0.5 -mt-2 -mb-2 rounded-full"
+                  >{{ $t("Sent") }}</span
+                >
+              </TableDataCell>
               <TableDataCell>${{ order.total_price }}</TableDataCell>
               <TableDataCell class="">
                 <span class="text-yellow-500 flex justify-end">
@@ -177,32 +265,52 @@ const updateOrderCencal = async (id) => {
                     @click="updateOrder(order.id)"
                     class="text-green-700 ml-1"
                   >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                    <path d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 1 1 6 0h3a.75.75 0 0 0 .75-.75V15Z" />
-                    <path d="M8.25 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0ZM15.75 6.75a.75.75 0 0 0-.75.75v11.25c0 .087.015.17.042.248a3 3 0 0 1 5.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 0 0-3.732-10.104 1.837 1.837 0 0 0-1.47-.725H15.75Z" />
-                    <path d="M19.5 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
-                </svg>
-
-
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="size-6"
+                    >
+                      <path
+                        d="M3.375 4.5C2.339 4.5 1.5 5.34 1.5 6.375V13.5h12V6.375c0-1.036-.84-1.875-1.875-1.875h-8.25ZM13.5 15h-12v2.625c0 1.035.84 1.875 1.875 1.875h.375a3 3 0 1 1 6 0h3a.75.75 0 0 0 .75-.75V15Z"
+                      />
+                      <path
+                        d="M8.25 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0ZM15.75 6.75a.75.75 0 0 0-.75.75v11.25c0 .087.015.17.042.248a3 3 0 0 1 5.958.464c.853-.175 1.522-.935 1.464-1.883a18.659 18.659 0 0 0-3.732-10.104 1.837 1.837 0 0 0-1.47-.725H15.75Z"
+                      />
+                      <path
+                        d="M19.5 19.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z"
+                      />
+                    </svg>
                   </button>
                   <span class="mx-1">||</span>
                   <button
                     v-if="hasPermission('Delete Product')"
-                    @click="updateOrderCencal(order.id)"
+                    @click="updateOrderCancel(order.id)"
                     class="text-green-700 ml-1"
                   >
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6 text-red-600">
-  <path fill-rule="evenodd" d="M2.515 10.674a1.875 1.875 0 0 0 0 2.652L8.89 19.7c.352.351.829.549 1.326.549H19.5a3 3 0 0 0 3-3V6.75a3 3 0 0 0-3-3h-9.284c-.497 0-.974.198-1.326.55l-6.375 6.374ZM12.53 9.22a.75.75 0 1 0-1.06 1.06L13.19 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L15.31 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-1.72 1.72-1.72-1.72Z" clip-rule="evenodd" />
-</svg>
-
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="size-6 text-red-600"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2.515 10.674a1.875 1.875 0 0 0 0 2.652L8.89 19.7c.352.351.829.549 1.326.549H19.5a3 3 0 0 0 3-3V6.75a3 3 0 0 0-3-3h-9.284c-.497 0-.974.198-1.326.55l-6.375 6.374ZM12.53 9.22a.75.75 0 1 0-1.06 1.06L13.19 12l-1.72 1.72a.75.75 0 1 0 1.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 1 0 1.06-1.06L15.31 12l1.72-1.72a.75.75 0 1 0-1.06-1.06l-1.72 1.72-1.72-1.72Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
                   </button>
                 </span>
               </TableDataCell>
             </TableRow>
           </template>
         </Table>
+        <div class="pr-4">
+          <!-- pagination -->
+          <PaginationLink :paginator="orders" />
+        </div>
       </div>
     </div>
-
   </AdminLayout>
 </template>

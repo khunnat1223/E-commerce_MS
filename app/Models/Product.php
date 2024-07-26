@@ -24,9 +24,6 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
-    // public function discount(){
-    //     return $this->belongsTo(Discount::class);
-    // }
     public function supplier(){
         return $this->belongsTo(Supplier::class);
     }
@@ -36,10 +33,6 @@ class Product extends Model
     public function OrderItem(){
         return $this->belongsTo(OrderItem::class);
     }
-    // public function cartItems()
-    // {
-    //     return $this->hasMany(CartItem::class);
-    // }
      //filter logic for price or categories or brands
 
      public function scopeFiltered($query)
