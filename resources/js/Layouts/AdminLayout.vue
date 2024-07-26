@@ -511,7 +511,7 @@ const showingNavigationDropdown = ref(false);
         <div>
           <div class="flex justify-center pb-2">
             <img
-              src="RanyLOGOS.png"
+              src="/RanyLOGOS.png"
               class="w-24 hover:scale-110 -mt-5 hover:shadow-lg hover:shadow-gray-400"
             />
           </div>

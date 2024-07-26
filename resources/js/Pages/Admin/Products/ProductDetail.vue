@@ -128,6 +128,10 @@ const { hasPermission } = usePermission();
           </div>
 
           <div class="w-96">
+            <span class="text-xl">{{ $t('Product Information') }}</span>
+            <div class="flex mb-2">
+              <p class="text-sm">{{ products.category.category }}</p>
+            </div>
             <div class="flex mb-2">
               <p class="text-3xl">{{ products.title }}</p>
             </div>
@@ -147,10 +151,9 @@ const { hasPermission } = usePermission();
               </p>
             </div>
 
-            <div class="border-t-2 border-white mt-5">
-              <span class="text-xl">Price:</span>
+            <div class="border-t-2 border-white mt-5 pt-2">
               <div
-                class="bg-white shadow-md rounded-md p-2 flex justify-start space-x-5"
+                class=" rounded-md p-2 flex justify-start space-x-5"
               >
                 <div>
                   <div class="flex mb-2">
@@ -171,13 +174,13 @@ const { hasPermission } = usePermission();
                 <div>
                   <div class="flex mb-2">
                     <h1 class="font-bold text-lg mr-2">
-                      {{ $t("Selling") }} :
+                      {{ $t("Sellings") }} :
                     </h1>
                     <p class="text-lg">${{ products.sellingprice }}</p>
                   </div>
                   <div class="flex mb-2">
                     <h1 class="font-bold text-lg mr-2">
-                      {{ $t("Selling ") }} :
+                      {{ $t("Selling") }} :
                     </h1>
                     <p class="text-lg">${{ products.price }}</p>
                   </div>
@@ -189,7 +192,40 @@ const { hasPermission } = usePermission();
                   </div>
                 </div>
               </div>
-              <div class="flex mb-2 mt-3">
+
+            </div>
+            <div class="border-t-2 border-white pt-2">
+              <div
+                class=" rounded-md p-2 flex justify-start space-x-5"
+              >
+                <div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">{{ $t("Supplier") }} :</h1>
+                    <p class="text-lg">{{ products.supplier.name }}</p>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex mb-2">
+                    <h1 class="font-bold text-lg mr-2">
+                      {{ $t("Phone Number") }} :
+                    </h1>
+                    <p class="text-lg">{{ products.supplier.number }}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="flex ml-2 mb-2">
+                    <h1 class="font-bold text-lg mr-2">
+                      {{ $t("Email") }} :
+                    </h1>
+                    <p class="text-lg">{{ products.supplier.email }}</p>
+                  </div>
+                  <div class="flex ml-2">
+                    <h1 class="font-bold text-lg mr-2">
+                      {{ $t("Address") }} :
+                    </h1>
+                    <p class="text-lg">{{ products.supplier.address }}</p>
+                  </div>
+              <!-- <div class="flex mb-2 mt-3">
                 <h1 class="font-bold text-lg mr-2">{{ $t("Status") }} :</h1>
                 <p class="text-lg" v-if="products.published == 0">
                   {{ $t("Unpublish") }}
@@ -197,7 +233,7 @@ const { hasPermission } = usePermission();
                 <p class="text-lg text-green-500" v-else>
                   {{ $t("Published") }}
                 </p>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

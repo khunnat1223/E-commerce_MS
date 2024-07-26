@@ -209,14 +209,14 @@ if ($request->has('inStock')) {
 {
     $categories = Category::all();
 $suppliers = Supplier::all();
-    $product = Product::with(['category', 'product_images'])->findOrFail($id);
+    $product = Product::with(['category', 'product_images','supplier'])->findOrFail($id);
                 return Inertia::render('Admin/Products/ProductDetail', [
                     // 'product' => new ProductResource($product),
                 'products' => $product,
                 'notifications' =>Notification::get(),
                 'contnitification' =>Notification::count(),
-                'categories' => CategoryResource::collection($categories),
-                'suppliers' => SupplierResource::collection($suppliers),
+                // 'categories' => CategoryResource::collection($categories),
+                // 'suppliers' => SupplierResource::collection($suppliers),
      ]);
 }
 
