@@ -54,9 +54,7 @@ class StaffController extends Controller
             'profile' => $profile,
 
         ]);
-
-
-        return redirect()->route('staffs.index')->with('success', 'Staffs created successfully!');
+        return redirect()->route('staffs.index')->with('success', 'បានបង្កើតព័ត៌មានបុគ្គលិកជោគជ័យ!');
     }
 
     public function edit(Staff $staff):Response
@@ -96,7 +94,7 @@ class StaffController extends Controller
             'profile' => $profile,
         ]);
 
-         return redirect()->route('staffs.index')->with('success', 'staff updated successfully.');
+         return redirect()->route('staffs.index')->with('success', 'បានកែប្រែព័ត៌មានបុគ្គលិកជោគជ័យ!');
     }
 
 
@@ -104,11 +102,10 @@ class StaffController extends Controller
     {
         $staff->delete();
 
-        return redirect()->route('staffs.index')->with('success', 'staff deleted successfully.');
+        return redirect()->route('staffs.index')->with('dsuccess', 'បានលុបព័ត៌មានបុគ្គលិកជោគជ័យ!');
     }
     public function deleteImage($id)
     {
-        // Gate::authorize('deleteImage', $productImage);
         $profile = staff::where('id', $id)->delete();
         return back();
     }

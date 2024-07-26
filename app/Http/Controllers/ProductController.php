@@ -111,7 +111,7 @@ if ($request->has('inStock')) {
                 ]);
             }
         }
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('products.index')->with('success', 'បានបង្កើតព័ត៌មានទំនិញរួចរាល់!');
     }
     public function edit(Product $product):Response
     {
@@ -171,7 +171,7 @@ if ($request->has('inStock')) {
             }
         }
         $product->update();
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('products.index')->with('success', 'បានកែប្រែព័ត៌មានទំនិញជោគជ័យ!');
     }
 
 
@@ -186,7 +186,7 @@ if ($request->has('inStock')) {
                 $product->delete();
             });
 
-            return back()->with('success', 'Product and related cart items deleted successfully.');
+            return back()->with('dsuccess', 'បានលុបព័ត៌មានទំនិញជោគជ័យ!');
      }
      public function updateToPublished(Request $request, $id)
      {
@@ -194,7 +194,7 @@ if ($request->has('inStock')) {
          $product->update([
              'published' => 1,
          ]);
-         return redirect()->route('products.index')->with('success', 'Product published successfully.');
+         return redirect()->route('products.index')->with('success', 'បានដាក់លក់ទំនិញជោគជ័យ!');
      }
      public function updateToUnpublished(Request $request, $id)
      {
@@ -202,7 +202,7 @@ if ($request->has('inStock')) {
          $product->update([
              'published' => 0,
          ]);
-         return redirect()->route('products.index')->with('success', 'Product published successfully.');
+         return redirect()->route('products.index')->with('success', 'បានលាក់ទំនិញជោគជ័យ!');
      }
 
      public function show($id):Response
@@ -215,8 +215,6 @@ $suppliers = Supplier::all();
                 'products' => $product,
                 'notifications' =>Notification::get(),
                 'contnitification' =>Notification::count(),
-                // 'categories' => CategoryResource::collection($categories),
-                // 'suppliers' => SupplierResource::collection($suppliers),
      ]);
 }
 

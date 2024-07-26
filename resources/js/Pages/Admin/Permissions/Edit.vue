@@ -81,19 +81,19 @@ const form = useForm ({
                             <path fill-rule="evenodd" d="M19.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06L17.69 12l-6.97-6.97a.75.75 0 0 1 1.06-1.06l7.5 7.5Z" clip-rule="evenodd" />
                         </svg>
                         <span class="m-1">
-                            
+
                                 <span class="font-sans">{{ $t("Update") }}</span>
-                            
+
                         </span>
                     </div>
                 </div>
-              
+
             </div>
             <div class="mt-6 bg-slate-200 p-6 rounded-lg">
                 <h1 class="pl-4 pb-6 text-xl">{{ $t("Update") }}</h1>
                 <form @submit.prevent="form.put(route('permissions.update', permission.id))">
                     <div>
-                        <InputLabel  value="Name" />
+                       <span>{{ $t("permission") }}</span>
 
                         <TextInput
                             id="name"
@@ -109,10 +109,10 @@ const form = useForm ({
 
 
                     <div class="flex items-center mt-4">
-                    
-                        <PrimaryButton 
+
+                        <PrimaryButton
                         >
-                           {{ $t('Update') }} 
+                           {{ $t('Update') }}
                         </PrimaryButton>
                     </div>
                 </form>

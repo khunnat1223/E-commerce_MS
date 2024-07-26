@@ -55,7 +55,7 @@ public function update(Request $request, $id)
             'status' => '1',
             'updated_date'=>now(),
         ]);
-        //  return redirect()->route('staffs.index')->with('success', 'staff updated successfully.');
+      return redirect()->route('orders.index')->with('success', 'បានដាក់‌ឥវ៉ានជូនអតិថិជនជោគជ័យ!');
     }
 
     public function updateToCancel(Request $request, $id)
@@ -65,7 +65,7 @@ public function update(Request $request, $id)
             'status' => '0',
             'updated_date'=>now(),
         ]);
-        return redirect()->route('orders.index')->with('success', 'Order status updated to pending successfully.');
+        return redirect()->route('orders.index')->with('dsuccess', 'បានកែប្រែការបញ្ជាទិញមកសិ្ថតក្នុងការរង់ចាំជោគជ័យ!');
     }
 
 }

@@ -53,7 +53,7 @@ class RoleController extends Controller
         if($request->has('permissions')){
             $role->syncPermissions($request->input('permissions.*.name'));
         }
-        return to_route('roles.index');
+        return to_route('roles.index')->with('success','បានបង្កើតតួនាទីជោគជ័យ!');
     }
 
     /**
@@ -82,13 +82,11 @@ class RoleController extends Controller
      */
     public function update(CreateRoleRequest $request, Role $role)
     {
-        // $role = Role::findByID($id);
         $role -> update([
             'name' => $request->name
         ]);
         $role->syncPermissions($request->input('permissions.*.name'));
-        return to_route('roles.index');
-        // return back();
+        return to_route('roles.index')->with('success','បានកែប្រែព័ត៌មានតួនាទីជោគជ័យ!');
     }
 
     /**
@@ -98,7 +96,7 @@ class RoleController extends Controller
     {
         $role = Role::findByID($id);
         $role->delete();
-        return back();
+        return back()->with('dsuccess','បានលុបព័ត៌មានតួនាទីជោគជ័យ!');
 
     }
 }

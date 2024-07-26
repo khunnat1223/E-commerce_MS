@@ -74,7 +74,6 @@ const DeleteSupplier = () => {
               </a>
             </span>
           </div>
-
           <div
             class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200"
           >
@@ -102,7 +101,6 @@ const DeleteSupplier = () => {
             </span>
           </div>
         </div>
-
         <Link
           v-if="hasPermission('Create Product')"
           :href="route('suppliers.create')"
@@ -113,7 +111,6 @@ const DeleteSupplier = () => {
         </Link>
       </div>
       <div>
-        <!-- <p>{{ $en.test }}</p> -->
       </div>
       <div class="shadow overflow-auto rounded ">
         <Table class="w-full">
@@ -136,8 +133,6 @@ const DeleteSupplier = () => {
             >
               <TableDataCell>{{ Supplier.id }}</TableDataCell>
               <TableDataCell>
-                <!-- <img src="`${{ Discount.image }}`" alt=""> -->
-                 <!-- <img :src="Supplier.supplier_profile" alt=""> -->
              <img
                 v-if="Supplier.supplier_profile.length > 0"
                   class="w-10 h-10 rounded"

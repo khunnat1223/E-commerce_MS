@@ -36,10 +36,6 @@ const handleFileChange = (event) => {
 };
 const staffs = () => {
   form.post("/admin/staffs", {
-    onFinish: () => {
-      form.reset();
-      preview.value = null;
-    },
   });
 };
 </script>
@@ -98,7 +94,7 @@ const staffs = () => {
             </svg>
             <span class="m-1">
               <Link :href="route('staffs.index')" :active="false">
-                <span class="font-sans">{{ $t("staffs") }}</span>
+                <span class="font-sans">{{ $t("staff") }}</span>
               </Link>
             </span>
           </div>

@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 import HomeLayout from "@/Layouts/HomeLayout.vue";
 
@@ -10,14 +9,12 @@ onMounted(() => {
 });
 import Products from "@/Pages/HomePage/Components/Products.vue";
 import { ref } from "vue";
-import SecondaryButtonVue from "@/Components/SecondaryButton.vue";
 import { router, useForm } from "@inertiajs/vue3";
 import { watch } from "vue";
 import {
   Disclosure,
   DisclosureButton,
   DisclosurePanel,
-
 
 } from "@headlessui/vue";
 import { XMarkIcon } from "@heroicons/vue/24/outline";
@@ -168,21 +165,13 @@ const mobileFiltersOpen = ref(false);
                     <dev
                       class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
                     >
-                      <span class="font-medium text-gray-900 mb-2">{{
+                      <span class="font-medium border-t-2 w-full pt-2 text-gray-900 mb-2">{{
                         $t("Categories")
                       }}</span>
-                      <span class="ml-6 flex items-center">
-                        <!-- <PlusIcon
-                          v-if="!open"
-                          class="h-5 w-5"
-                          aria-hidden="true"
-                        /> -->
-                        <!-- <MinusIcon v-else class="h-5 w-5" aria-hidden="true" /> -->
-                      </span>
                     </dev>
                   </h3>
-                  <dev class="pt-6">
-                    <div class="space-y-4">
+                  <dev class="pt-6 ">
+                    <div class="space-y-4 ">
                       <div
                         v-for="category in categories"
                         :key="category.id"

@@ -15,7 +15,7 @@ const auth = props.auth;
 
 // Computed property for user roles
 const userRoles = computed(() => {
-  return auth.user.roles.join(', '); // Join the array into a string
+  return auth.user.roles.join(", "); // Join the array into a string
 });
 
 // Function to format date
@@ -40,7 +40,9 @@ onMounted(() => {
 });
 
 // Determine profile URL
-const profileUrl = auth.user?.profile?.profile ? `/storage/${auth.user.profile.profile}` : "";
+const profileUrl = auth.user?.profile?.profile
+  ? `/storage/${auth.user.profile.profile}`
+  : "";
 
 // Reactive items for language selection
 const items = reactive({
@@ -127,6 +129,51 @@ const showingNavigationDropdown = ref(false);
           <span class="text-yellow-700 dark:text-yellow-500"
             >{{ $t("Hello") }}! : {{ $page.props.auth.user.name }}</span
           >
+          <div
+            v-if="$page.props.flash.success"
+            class="absolute mt-36 ml-64 flex items-center p-3 mb-4 text-sm text-green-800 rounded-lg bg-green-50 shadow-md dark:bg-gray-800 dark:text-blue-400"
+            role="alert"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+            <span> {{ $page.props.flash.success }}</span>
+          </div>
+          <div>
+            <div
+              v-if="$page.props.flash.dsuccess"
+              class="absolute mt-10 ml-28 flex items-center p-3 mb-4 text-sm text-red-800 rounded-lg bg-red-50 shadow-md dark:bg-gray-800 dark:text-red-400"
+              role="alert"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+
+              <span> {{ $page.props.flash.dsuccess }}</span>
+            </div>
+          </div>
         </div>
         <div class="flex items-center lg:order-2">
           <!-- Notifications -->
@@ -171,25 +218,26 @@ const showingNavigationDropdown = ref(false);
             </div>
             <div v-for="notifications in notification" :key="notifications.id">
               <Link
-
                 :href="route('orders.index')"
                 class="flex py-3 px-4 border-b hover:bg-gray-100 dark:hover:bg-gray-600 dark:border-gray-600"
               >
                 <div class="flex-shrink-0">
-                    <div class="h-11 w-11 mt-4 rounded-full border-2 border-yellow-200 text-amber-500 justify-center items-center flex">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            class="size-5"
-                        >
-                            <path
-                            fill-rule="evenodd"
-                            d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z"
-                            clip-rule="evenodd"
-                            />
-                        </svg>
-                    </div>
+                  <div
+                    class="h-11 w-11 mt-4 rounded-full border-2 border-yellow-200 text-amber-500 justify-center items-center flex"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="size-5"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 0 0 4.25 22.5h15.5a1.875 1.875 0 0 0 1.865-2.071l-1.263-12a1.875 1.875 0 0 0-1.865-1.679H16.5V6a4.5 4.5 0 1 0-9 0ZM12 3a3 3 0 0 0-3 3v.75h6V6a3 3 0 0 0-3-3Zm-3 8.25a3 3 0 1 0 6 0v-.75a.75.75 0 0 1 1.5 0v.75a4.5 4.5 0 1 1-9 0v-.75a.75.75 0 0 1 1.5 0v.75Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
                 </div>
                 <div class="pl-3 w-56 ml-6">
                   <div
@@ -214,7 +262,7 @@ const showingNavigationDropdown = ref(false);
               </Link>
             </div>
             <Link
-                v-if="contnitification > 0 "
+              v-if="contnitification > 0"
               :href="route('clear.infor')"
               class="block py-2 text-md font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-600 dark:text-white dark:hover:underline"
             >
@@ -233,10 +281,9 @@ const showingNavigationDropdown = ref(false);
                     clip-rule="evenodd"
                   />
                 </svg>
-               {{ $t('Clear All')}}
+                {{ $t("Clear All") }}
               </div>
             </Link>
-
           </div>
 
           <!-- Dark Mode -->
@@ -420,21 +467,21 @@ const showingNavigationDropdown = ref(false);
           >
             <span class="sr-only">Open user menu</span>
             <img
-                v-if="!auth.user.profile || auth.user.profile === ''"
-                class="w-8 h-8 rounded-full shadow-md border-2 border-white"
-                src="/profile.png"
-                alt="Profile Image"
-              />
-              <img
-                v-else
-                class="w-8 h-8 object-cover rounded-full shadow-md border-2 border-white"
-                :src="profileUrl"
-                alt="Profile Image"
-              />
+              v-if="!auth.user.profile || auth.user.profile === ''"
+              class="w-8 h-8 rounded-full shadow-md border-2 border-white"
+              src="/profile.png"
+              alt="Profile Image"
+            />
+            <img
+              v-else
+              class="w-8 h-8 object-cover rounded-full shadow-md border-2 border-white"
+              :src="profileUrl"
+              alt="Profile Image"
+            />
           </button>
           <!-- Dropdown menu -->
           <div
-            class="hidden z-50 my-4 w-56  text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+            class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
             id="dropdown"
           >
             <div class="py-3 px-4">
@@ -451,20 +498,19 @@ const showingNavigationDropdown = ref(false);
               class="py-1 text-gray-500 dark:text-gray-400"
               aria-labelledby="dropdown"
             >
-            <li v-if="auth.user.name">
-              <Link
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >Position: {{ userRoles }}</Link
-              >
-
-            </li>
-            <li v-if="auth.user.name">
-              <Link
-                :href="route('profile.index')"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >Account settings</Link
-              >
-            </li>
+              <li v-if="auth.user.name">
+                <Link
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  >Position: {{ userRoles }}</Link
+                >
+              </li>
+              <li v-if="auth.user.name">
+                <Link
+                  :href="route('profile.index')"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                  >Account settings</Link
+                >
+              </li>
             </ul>
             <ul
               class="py-1 text-gray-500 dark:text-gray-400"
@@ -515,7 +561,9 @@ const showingNavigationDropdown = ref(false);
               class="w-24 hover:scale-110 -mt-5 hover:shadow-lg hover:shadow-gray-400"
             />
           </div>
-          <div class="hover:scale-110 font-khmer text-sm -mt-4 cursor-default text-yellow-700">
+          <div
+            class="hover:scale-110 font-khmer text-sm -mt-4 cursor-default text-yellow-700"
+          >
             {{ $t("systemName") }}
           </div>
         </div>
@@ -649,7 +697,9 @@ const showingNavigationDropdown = ref(false);
             </li>
           </template>
         </ul>
-        <ul class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700">
+        <ul
+          class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700"
+        >
           <template v-if="hasRole('admin')">
             <li>
               <SidebarLink

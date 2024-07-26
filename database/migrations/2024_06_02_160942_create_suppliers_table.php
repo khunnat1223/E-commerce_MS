@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('number')->nullable();
             $table->string('address')->nullable();
-            $table->string('supplier_profile')->nullable();
+            $table->string('supplier_profile')->null();
             $table->timestamps();
         });
     }

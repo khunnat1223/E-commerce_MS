@@ -46,7 +46,7 @@ class SupplierController extends Controller
             'address' => $request->address,
             'supplier_profile' => $supplier_profile,
         ]);
-        return redirect()->route('suppliers.index')->with('success', 'Supplier created successfully!');
+        return redirect()->route('suppliers.index')->with('success', 'បានបង្កើតអ្នកផ្គត់ផ្គង់ជោគជ័យ!');
     }
 
     public function edit(Supplier $supplier):Response
@@ -78,7 +78,7 @@ class SupplierController extends Controller
             'supplier_profile' => $supplier_profile,
         ]);
 
-        return redirect()->route('suppliers.index')->with('success', 'Supplier updated successfully.');
+        return redirect()->route('suppliers.index')->with('success', 'បានកែប្រែព័ត៌មានអ្នកផ្គត់ផ្ទង់ជោគជ័យ!');
     }
 
 
@@ -86,7 +86,7 @@ class SupplierController extends Controller
     {
         $supplier->delete();
 
-        return redirect()->route('suppliers.index')->with('success', 'Supplier deleted successfully.');
+        return redirect()->route('suppliers.index')->with('dsuccess', 'បានលុបព័ត៌មានអ្នកផ្គត់ផ្ទង់ជោគជ័យ!');
     }
     public function deleteImage($id)
     {

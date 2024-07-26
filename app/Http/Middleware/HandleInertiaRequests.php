@@ -40,18 +40,11 @@ class HandleInertiaRequests extends Middleware
             'auth.user' => fn () => $request->user()
                 ? new UserSharedResource($request->user())
                 : null,
-
-                // 'ziggy' => fn () => [
-                //     ...(new Ziggy)->toArray(),
-                //     'location' => $request->url(),
-                // ],
-                // 'auth' => [
-                //     'user' => $request->user(),
-                // ],
                 'cart' => new CartResource(Cart::getProductsAndCartItems()),
 
                 'flash' => [
                     'success' => fn () => $request->session()->get('success'),
+                    'dsuccess' => fn () => $request->session()->get('dsuccess'),
                     'error' => fn () => $request->session()->get('error'),
                     'warning' => fn () => $request->session()->get('warning'),
                     'info' => fn () => $request->session()->get('info')

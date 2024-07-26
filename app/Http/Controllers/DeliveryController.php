@@ -26,45 +26,38 @@ class DeliveryController extends Controller
 
     public function create(): Response
     {
-        // Gate::authorize('create', Delivery::class);
         return Inertia::render('Admin/Deliverys/Create');
     }
 
     public function store(Request $request): RedirectResponse
     {
-        // Gate::authorize('create', Delivery::class);
         Delivery::create([
             'company' => $request->company,
             'description' => $request->description,
         ]);
-        return to_route('deliverys.index');
+        return to_route('deliverys.index')->with('success','បានបង្កើតដៃគូរដឹកជញ្ជូនជោគជ័យ!');
 
     }
     public function edit(Delivery $delivery):Response
     {
-        // Gate::authorize('update', $delivery);
         return Inertia::render('Admin/Deliverys/Edit', [
             'delivery' => $delivery,
-            // 'description' => $delivery,
         ]);
     }
 
 
     public function update(Request $request, Delivery $delivery):RedirectResponse
     {
-        // $category->update($request->validated());
-        // Gate::authorize('update', $category);
         $delivery->update([
             'company' => $request->company,
             'description' => $request->description,
         ]);
-        return to_route('deliverys.index');
+        return to_route('deliverys.index')->with('success','បានកែប្រែព័ត៌មានដៃគូរដឹកជញ្ជូនជោគជ័យ!');
     }
 
     public function destroy(Delivery $delivery)
     {
-        // Gate::authorize('delete', $category);
         $delivery->delete();
-        return to_route('deliverys.index');
+        return to_route('deliverys.index')->with('dsuccess','បានលុបព័ត៌មានដៃគួរដឹកជញ្ជូនជោគជ័យ!');
     }
 }

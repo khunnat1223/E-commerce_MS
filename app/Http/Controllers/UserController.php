@@ -72,7 +72,7 @@ class UserController extends Controller
         $user->syncRoles($request->input('roles.*.name'));
         $user->syncPermissions($request->input('permissions.*.name'));
 
-        return to_route('users.index');
+        return to_route('users.index')->with('success','បានបង្កើតអ្នកប្រើប្រាស់ជោគជ័យ!');
     }
 
     /**
@@ -117,7 +117,7 @@ class UserController extends Controller
         $user->syncRoles($request->input('roles.*.name'));
         $user->syncPermissions($request->input('permissions.*.name'));
 
-        return to_route('users.index');
+        return to_route('users.index')->with('success','បានកែប្រែអ្នកប្រើប្រាស់ជោគជ័យ!');
     }
 
     /**
@@ -128,11 +128,10 @@ class UserController extends Controller
         DB::transaction(function () use ($user) {
             // Set related addresses' user_id to NULL
             $user->user_address()->update(['user_id' => NULL]);
-
             // Delete the user
             $user->delete();
         });
 
-        return to_route('users.index');
+        return to_route('users.index')->with('dsuccess','បានលុបព័ត៌មានអ្នកប្រើប្រាស់ជោគជ័យ!');;
     }
 }

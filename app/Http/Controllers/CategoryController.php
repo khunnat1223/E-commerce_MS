@@ -41,7 +41,7 @@ class CategoryController extends Controller
             'category' => $request->category,
             'description' => $request->description,
         ]);
-        return to_route('categorys.index');
+        return to_route('categorys.index')->with('success','បានបង្កើតប្រភេទទំនិញជោគជ័យ!');
 
     }
     public function edit(Category $category):Response
@@ -61,13 +61,13 @@ class CategoryController extends Controller
             'category' => $request->category,
             'description' => $request->description,
         ]);
-        return to_route('categorys.index');
+        return to_route('categorys.index')->with('success','បានកែប្រែប្រភេទទំនិញជោគជ័យ!');;
     }
 
     public function destroy(Category $category)
     {
         Gate::authorize('delete', $category);
         $category->delete();
-        return back();
+        return back()->with('dsuccess','បានលុបប្រភេទទំនិញជោគជ័យ!');
     }
 }

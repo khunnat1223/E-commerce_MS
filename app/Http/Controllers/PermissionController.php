@@ -37,22 +37,23 @@ class PermissionController extends Controller
     public function store(CreatePermissionRequest $request)
     {
         Permission::create($request->validated());
-        return to_route('permissions.index');
+        return to_route('permissions.index')->with('success','បានបង្កើតសិទ្ធជោគជ័យ!');
     }
-    public function destroyImage(Product $product)
-    {
-        // Ensure the user is authorized to delete the product image
-        $this->authorize('update', $product);
 
-        // Delete the image file from storage
-        if ($product->image_path && Storage::exists($product->image_path)) {
-            Storage::delete($product->image_path);
-        }
+    // public function destroyImage(Product $product)
+    // {
+    //     // Ensure the user is authorized to delete the product image
+    //     $this->authorize('update', $product);
 
-        // Remove the image path from the database
-        $product->image_path = null;
-        $product->save();
-    }
+    //     // Delete the image file from storage
+    //     if ($product->image_path && Storage::exists($product->image_path)) {
+    //         Storage::delete($product->image_path);
+    //     }
+
+    //     // Remove the image path from the database
+    //     $product->image_path = null;
+    //     $product->save();
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -70,14 +71,14 @@ class PermissionController extends Controller
     public function update(CreatePermissionRequest $request, Permission $permission)
     {
         $permission->update($request->Validated());
-        return to_route('permissions.index');
+        return to_route('permissions.index')->with('success','បានកែប្រែព័ត៌មានសិទ្ធជោគជ័យ!');
     }
 
-    public function deleteImage($id)
-    {
-        $image = ProductImage::where('id', $id)->delete();
-        return redirect()->route('admin.products.index')->with('success', 'Image deleted successfully.');
-    }
+    // public function deleteImage($id)
+    // {
+    //     $image = ProductImage::where('id', $id)->delete();
+    //     return redirect()->route('admin.products.index')->with('success', 'Image deleted successfully.');
+    // }
 
 
     /**
@@ -86,7 +87,7 @@ class PermissionController extends Controller
     public function destroy(Permission $permission)
     {
         $permission->delete();
-        return back();
+        return back()->with('dsuccess','បានលុបព័ត៌មានសិទ្ធជោគជ័យ!');
     }
 }
 
