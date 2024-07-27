@@ -34,12 +34,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Users/UserIndex',
-        [
-            'notifications' =>Notification::get(),
-            'contnitification' =>Notification::count(),
-            'users' =>UserResource::collection(User::all()),
-        ]);
+        $users = User::with(['roles', 'permissions', 'userInfor'])->get();
+
+    return Inertia::render('Admin/Users/UserIndex', [
+        'notifications' => Notification::get(),
+        'contnitification' => Notification::count(),
+        'users' => UserResource::collection($users),
+    ]);
     }
 
     /**

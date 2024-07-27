@@ -4,66 +4,16 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { Link, useForm } from "@inertiajs/vue3";
 import { usePermission } from "@/composables/permission";
-// import { usePage } from '@inertiajs/inertia-vue3';
-import { router } from "@inertiajs/vue3";
-import Table from "@/Components/Table.vue";
-import TableRow from "@/Components/TableRow.vue";
-import TableHeaderCell from "@/Components/TableHeaderCell.vue";
-import TableDataCell from "@/Components/TableDataCell.vue";
-import PaginationLink from "@/Components/PaginationLink.vue";
-import moment from "moment";
-// const notification = usePage().props.notifications;
+
 const props = defineProps({
   payments: Object,
-  filters: Object,
+  payment: Object,
+  products: Object,
+  product: Object,
 });
 
-// Setup reactive form fields for dates
-const start_date = ref(props.filters.start_date || "");
-const end_date = ref(props.filters.end_date || "");
-// Function to filter records
-const filterRecords = () => {
-  router.get(route("reports.index"), {
-    start_date: start_date.value,
-    end_date: end_date.value,
-  });
-};
 
-const i = 1;
-
-const formatDate = (date) => {
-  return moment(date).format("DD/MMM/YYYY");
-};
-const formatNumber = (number) => {
-  return number.toString().padStart(4, "0");
-};
-
-const form = useForm({});
-const OrderId = ref('');
-
-
-const { hasPermission } = usePermission();
-
-const updateOrder = (id) => {
-    OrderId.value = id;
-    form.put(route("payments.update", OrderId.value), {
-        onFinish: () => {
-        },
-      });
-}
-const updateOrderCencal = async (id) => {
-    OrderId.value = id;
-     router.put("/admin/payments/update-to-cancel/" + OrderId.value, {
-    });
-};
-const exportPayments = () => {
-      window.location.href = `/reports/download?start_date=${start_date.value}&end_date=${end_date.value}`;
-    };
-
-const toggleImageScale = (payment)=> {
-      payment.isScaled = !payment.isScaled;
-    };
-
+// const notification = usePage().props.notifications;
 </script>
 
 <template>
@@ -121,148 +71,181 @@ const toggleImageScale = (payment)=> {
             </svg>
             <span class="m-1">
               <Link :href="route('reports.index')" :active="false">
-                <span class="font-sans">{{ $t("Order") }}</span>
+                <span class="font-sans">{{ $t("Reports") }}</span>
               </Link>
             </span>
           </div>
         </div>
-
       </div>
-      <div class="flex justify-between">
-        <div class="flex space-x-2">
-          <div class="flex ">
-            <button
-              @click="exportPayments"
-              class="middle none center flex items-center justify-center rounded-lg w-24 h-10 hover:scale-110 hover:skew-y-3 border-2 border-green-600 font-sans text-sm text-green-600 shadow-md transition-all hover:shadow-lg hover:shadow-green-700"
-              data-ripple-light="true"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                class="size-4 mr-1"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0 0 16.5 9h-1.875a1.875 1.875 0 0 1-1.875-1.875V5.25A3.75 3.75 0 0 0 9 1.5H5.625ZM7.5 15a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5h-7.5A.75.75 0 0 1 7.5 15Zm.75 2.25a.75.75 0 0 0 0 1.5H12a.75.75 0 0 0 0-1.5H8.25Z"
-                  clip-rule="evenodd"
-                />
-                <path
-                  d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z"
-                />
-              </svg>
-
-              {{ $t("Excel") }}
-            </button>
-          </div>
-
-        </div>
- <!-- Filter Form -->
- <form @submit.prevent="filterRecords">
-          <div class="flex justify-end space-x-3 mb-2">
-            <div class="relative max-w-sm">
+      <div class="mx-4 md:flex mx:flex block justify-between space-x-10">
+        <Link
+        :href="route('SaleReport.SaleReport')"
+        class="md:w-1/2 mx:w-1/2 w-full rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
+      >
+        <h1 class="p-5 text-xl font-khmer">{{ $t("Sale Report") }}</h1>
+        <div class="flex bg-gray-200">
+          <div class="block space-y-4">
+            <div class="flex w-64 h-24 px-5 py-5">
               <div
-                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
               >
                 <svg
-                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  class="w-6 h-6 dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
                   fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="date"
-                v-model="start_date"
-                placeholder="Start Date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
-            <div class="relative max-w-sm">
-              <div
-                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
-              >
-                <svg
-                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="date"
-                v-model="end_date"
-                placeholder="End Date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <button type="submit" class="mt-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="size-6 text-yellow-600"
                 >
                   <path
                     fill-rule="evenodd"
-                    d="M3.792 2.938A49.069 49.069 0 0 1 12 2.25c2.797 0 5.54.236 8.209.688a1.857 1.857 0 0 1 1.541 1.836v1.044a3 3 0 0 1-.879 2.121l-6.182 6.182a1.5 1.5 0 0 0-.439 1.061v2.927a3 3 0 0 1-1.658 2.684l-1.757.878A.75.75 0 0 1 9.75 21v-5.818a1.5 1.5 0 0 0-.44-1.06L3.13 7.938a3 3 0 0 1-.879-2.121V4.774c0-.897.64-1.683 1.542-1.836Z"
+                    d="M4 5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H4Zm0 6h16v6H4v-6Z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M5 14a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Zm5 0a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2h-5a1 1 0 0 1-1-1Z"
                     clip-rule="evenodd"
                   />
                 </svg>
-              </button>
+              </div>
+              <div class="">
+                <span class="text-green-800 text-3xl">{{ payment }}</span>
+                <div class="text-green-950 text-md">
+                  {{ $t("Invoice") }}
+                </div>
+              </div>
+            </div>
+            <div class="flex w-64 h-20 ml-5">
+              <div
+                class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+              >
+                <svg
+                  class="w-6 h-6 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M11 16.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Zm4.5 2.5v-1.5H14v-2h1.5V14h2v1.5H19v2h-1.5V19h-2Z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    d="M3.987 4A2 2 0 0 0 2 6v9a2 2 0 0 0 2 2h5v-2H4v-5h16V6a2 2 0 0 0-2-2H3.987Z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M5 12a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div class="">
+                <span class="text-green-800 text-3xl">$ {{ payments }}</span>
+                <div class="text-green-950 text-md">
+                  {{ $t("Revenue") }}
+                </div>
+              </div>
             </div>
           </div>
-        </form>
-
-      </div>
-
-      <div>
-        <!-- <p>{{ $en.test }}</p> -->
-      </div>
-      <div class="shadow overflow-auto rounded">
-        <Table class="w-full">
-          <template #header>
-            <TableRow>
-              <TableHeaderCell>{{ $t("Parcel ID") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Image") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Date") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Type") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Total") }}</TableHeaderCell>
-              <!-- <TableHeaderCell class="text-center">{{ $t("Action") }}</TableHeaderCell> -->
-            </TableRow>
-          </template>
-          <template #default>
-            <TableRow v-for="payment in payments.data" :key="payment.id" class="border-b">
-              <TableDataCell># {{ formatNumber(payment.id) }}</TableDataCell>
-              <TableDataCell>
-                <img v-if="payment.imagepay" :src="payment.imagepay"  class="w-14 h-14 rounded bg-gray-200 text-sm text-center"
-                :class="{ 'w-14 h-14 rounded bg-gray-200 text-sm text-center  scaled-image': payment.isScaled }"
-                @click="toggleImageScale(payment)"
-                 alt="No Image">
-            </TableDataCell>
-              <TableDataCell>{{ formatDate(payment.created_date) }}</TableDataCell>
-              <TableDataCell>{{ payment.type }}</TableDataCell>
-              <TableDataCell>${{ payment.amount }}</TableDataCell>
-            </TableRow>
-          </template>
-        </Table>
-        <div class="pr-4">
-          <!-- pagination -->
-          <PaginationLink :paginator="payments" />
+          <div class="">
+            <img
+              src="https://www.bigtime.net/wp-content/uploads/2024/05/How-to-Improve-Profitability-at-a-Professional-Services-Company.png"
+              class="h-40 -ml-5 mt-5"
+              alt=""
+            />
+          </div>
         </div>
-      </div>
+      </Link>
+      <!-- <div
+        class="md:w-1/2 mx:w-1/2 w-full rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
+      >
+        <h1 class="p-5 text-xl font-khmer">{{ $t("Buy Reports") }}</h1>
+        <div class="flex bg-gray-200">
+          <div class="block space-y-4">
+            <div class="flex w-64 h-24 px-5 py-5">
+              <div
+                class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+              >
+                <svg
+                  class="w-6 h-6 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M4 5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H4Zm0 6h16v6H4v-6Z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M5 14a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Zm5 0a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2h-5a1 1 0 0 1-1-1Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div class="">
+                <span class="text-green-800 text-3xl"> {{ product }}</span>
+                <div class="text-green-950 text-md">
+                  {{ $t("Product") }}
+                </div>
+              </div>
+            </div>
+            <div class="flex w-64 h-20 ml-5">
+              <div
+                class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
+              >
+                <svg
+                  class="w-6 h-6 dark:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M11 16.5a5.5 5.5 0 1 1 11 0 5.5 5.5 0 0 1-11 0Zm4.5 2.5v-1.5H14v-2h1.5V14h2v1.5H19v2h-1.5V19h-2Z"
+                    clip-rule="evenodd"
+                  />
+                  <path
+                    d="M3.987 4A2 2 0 0 0 2 6v9a2 2 0 0 0 2 2h5v-2H4v-5h16V6a2 2 0 0 0-2-2H3.987Z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M5 12a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2H6a1 1 0 0 1-1-1Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <div class="">
+                <span class="text-green-800 text-3xl">$ {{ products }}</span>
+                <div class="text-green-950 text-md">
+                  {{ $t("Expenses") }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="">
+            <img
+              src="https://www.bigtime.net/wp-content/uploads/2024/05/How-to-Improve-Profitability-at-a-Professional-Services-Company.png"
+              class="h-40 -ml-5 mt-5"
+              alt=""
+            />
+          </div>
+        </div>
+      </div> -->
     </div>
-
+    </div>
   </AdminLayout>
 </template>

@@ -105,7 +105,7 @@ const DeleteStaff = () => {
         </div>
 
         <Link
-          v-if="hasPermission('Create Product')"
+          v-if="hasPermission('Create')"
           :href="route('staffs.create')"
           class="middle none center rounded-lg hover:scale-110 hover:skew-y-3 border-2 border-yellow-600 py-2 px-6 font-sans text-sm text-yellow-600 shadow-md transition-all hover:shadow-lg hover:shadow-yellow-700"
           data-ripple-light="true"
@@ -158,7 +158,7 @@ const DeleteStaff = () => {
               <TableDataCell>
                 <span class="text-yellow-500 flex">
                   <Link
-                    v-if="hasPermission('Update Product')"
+                    v-if="hasPermission('Update')"
                     :href="route('staffs.edit', staff.id)"
                   >
                     <svg
@@ -179,7 +179,7 @@ const DeleteStaff = () => {
                   </Link>
 
                   <button
-                    v-if="hasPermission('Delete Product')"
+                    v-if="hasPermission('Delete')"
                     @click="ComfimDeleteStaff(staff.id)"
                   >
                     <svg

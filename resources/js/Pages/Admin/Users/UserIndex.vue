@@ -1,7 +1,7 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
-import {ref} from "vue";
+import { ref } from "vue";
 import Table from "@/Components/Table.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
 import TableRow from "@/Components/TableRow.vue";
@@ -11,30 +11,27 @@ import Modal from "@/Components/Modal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-
 defineProps(["users"]);
 
 const form = useForm({});
-const UserID = ref('');
+const UserID = ref("");
 
+const showComfirmDeleteUserModel = ref(false);
 
-const showComfirmDeleteUserModel= ref(false);
-
-const ComfimDeleteUser =(id)=>{
-showComfirmDeleteUserModel.value=true;
-UserID.value=id;
-}
+const ComfimDeleteUser = (id) => {
+  showComfirmDeleteUserModel.value = true;
+  UserID.value = id;
+};
 
 const closeModal = () => {
-  showComfirmDeleteUserModel.value=false;
-}
+  showComfirmDeleteUserModel.value = false;
+};
 
 const deleteUser = (id) => {
-form.delete(route('users.destroy', UserID.value),{
-  onSuccess: () => closeModal()
-});
-}
-
+  form.delete(route("users.destroy", UserID.value), {
+    onSuccess: () => closeModal(),
+  });
+};
 </script>
 
 
@@ -105,20 +102,44 @@ form.delete(route('users.destroy', UserID.value),{
         </Link>
       </div>
       <div class="shadow overflow-x-auto rounded border-b border-gray-200">
-        <Table class="min-w-full snap-x bg-white ">
+        <Table class="min-w-full snap-x bg-white">
           <template #header>
             <TableRow>
               <TableHeaderCell>{{ $t("ID") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("Image") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Name") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Email") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("role") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Action") }}</TableHeaderCell>
             </TableRow>
           </template>
           <template #default>
             <TableRow v-for="user in users" :key="user.id" class="border-b">
               <TableDataCell>{{ user.id }}</TableDataCell>
+              <img
+                v-if="
+                  !user.userInfor ||
+                  !user.userInfor.profile ||
+                  user.userInfor.profile === ''
+                "
+                class="h-10 w-10 mt-1 rounded-full"
+                src="/profile.png"
+                alt="Profile Image"
+              />
+              <img
+                v-else
+                :src="`/storage/${user.userInfor.profile}`"
+                alt="Profile Picture"
+                class="h-10 w-10 mt-1 rounded-full"
+              />
+
               <TableDataCell>{{ user.name }}</TableDataCell>
               <TableDataCell>{{ user.email }}</TableDataCell>
+              <TableDataCell>
+                <span v-for="role in user.roles" :key="role.id">{{
+                  role.name
+                }}</span>
+              </TableDataCell>
               <TableDataCell>
                 <span class="text-yellow-500 flex">
                   <Link :href="route('users.edit', user.id)">
@@ -139,9 +160,7 @@ form.delete(route('users.destroy', UserID.value),{
                     </svg>
                   </Link>
 
-                  <button
-                    @click="ComfimDeleteUser(user.id)"
-                  >
+                  <button @click="ComfimDeleteUser(user.id)">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5 text-red-600 hover:text-red-900"
@@ -156,37 +175,32 @@ form.delete(route('users.destroy', UserID.value),{
                     </svg>
                   </button>
 
-                  <!-- <button @click="ComfimDeleteUser" class="text-red-800 border-2 px-5 rounded-md  font-sans" >{{ $t('delete') }}</button> -->
-
                   <Modal :show="showComfirmDeleteUserModel" @click="closeModal">
-                      <div class="relative p-4 text-center  rounded-lg">
-                        <svg class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                        <p class="mb-4 text-gray-500 dark:text-gray-300">{{ $t('comfimdelete') }}</p>
-                        <DangerButton @click="deleteUser">{{ $t('delete') }}</DangerButton>
-                        <SecondaryButton @click="closeModal">{{ $t('cancel') }}</SecondaryButton>
-                      </div>
-
+                    <div class="relative p-4 text-center rounded-lg">
+                      <svg
+                        class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <p class="mb-4 text-gray-500 dark:text-gray-300">
+                        {{ $t("comfimdelete") }}
+                      </p>
+                      <DangerButton @click="deleteUser">{{
+                        $t("delete")
+                      }}</DangerButton>
+                      <SecondaryButton @click="closeModal">{{
+                        $t("cancel")
+                      }}</SecondaryButton>
+                    </div>
                   </Modal>
-                  <!-- Main modal -->
-
-                  <!-- <Link
-                    :href="route('users.destroy', user.id)"
-                    method="DELETE"
-                    as="button"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-5 w-5 text-red-600 hover:text-red-900"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </Link> -->
                 </span>
               </TableDataCell>
             </TableRow>

@@ -79,7 +79,26 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
     Route::post('/products/store',[ProductController::class,'store'])->name('products.store');
     Route::put('/products/update-to-public/{id}',[ProductController::class,'updateToPublished'])->name('products.updateToPublished');
     Route::put('/products/update-to-unpublic/{id}',[ProductController::class,'updateToUnpublished'])->name('products.updateToUnpublished');
+    Route::get('/sale-report', [ReportController::class, 'SaleReport'])->name('SaleReport.SaleReport');
+});
 
+//Roles
+Route::middleware(['auth', 'role:staff|admin'])->prefix('/admin')->group(function () {
+    Route::resource('/notification',NotificationController::class);
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/profile', [AdminProfile::class, 'index'])->name('profile.index');
+    Route::post('/prloefile/update', [AdminProfile::class, 'update'])->name('prloefile.edit');
+    Route::resource('/deliverys', DeliveryController::class);
+    Route::resource('/categorys', CategoryController::class);
+    Route::resource('/orders', OrderController::class);
+    Route::put('/orders/update-to-cancel/{id}',[OrderController::class,'updateToCancel'])->name('orders.updateToCancel');
+    Route::resource('/banners', BannerController::class);
+    Route::get('/clear/notification', [AdminController::class,'clear'])->name('clear.infor');
+    //Product
+    Route::resource('/products', ProductController::class);
+    Route::post('/products/store',[ProductController::class,'store'])->name('products.store');
+    Route::put('/products/update-to-public/{id}',[ProductController::class,'updateToPublished'])->name('products.updateToPublished');
+    Route::put('/products/update-to-unpublic/{id}',[ProductController::class,'updateToUnpublished'])->name('products.updateToUnpublished');
 });
 // Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 // Excel

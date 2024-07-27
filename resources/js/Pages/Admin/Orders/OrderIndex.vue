@@ -241,7 +241,7 @@ const filterRecords = () => {
               <TableDataCell class="">
                 <span class="text-yellow-500 flex justify-end">
                   <Link
-                    v-if="hasPermission('Update Product')"
+                    v-if="hasPermission('Create')"
                     :href="route('orders.show', order.id)"
                   >
                     <svg
@@ -261,7 +261,7 @@ const filterRecords = () => {
                   <span class="mx-1">||</span>
 
                   <button
-                    v-if="hasPermission('Delete Product')"
+                    v-if="hasPermission('Sale')"
                     @click="updateOrder(order.id)"
                     class="text-green-700 ml-1"
                   >
@@ -284,7 +284,7 @@ const filterRecords = () => {
                   </button>
                   <span class="mx-1">||</span>
                   <button
-                    v-if="hasPermission('Delete Product')"
+                    v-if="hasPermission('Sale')"
                     @click="updateOrderCancel(order.id)"
                     class="text-green-700 ml-1"
                   >

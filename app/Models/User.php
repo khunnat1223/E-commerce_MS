@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
@@ -52,7 +53,7 @@ class User extends Authenticatable
         ];
         $user = User::with(['roles', 'permissions', 'userInfor'])->find($id);
     }
-    
+
     function user_address() {
         return $this->hasMany(UserAddress::class);
     }
@@ -67,4 +68,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserInfor::class);
     }
+    // public function roles()
+    // {
+    //     return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    // }
 }

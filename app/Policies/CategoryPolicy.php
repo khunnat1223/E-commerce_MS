@@ -29,7 +29,7 @@ class CategoryPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('Create Product')? true : false;
+        return $user->hasPermissionTo('Create')? true : false;
     }
 
     /**
@@ -37,7 +37,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-        return $user->hasPermissionTo('Update Product')? true : false;
+        return $user->hasPermissionTo('Update')? true : false;
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        return $user->hasPermissionTo('Delete Product')? true : false;
+        return $user->hasPermissionTo('Delete')? true : false;
     }
 
     /**

@@ -21,15 +21,17 @@ class PaymentExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ['OrderID', 'Date', 'Payment Type', 'Delivery', 'Amount'];
+        return ['OrderID','Name', 'Date', 'Payment Type', 'Delivery', 'Amount'];
     }
 
     public function collection()
     {
-        $query = Payment::select('order_id', 'created_date', 'type', 'delivery', 'amount');
+        $query = Payment::select('payments.order_id', 'users.name as created_by_name', 'payments.created_at', 'payments.type', 'payments.delivery', 'payments.amount')
+            ->join('orders', 'payments.order_id', '=', 'orders.id')
+            ->join('users', 'orders.created_by', '=', 'users.id');
 
         if ($this->start_date && $this->end_date) {
-            $query->whereBetween('created_date', [$this->start_date, $this->end_date]);
+            $query->whereBetween('payments.created_at', [$this->start_date, $this->end_date]);
         }
 
         return $query->get();

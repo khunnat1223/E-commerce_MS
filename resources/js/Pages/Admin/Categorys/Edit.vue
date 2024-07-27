@@ -6,8 +6,6 @@ import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
 
-
-
 import { onMounted } from 'vue';
 
 

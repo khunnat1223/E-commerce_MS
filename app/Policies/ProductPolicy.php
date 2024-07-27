@@ -17,15 +17,14 @@ class ProductPolicy
     }
     public function create(User $user): bool
     {
-        return $user->hasPermissionTo('Create Product')? true : false;
+        return $user->hasPermissionTo('Create')? true : false;
     }
-
     /**
      * Determine whether the user can update the model.
      */
     public function update(User $user, Product $product): bool
     {
-        return $user->hasPermissionTo('Update Product')? true : false;
+        return $user->hasPermissionTo('Update')? true : false;
     }
 
     /**
@@ -33,12 +32,12 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product): bool
     {
-        return $user->hasPermissionTo('Delete Product')? true : false;
+        return $user->hasPermissionTo('Delete')? true : false;
     }
-    
+
     public function deleteImage(User $user, ProductImage $productImage): bool
     {
-        return $user->hasPermissionTo('Delete Product')? true : false;
+        return $user->hasPermissionTo('Delete')? true : false;
     }
 
 }

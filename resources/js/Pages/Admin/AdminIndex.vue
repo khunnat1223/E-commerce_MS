@@ -2,6 +2,9 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 
+import { usePermission } from "@/composables/permission";
+const { hasRole, hasRoles } = usePermission();
+
 defineProps([
   "users",
   "roles",
@@ -27,7 +30,7 @@ defineProps([
         Admin Dashboard
       </h2>
     </template>
-
+    <template v-if="hasRoles(['admin','view'])">
     <div class="m-4 flex flex-wrap justify-between">
       <div
         class="mb-4 w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-yellow-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-yellow-900/40"
@@ -134,6 +137,7 @@ defineProps([
         </div>
       </div>
     </div>
+</template>
     <div class="mx-4 md:flex mx:flex block justify-between space-x-10">
       <div
         class="md:w-1/2 mx:w-1/2 w-full rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
@@ -233,6 +237,7 @@ defineProps([
           </div>
         </div>
       </div>
+      <template v-if="hasRoles(['admin','view'])">
       <div
         class="md:w-1/2 mx:w-1/2 w-full rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
@@ -316,6 +321,7 @@ defineProps([
           </div>
         </div>
       </div>
+    </template>
     </div>
   </AdminLayout>
 </template>

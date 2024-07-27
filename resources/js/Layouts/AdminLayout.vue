@@ -6,7 +6,7 @@ import { loadLanguageAsync } from "laravel-vue-i18n";
 import { useDark, useToggle } from "@vueuse/core";
 import moment from "moment";
 import { initFlowbite } from "flowbite";
-
+const { hasRole, hasRoles } = usePermission();
 import SidebarLink from "@/Components/SidebarLink.vue";
 
 // Get the page props
@@ -23,8 +23,6 @@ const formatDate = (date) => {
   return moment(date).format("DD/MMM/YYYY");
 };
 
-// Use permission composable
-const { hasRole } = usePermission();
 
 // Dark mode toggle
 const isDark = useDark();
@@ -37,6 +35,10 @@ const contnitification = props.contnitification;
 // Initialize Flowbite on component mount
 onMounted(() => {
   initFlowbite();
+  notificationShowDelete.value = true;
+  notificationShow.value = true;
+  setTimeout(() =>(notificationShow.value = false),2000);
+  setTimeout(() =>(notificationShowDelete.value = false),2000);
 });
 
 // Determine profile URL
@@ -58,6 +60,9 @@ const changeLocale = (item) => {
   localStorage.setItem("lang", item.value);
   loadLanguageAsync(item.value);
 };
+
+const notificationShow = ref(false);
+const notificationShowDelete = ref(false);
 
 // Ref for showing navigation dropdown
 const showingNavigationDropdown = ref(false);
@@ -105,7 +110,6 @@ const showingNavigationDropdown = ref(false);
             </svg>
             <span class="sr-only">Toggle sidebar</span>
           </button>
-
           <a
             :href="route('home.index')"
             :active="false"
@@ -129,11 +133,11 @@ const showingNavigationDropdown = ref(false);
           <span class="text-yellow-700 dark:text-yellow-500"
             >{{ $t("Hello") }}! : {{ $page.props.auth.user.name }}</span
           >
-          <div
-            v-if="$page.props.flash.success"
-            class="absolute mt-36 ml-64 flex items-center p-3 mb-4 text-sm text-green-800 rounded-lg bg-green-50 shadow-md dark:bg-gray-800 dark:text-blue-400"
-            role="alert"
-          >
+          <div v-if="(notificationShow && $page.props.flash.success) || (notificationShowDelete && $page.props.flash.dsuccess)">
+            <div
+             class="absolute mt-10 ml-16 flex items-center p-3 mb-4 text-sm text-green-800 rounded-lg bg-green-50 shadow-md dark:bg-gray-800 dark:text-blue-400"
+                role="alert"
+                >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -149,11 +153,12 @@ const showingNavigationDropdown = ref(false);
               />
             </svg>
             <span> {{ $page.props.flash.success }}</span>
+            </div>
           </div>
-          <div>
+          <div >
             <div
-              v-if="$page.props.flash.dsuccess"
-              class="absolute mt-10 ml-28 flex items-center p-3 mb-4 text-sm text-red-800 rounded-lg bg-red-50 shadow-md dark:bg-gray-800 dark:text-red-400"
+            v-if="$page.props.flash.dsuccess"
+              class="absolute mt-10 ml-16 flex items-center p-3 mb-4 text-sm text-red-800 rounded-lg bg-red-50 shadow-md dark:bg-gray-800 dark:text-red-400"
               role="alert"
             >
               <svg
@@ -170,7 +175,6 @@ const showingNavigationDropdown = ref(false);
                   d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
-
               <span> {{ $page.props.flash.dsuccess }}</span>
             </div>
           </div>
@@ -620,7 +624,7 @@ const showingNavigationDropdown = ref(false);
         <ul
           class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700"
         >
-          <template v-if="hasRole('admin')">
+          <template v-if="hasRoles(['staff','admin','view'])">
             <!-- Category -->
             <li>
               <SidebarLink
@@ -700,7 +704,7 @@ const showingNavigationDropdown = ref(false);
         <ul
           class="pt-3 space-y-1 border-t border-gray-200 dark:border-gray-700"
         >
-          <template v-if="hasRole('admin')">
+        <template v-if="hasRoles(['staff','admin','view'])">
             <li>
               <SidebarLink
                 :href="route('orders.index')"
@@ -727,7 +731,7 @@ const showingNavigationDropdown = ref(false);
                 <span class="font-sans">{{ $t("Order") }}</span>
               </SidebarLink>
             </li>
-            <li>
+            <li v-if="hasRoles(['admin','view'])">
               <SidebarLink
                 :href="route('reports.index')"
                 :active="route().current('reports.index')"
@@ -752,7 +756,7 @@ const showingNavigationDropdown = ref(false);
                 <span class="font-sans">{{ $t("Reports") }}</span>
               </SidebarLink>
             </li>
-            <li>
+            <li v-if="hasRoles(['admin','view'])">
               <SidebarLink
                 :href="route('staffs.index')"
                 :active="route().current('staffs.index')"

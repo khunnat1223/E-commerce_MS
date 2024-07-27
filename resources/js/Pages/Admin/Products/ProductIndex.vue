@@ -165,7 +165,7 @@ const applyFilterStock = () => {
           </div>
 
           <Link
-            v-if="hasPermission('Create Product')"
+            v-if="hasPermission('Create')"
             :href="route('products.create')"
             class="middle none justify-center items-center flex center ml-2 w-24 h-10 rounded-lg hover:scale-110 hover:skew-y-3 border-2 border-yellow-600 font-sans text-sm text-yellow-600 shadow-md transition-all hover:shadow-lg hover:shadow-yellow-700"
             data-ripple-light="true"
@@ -361,7 +361,6 @@ const applyFilterStock = () => {
                 <span class="text-yellow-500 flex">
                   <span class="text-yellow-500 flex justify-end">
                     <Link
-                      v-if="hasPermission('Update Product')"
                       :href="route('products.show', Product.id)"
                     >
                       <svg
@@ -381,7 +380,7 @@ const applyFilterStock = () => {
                     <span class="mx-1">||</span>
 
                     <Link
-                      v-if="hasPermission('Update Product')"
+                      v-if="hasPermission('Update')"
                       :href="route('products.edit', Product.id)"
                     >
                       <svg
@@ -402,7 +401,7 @@ const applyFilterStock = () => {
                     </Link>
                     <span class="mx-1">||</span>
                     <button
-                      v-if="hasPermission('Delete Product')"
+                      v-if="hasPermission('Delete')"
                       @click="ComfimDeleteProduct(Product.id)"
                     >
                       <svg

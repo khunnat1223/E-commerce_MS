@@ -13,8 +13,9 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(['name'=>'Create Product']);
-        Permission::create(['name'=>'Update Product']);
-        Permission::create(['name'=>'Delete Product']);
+        Permission::create(['name'=>'Create']);
+        Permission::create(['name'=>'Update']);
+        Permission::create(['name'=>'Delete']);
+        Permission::create(['name'=>'Sale']);
     }
 }

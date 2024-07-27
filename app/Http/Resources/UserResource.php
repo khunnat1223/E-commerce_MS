@@ -25,7 +25,6 @@ class UserResource extends JsonResource
             'permissions' =>  PermissionResource::collection($this->whenLoaded('permissions')),
             'userInfor' => new UserInforResource($this->whenLoaded('userInfor')),
 
-
         ];
 
     }
