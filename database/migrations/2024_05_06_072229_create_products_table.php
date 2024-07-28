@@ -34,6 +34,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'create_by')->nullable();
             $table->foreignIdFor(User::class, 'update_by')->nullable();
             $table->foreignIdFor(User::class,'deleted_by')->nullable();
+            $table->datetime('created_date')->nullable();
+            $table->datetime('updated_date')->nullable();
             $table->timestamps();
         });
     }

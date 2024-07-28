@@ -48,7 +48,7 @@ const addToCart = (product) => {
 <template>
   <div>
     <HomeLayout>
-      <div class="mt-20">
+      <div class="mt-28 md:mt-20">
         <FilterCategory></FilterCategory>
       </div>
       <!-- Banner -->
@@ -138,8 +138,8 @@ const addToCart = (product) => {
         </div>
       </div>
       <div class="mt-10 text-center">
-        <h2 class="text-3xl font-khmer  text-yellow-500">{{$t('Welcome to Rany Shop!')}}</h2>
-        <p class=" mx-72 pt-2 text-lg dark:text-white">{{$t('Discover the best deals and newest arrivals at RANY SHOP. We offer a wide range of products to meet all your needs and desires. Browse through our extensive catalog and find exactly what you’re looking for.')}}
+        <h2 class="text-lg md:text-3xl font-khmer  text-yellow-500">{{$t('Welcome to Rany Shop!')}}</h2>
+        <p class=" mx-4 md:mx-72 pt-2 text-sm md:text-lg dark:text-white">{{$t('Discover the best deals and newest arrivals at RANY SHOP. We offer a wide range of products to meet all your needs and desires. Browse through our extensive catalog and find exactly what you’re looking for.')}}
 
 </p>
       </div>

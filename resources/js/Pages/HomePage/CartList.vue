@@ -49,7 +49,7 @@ const totalSellingPrice = computed(() => {
       <div>
         <div class="relative max-w-screen-lg px-4 mx-auto md:px-8">
           <div>
-            <h2 class="mb-2 text-2xl font-bold text-center text-gray-800">
+            <h2 class="mb-2 mt-10 md:mt-5 text-2xl font-bold text-center text-gray-800 dark:text-white">
                 {{$t('Cart Lists')}}
             </h2>
           </div>
@@ -58,7 +58,7 @@ const totalSellingPrice = computed(() => {
             <div
               v-for="product in products"
               :key="product.id"
-              class="flex flex-wrap overflow-hidden rounded-lg gap-x-4 sm:gap-y-4 lg:gap-6 h-32 bg-slate-100 shadow-md shadow-slate-300 mb-3"
+              class="flex flex-wrap overflow rounded-lg gap-x-4 sm:gap-y-4 lg:gap-6 h-32 bg-slate-100 shadow-md shadow-slate-300 mb-3"
             >
               <a
                 href="#"
@@ -69,23 +69,23 @@ const totalSellingPrice = computed(() => {
                   :src="`/${product.product_images[0].image}`"
                   loading="lazy"
                   alt="No product images!"
-                  class="object-cover object-center transition duration-200 group-hover:scale-110 h-full w-full"
+                  class="object-cover object-center transition duration-200 group-hover:scale-110 md:h-full md:w-full w-24 h-24"
                 />
                 <img
                   v-else
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/495px-No-Image-Placeholder.svg.png?20200912122019"
                   loading="lazy"
                   alt="No product images!"
-                  class="object-cover object-center transition duration-200 group-hover:scale-110 h-full w-full"
+                  class="object-cover object-center transition duration-200 group-hover:scale-110 md:h-full md:w-full w-24 h-24"
                 />
               </a>
-              <div class="flex flex-col justify-between flex-1 py-2">
+              <div class="flex justify-between  py-2">
                 <div>
                   <a
                     href="#"
                     class="inline-block text-lg font-bold text-gray-800 transition duration-100 hover:text-gray-500 lg:text-xl text-wrap"
                   >{{ product.title }}</a>
-                  <span class="block w-80 truncate">{{ product.description }}</span>
+                  <span class="md:block hidden w-80 truncate ">{{ product.description }}</span>
                   <span class="block pt-2 font-bold text-gray-800 md:text-base">
                     $ {{ product.price }}
                   </span>
@@ -96,10 +96,10 @@ const totalSellingPrice = computed(() => {
                   </span>
                 </div>
               </div>
-              <div class="flex justify-between w-full p-4 border-t sm:w-auto sm:border-none sm:pl-0 lg:p-6 lg:pl-0">
+              <div class="-mt-28 ml-48 md:ml-0 md:-mt-2 justify-between w-full md:p-4 border-t sm:w-auto sm:border-none sm:pl-0 lg:p-6 lg:pl-0">
                 <div class="flex flex-col items-center gap-2">
-                  <div class="flex w-20 h-12 overflow-hidden">
-                    <div class="relative flex items-center">
+                  <div class="flex w-20 h-12 ">
+                    <div class="relative flex items-center -mb-12 md:mb-0">
                       <button
                         @click.prevent="update(product, carts[itemId(product.id)].quantity - 1)"
                         :disabled="carts[itemId(product.id)].quantity <= 1"
@@ -189,7 +189,7 @@ const totalSellingPrice = computed(() => {
               <div
                 class="p-4 bg-slate-100 rounded-lg w-full h-96 lg:w-80 shadow-md shadow-slate-300"
               >
-                <h2 class="text-lg font-semibold text-center mb-6 mt-4 text-gray-900 dark:text-white">
+                <h2 class="text-lg font-semibold text-center mb-6 mt-4 text-gray-900 ">
                   {{$t('Order summary')}}
                 </h2>
                 <div class="space-y-4">

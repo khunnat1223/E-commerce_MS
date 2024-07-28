@@ -1,6 +1,6 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 
 import { usePermission } from "@/composables/permission";
 const { hasRole, hasRoles } = usePermission();
@@ -32,9 +32,10 @@ defineProps([
     </template>
     <template v-if="hasRoles(['admin','view'])">
     <div class="m-4 flex flex-wrap justify-between">
-      <div
-        class="mb-4 w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-yellow-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-yellow-900/40"
-      >
+      <Link
+        :href="route('staffs.index')"
+        class="mb-4 w-80 md:w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-yellow-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-yellow-900/40"
+        >
         <div class="flex px-2 py-5">
           <div class="bg-yellow-800 text-white rounded-full h-14 w-14 p-4 mr-2">
             <svg
@@ -57,35 +58,26 @@ defineProps([
             <div class="text-green-950 text-md">{{ $t("Staff") }}</div>
           </div>
         </div>
-      </div>
-      <div
-        class="mb-4 w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-blue-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
+      </Link>
+      <Link
+       :href="route('roles.index')"
+        class="mb-4 w-80 md:w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-blue-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <div class="flex px-2 py-5">
           <div class="bg-blue-600 text-white rounded-full h-14 w-14 p-4 mr-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4.5 12a7.5 7.5 0 0 0 15 0m-15 0a7.5 7.5 0 1 1 15 0m-15 0H3m16.5 0H21m-1.5 0H12m-8.457 3.077 1.41-.513m14.095-5.13 1.41-.513M5.106 17.785l1.15-.964m11.49-9.642 1.149-.964M7.501 19.795l.75-1.3m7.5-12.99.75-1.3m-6.063 16.658.26-1.477m2.605-14.772.26-1.477m0 17.726-.26-1.477M10.698 4.614l-.26-1.477M16.5 19.794l-.75-1.299M7.5 4.205 12 12m6.894 5.785-1.149-.964M6.256 7.178l-1.15-.964m15.352 8.864-1.41-.513M4.954 9.435l-1.41-.514M12.002 12l-3.75 6.495"
-              />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+</svg>
+
           </div>
           <div class="">
             <span class="text-blue-600 text-3xl">{{ roles }}</span>
             <div class="text-green-950 text-md">{{ $t("role") }}</div>
           </div>
         </div>
-      </div>
-      <div
-        class="mb-4 w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-yellow-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
+      </Link>
+      <Link :href="route('reports.index')"
+        class="mb-4 w-80 md:w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-yellow-500 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <div class="flex px-2 py-5">
           <div class="bg-yellow-400 text-white rounded-full h-14 w-14 p-4 mr-2">
@@ -106,12 +98,13 @@ defineProps([
           </div>
           <div class="">
             <span class="text-yellow-400 text-3xl">{{ paymant }} </span>
-            <div class="text-green-950 text-md">{{ $t("Reports") }}</div>
+            <div class="text-green-950 text-md">{{ $t("Sale Report") }}</div>
           </div>
         </div>
-      </div>
-      <div
-        class="mb-4 w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
+      </Link>
+      <Link
+       :href="route('users.index')"
+        class="mb-4 w-80 md:w-60 h-24 rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <div class="flex px-2 py-5">
           <div class="bg-green-600 text-white rounded-full h-14 w-14 p-4 mr-2">
@@ -135,15 +128,15 @@ defineProps([
             <div class="text-green-950 text-md">{{ $t("user") }}</div>
           </div>
         </div>
-      </div>
+      </Link>
     </div>
 </template>
-    <div class="mx-4 md:flex mx:flex block justify-between space-x-10">
+    <div class="mx-4 md:flex mx:flex block justify-between md:space-x-10">
       <div
         class="md:w-1/2 mx:w-1/2 w-full rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <h1 class="p-5 text-xl font-khmer">{{ $t("Product Information") }}</h1>
-        <div class="flex bg-gray-200 space-x-8">
+        <div class="block md:flex bg-gray-200 md:space-x-8 ">
           <div class="flex w-60 h-24 px-5 py-5">
             <div
               class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
@@ -164,7 +157,7 @@ defineProps([
               <div class="text-green-950 text-md">{{ $t("Supplier") }}</div>
             </div>
           </div>
-          <div class="flex w-60 h-24 px-5 py-5">
+          <div class="flex w-60 h-24 px-5 py-5 ">
             <div
               class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
             >
@@ -190,7 +183,7 @@ defineProps([
             </div>
           </div>
         </div>
-        <div class="flex bg-gray-200 grid-cols-2 space-x-8">
+        <div class="block md:flex bg-gray-200 grid-cols-2 md:space-x-8">
           <div class="flex w-60 h-24 px-5 py-5">
             <div
               class="bg-green-800 text-white rounded-full h-14 w-14 p-4 mr-2"
@@ -238,7 +231,8 @@ defineProps([
         </div>
       </div>
       <template v-if="hasRoles(['admin','view'])">
-      <div
+      <Link
+       :href="route('reports.index')"
         class="md:w-1/2 mx:w-1/2 w-full rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <h1 class="p-5 text-xl font-khmer">{{ $t("Revenue and Expenses") }}</h1>
@@ -272,7 +266,7 @@ defineProps([
               <div class="">
                 <span class="text-green-800 text-3xl">$ {{ productCost }}</span>
                 <div class="text-green-950 text-md">
-                  {{ $t("ប្រាក់ចំណាយ") }}
+                  {{ $t("Expenses") }}
                 </div>
               </div>
             </div>
@@ -307,12 +301,12 @@ defineProps([
               <div class="">
                 <span class="text-green-800 text-3xl">$ {{ payments }}</span>
                 <div class="text-green-950 text-md">
-                  {{ $t("ប្រាក់ចំណូល") }}
+                  {{ $t("Revenue") }}
                 </div>
               </div>
             </div>
           </div>
-          <div class="">
+          <div class="hidden md:block">
             <img
               src="https://www.bigtime.net/wp-content/uploads/2024/05/How-to-Improve-Profitability-at-a-Professional-Services-Company.png"
               class="h-40 -ml-5 mt-5"
@@ -320,7 +314,7 @@ defineProps([
             />
           </div>
         </div>
-      </div>
+      </Link>
     </template>
     </div>
   </AdminLayout>

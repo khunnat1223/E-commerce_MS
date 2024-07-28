@@ -14,12 +14,12 @@ onMounted(() => {
   initFlowbite();
 });
 
-const profile = auth.user.profile || {};
+const profile = auth.user?.profile || {};
 const form = useForm({
-  name: auth.user.name || "",
-  email: auth.user.email || "",
-  phone: auth.user.profile.phone || "",
-  address: auth.user.profile.address || "",
+  name: auth.user?.name || "",
+  email: auth.user?.email || "",
+  phone: auth.user?.profile?.phone || "",
+  address: auth.user?.profile?.address || "",
   current_password: "",
   password: "",
   password_confirmation: "",
@@ -55,7 +55,7 @@ const handleFileChange = (event) => {
 
 const profileUrl = profile.profile ? `/storage/${profile.profile}` : "";
 const submit = () => {
-  form.post(route("Userprofile.update"), {
+  form.post(route("prloefile.edit"), {
     // onSuccess: () => form.reset(),
     // onSuccess: () => closeModal(),
     onSuccess: (page) => {

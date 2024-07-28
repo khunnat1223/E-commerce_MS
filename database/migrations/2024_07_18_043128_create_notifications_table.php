@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('address')->nullable();
             $table->string('amount')->nullable();
-            $table->datetime('created_date')->null;
+            $table->datetime('created_date')->nullable();
             $table->timestamps();
         });
     }

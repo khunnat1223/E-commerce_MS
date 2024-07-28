@@ -7,7 +7,7 @@
             <div class="grid gap-4 lg:grid-cols-5">
               <div class="flex order-last h-64 gap-4 lg:order-none lg:flex-col small-images">
                 <div
-                  class="overflow-hidden bg-gray-100 rounded-lg"
+                  class="overflow-hidden bg-gray-100 shadow-md rounded-lg"
                   v-for="(image, index) in product.product_images"
                   :key="index"
                   @click="setCurrentImage(image)"
@@ -21,7 +21,7 @@
                 </div>
               </div>
 
-              <div class="relative overflow-hidden rounded-lg h-80 lg:col-span-4">
+              <div class="relative overflow-hidden shadow-md rounded-lg h-80 lg:col-span-4">
                 <img
                   v-if="currentImage"
                   :src="`/${currentImage.image}`"
@@ -50,7 +50,6 @@
                 </h2>
               </div>
               <!-- name - end -->
-
               <!-- price - start -->
               <div class="mb-4">
                 <div class="flex items-end gap-2">

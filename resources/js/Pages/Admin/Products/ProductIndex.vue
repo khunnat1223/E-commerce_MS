@@ -141,7 +141,7 @@ const applyFilterStock = () => {
           <div class="flex">
             <a
               :href="route('products.export')"
-              class="middle none center flex items-center justify-center rounded-lg w-24 h-10 hover:scale-110 hover:skew-y-3 border-2 border-green-600 font-sans text-sm text-green-600 shadow-md transition-all hover:shadow-lg hover:shadow-green-700"
+              class="middle none center flex items-center justify-center rounded-lg pl-1 md:w-24 h-10 hover:scale-110 hover:skew-y-3 border-2 border-green-600 font-sans text-sm text-green-600 shadow-md transition-all hover:shadow-lg hover:shadow-green-700"
               data-ripple-light="true"
             >
               <svg
@@ -160,7 +160,7 @@ const applyFilterStock = () => {
                 />
               </svg>
 
-              {{ $t("Excel") }}
+              <span class="hidden md:block">{{ $t("Excel") }}</span>
             </a>
           </div>
 
@@ -175,9 +175,9 @@ const applyFilterStock = () => {
         </div>
       </div>
 
-      <form class="mx-auto">
+      <form class="mx-auto ">
         <div class="flex justify-between">
-          <div class="relative w-1/3 mb-2">
+          <div class="relative w-1/3 mb-2 hidden md:block">
             <input
               type="search"
               v-model="search"
@@ -208,11 +208,11 @@ const applyFilterStock = () => {
               <span class="sr-only">Search</span>
             </button>
           </div>
-          <div class="grid grid-cols-5 space-x-2">
+          <div class="grid grid-cols-3 md:grid-cols-5 space-x-2">
             <div class="flex items-center mt-5">
               <label
                 for="yellow-checkbox"
-                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                class=" ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >{{ $t("Filter By Pub") }}:</label
               >
             </div>
@@ -242,7 +242,7 @@ const applyFilterStock = () => {
               />
               <label
                 for="yellow-checkbox"
-                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                class=" ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >{{ $t("Unpublish") }}</label
               >
             </div>

@@ -3,3 +3,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@media print {
+    /* Hide non-printable elements */
+    .sidebar, .navbar, .print-button {
+      display: none !important;
+    }
+
+    /* Optional: adjust layout for print */
+    .content {
+      width: 110%;
+      margin-left: -30px;
+      margin-top: -80px;
+    }
+    .contentreport{
+        width: 110%;
+        margin-left: -30px;
+        margin-top: -80px;
+    }
+    .Titel{
+        display:block;
+    }
+    .contentBuyReport{
+        width: 1050px;
+        margin-left: -300px;
+        margin-top: -80px;
+    }
+  }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('phone', 255)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('profile', 225)->default(0);
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->nullable();
             $table->timestamps();
         });
     }

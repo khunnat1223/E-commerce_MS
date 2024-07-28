@@ -6,13 +6,17 @@ import Table from "@/Components/Table.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableDataCell from "@/Components/TableDataCell.vue";
-import SidebarLink from "@/Components/SidebarLink.vue";
 import Modal from "@/Components/Modal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-
-defineProps(["users"]);
-
+import PaginationLink from "@/Components/PaginationLink.vue";
+import { debounce } from "lodash";
+import { Inertia } from "@inertiajs/inertia";
+// import { defineProps } from 'vue';
+// import Pagination from '@/Components/Pagination';
+defineProps({
+    users: Array,
+});
 const form = useForm({});
 const UserID = ref("");
 
@@ -27,23 +31,20 @@ const closeModal = () => {
   showComfirmDeleteUserModel.value = false;
 };
 
-const deleteUser = (id) => {
+const deleteUser = () => {
   form.delete(route("users.destroy", UserID.value), {
     onSuccess: () => closeModal(),
   });
 };
 </script>
 
-
 <template>
   <Head title="Users" />
   <AdminLayout>
     <div class="px-8 w-full">
-      <div class="flex justify-between pb-4">
-        <div class="text-md font-sans cursor-pointer flex">
-          <div
-            class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200"
-          >
+      <div class="md:flex block justify-between pb-4">
+        <div class="text-md font-sans cursor-pointer flex mb-4 md:mb-0">
+          <div class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -58,16 +59,13 @@ const deleteUser = (id) => {
                 d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
               />
             </svg>
-
             <span class="m-1">
               <Link :href="route('admin.index')" :active="false">
                 <span class="font-sans">{{ $t("dashbourd") }}</span>
               </Link>
             </span>
           </div>
-          <div
-            class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200"
-          >
+          <div class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -116,29 +114,24 @@ const deleteUser = (id) => {
           <template #default>
             <TableRow v-for="user in users" :key="user.id" class="border-b">
               <TableDataCell>{{ user.id }}</TableDataCell>
-              <img
-                v-if="
-                  !user.userInfor ||
-                  !user.userInfor.profile ||
-                  user.userInfor.profile === ''
-                "
-                class="h-10 w-10 mt-1 rounded-full"
-                src="/profile.png"
-                alt="Profile Image"
-              />
-              <img
-                v-else
-                :src="`/storage/${user.userInfor.profile}`"
-                alt="Profile Picture"
-                class="h-10 w-10 mt-1 rounded-full"
-              />
-
+              <TableDataCell>
+                <img
+                  v-if="!user.userInfor || !user.userInfor.profile || user.userInfor.profile === ''"
+                  class="h-10 w-10 mt-1 rounded-full"
+                  src="/profile.png"
+                  alt="Profile Image"
+                />
+                <img
+                  v-else
+                  :src="`/storage/${user.userInfor.profile}`"
+                  alt="Profile Picture"
+                  class="h-10 w-10 mt-1 rounded-full"
+                />
+              </TableDataCell>
               <TableDataCell>{{ user.name }}</TableDataCell>
               <TableDataCell>{{ user.email }}</TableDataCell>
               <TableDataCell>
-                <span v-for="role in user.roles" :key="role.id">{{
-                  role.name
-                }}</span>
+                <span v-for="role in user.roles" :key="role.id">{{ role.name }}</span>
               </TableDataCell>
               <TableDataCell>
                 <span class="text-yellow-500 flex">
@@ -149,9 +142,7 @@ const deleteUser = (id) => {
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      />
+                      <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                       <path
                         fill-rule="evenodd"
                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
@@ -159,7 +150,6 @@ const deleteUser = (id) => {
                       />
                     </svg>
                   </Link>
-
                   <button @click="ComfimDeleteUser(user.id)">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -174,8 +164,7 @@ const deleteUser = (id) => {
                       />
                     </svg>
                   </button>
-
-                  <Modal :show="showComfirmDeleteUserModel" @click="closeModal">
+                  <Modal :show="showComfirmDeleteUserModel" @close="closeModal">
                     <div class="relative p-4 text-center rounded-lg">
                       <svg
                         class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
@@ -193,12 +182,8 @@ const deleteUser = (id) => {
                       <p class="mb-4 text-gray-500 dark:text-gray-300">
                         {{ $t("comfimdelete") }}
                       </p>
-                      <DangerButton @click="deleteUser">{{
-                        $t("delete")
-                      }}</DangerButton>
-                      <SecondaryButton @click="closeModal">{{
-                        $t("cancel")
-                      }}</SecondaryButton>
+                      <DangerButton @click="deleteUser">{{ $t("delete") }}</DangerButton>
+                      <SecondaryButton @click="closeModal">{{ $t("cancel") }}</SecondaryButton>
                     </div>
                   </Modal>
                 </span>
@@ -206,6 +191,10 @@ const deleteUser = (id) => {
             </TableRow>
           </template>
         </Table>
+        <div class="pr-4">
+          <!-- pagination -->
+          <!-- <PaginationLink :paginator='users' /> -->
+        </div>
       </div>
     </div>
   </AdminLayout>

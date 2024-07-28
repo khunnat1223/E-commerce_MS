@@ -34,15 +34,15 @@ class UserController extends Controller
      */
     public function index()
     {
+        // $users = User::with(['roles', 'permissions', 'userInfor'])->paginate(10);
         $users = User::with(['roles', 'permissions', 'userInfor'])->get();
 
-    return Inertia::render('Admin/Users/UserIndex', [
-        'notifications' => Notification::get(),
-        'contnitification' => Notification::count(),
-        'users' => UserResource::collection($users),
-    ]);
+        return Inertia::render('Admin/Users/UserIndex', [
+            'notifications' => Notification::get(),
+            'contnitification' => Notification::count(),
+            'users' => UserResource::collection($users),
+        ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */

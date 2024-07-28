@@ -94,7 +94,7 @@ const staffs = () => {
             </svg>
             <span class="m-1">
               <Link :href="route('staffs.index')" :active="false">
-                <span class="font-sans">{{ $t("staff") }}</span>
+                <span class="font-sans">{{ $t("staffs") }}</span>
               </Link>
             </span>
           </div>
@@ -126,7 +126,7 @@ const staffs = () => {
       </div>
       <div class="mt-6 bg-slate-200 p-6 rounded-lg">
         <h1 class="pl-4 pb-6 text-xl">
-          {{ $t("Create") }} / {{ $t("Staff") }}
+          {{ $t("Create") }} / {{ $t("staffs") }}
         </h1>
         <form @submit.prevent="staffs">
           <div class="block w-full md:flex ms:block">

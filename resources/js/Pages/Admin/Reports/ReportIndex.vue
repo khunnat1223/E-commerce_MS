@@ -162,7 +162,8 @@ const props = defineProps({
           </div>
         </div>
       </Link>
-      <!-- <div
+      <Link
+        :href="route('BuyReport.BuyReport')"
         class="md:w-1/2 mx:w-1/2 w-full rounded-lg dark:bg-white dark:hover:shadow-green-800 shadow-md shadow-gray-400 transition-all hover:shadow-lg hover:shadow-blue-500/40"
       >
         <h1 class="p-5 text-xl font-khmer">{{ $t("Buy Reports") }}</h1>
@@ -244,7 +245,7 @@ const props = defineProps({
             />
           </div>
         </div>
-      </div> -->
+      </Link>
     </div>
     </div>
   </AdminLayout>

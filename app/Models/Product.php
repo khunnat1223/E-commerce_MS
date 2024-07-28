@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Builder;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable =['title','description','cost','price','qty','published','category_id','discount','sellingprice','supplier_id','product_images'];
+    protected $fillable =['title','description','cost','price','qty','published','category_id','discount','sellingprice','supplier_id','product_images','updated_date','created_date'];
 
     public function product_images(){
         return $this->hasMany(ProductImage::class);

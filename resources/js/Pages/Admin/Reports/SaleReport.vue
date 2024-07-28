@@ -18,7 +18,13 @@ const props = defineProps({
   filters: Object,
   totalAmount:Object,
 });
-
+const ClearFilter = () => {
+  router.get(route("BuyReport.BuyReport"), {
+  });
+};
+const  printPage =() =>{
+      window.print();
+    }
 // Setup reactive form fields for dates
 const start_date = ref(props.filters.start_date || '');
 const end_date = ref(props.filters.end_date || '');
@@ -52,9 +58,9 @@ const toggleImageScale = (payment) => {
 
   <AdminLayout>
     <div class="px-8 w-full">
-      <div class="flex justify-between pb-4">
+        <div class="md:flex block justify-between pb-4">
         <!-- Path for Back -->
-        <div class="text-md font-sans cursor-pointer flex">
+        <div class="md:flex block font-sans cursor-pointer navbar">
           <div
             class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200"
           >
@@ -127,20 +133,17 @@ const toggleImageScale = (payment) => {
               />
             </svg>
             <span class="m-1">
-              <Link >
+              <Link>
                 <span class="font-sans">{{ $t("Sale Report") }}</span>
               </Link>
             </span>
           </div>
         </div>
-
-      </div>
-      <div class="flex justify-between">
-        <div class="flex space-x-2">
-          <div class="flex ">
+        <div class="flex space-x-3">
+          <div class=" ">
             <button
               @click="exportPayments"
-              class="middle none center flex items-center justify-center rounded-lg w-24 h-10 hover:scale-110 hover:skew-y-3 border-2 border-green-600 font-sans text-sm text-green-600 shadow-md transition-all hover:shadow-lg hover:shadow-green-700"
+              class="middle navbar none center flex items-center justify-center rounded-lg w-24 h-11 hover:scale-110 hover:skew-y-3 border-2 border-green-600 font-sans text-green-600 shadow-md transition-all hover:shadow-lg hover:shadow-green-700"
               data-ripple-light="true"
             >
               <svg
@@ -163,58 +166,68 @@ const toggleImageScale = (payment) => {
             </button>
           </div>
 
+          <div class="relative">
+            <button
+              @click="printPage"
+              class="flex print-button btn middle none center rounded-lg hover:scale-110 hover:skew-y-3 border-2 border-yellow-600 py-2.5 px-4 font-sans text-sm text-yellow-600 shadow-md transition-all hover:shadow-lg hover:shadow-yellow-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z"
+                />
+              </svg>
+              <span class="mt-0.5 ml-1">{{ $t("Print") }}</span>
+            </button>
+          </div>
         </div>
- <!-- Filter Form -->
- <form @submit.prevent="filterRecords">
-          <div class="flex justify-end space-x-3 mb-2">
-            <div class="relative max-w-sm">
-              <div
-                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
-              >
-                <svg
-                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="date"
-                v-model="start_date"
-                placeholder="Start Date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
-            <div class="relative max-w-sm">
-              <div
-                class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
-              >
-                <svg
-                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="date"
-                v-model="end_date"
-                placeholder="End Date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-            </div>
+      </div>
+      <div class="py-2 mb-5 navbar px-6 bg-white dark:bg-gray-800 rounded-md shadow-lg">
+        <form @submit.prevent="filterRecords" class="flex space-x-2">
+          <div class="flex flex-col space-y-1">
+            <label
+              class="font-sans text-sm dark:text-gray-300"
+              for="start_date"
+              >{{ $t("Start Date") }}</label
+            >
+            <input
+              type="date"
+              class="dark:bg-gray-500 h-11 text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-200 bg-transparent font-sans text-sm outline-none border border-gray-500 rounded-[7px] transition-all focus:border-yellow-500 focus:outline-none"
+              v-model="start_date"
+              name="start_date"
+              id="start_date"
+              required
+            />
+          </div>
+
+          <div class="flex flex-col space-y-1">
+            <label
+              class="font-sans text-sm dark:text-gray-300"
+              for="end_date"
+              >{{ $t("End Date") }}</label
+            >
+            <input
+              type="date"
+              class="dark:bg-gray-500 h-11 text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm outline-none border border-gray-500 rounded-[7px] transition-all focus:border-yellow-500 focus:outline-none"
+              v-model="end_date"
+
+              name="end_date"
+              id="end_date"
+              required
+            />
+          </div>
+
+          <div class="flex items-end">
             <div>
-              <button type="submit" class="mt-2">
+              <button type="submit" @dblclick="ClearFilter()" class="mt-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -231,13 +244,13 @@ const toggleImageScale = (payment) => {
             </div>
           </div>
         </form>
-
       </div>
 
-      <div>
-        <!-- <p>{{ $en.test }}</p> -->
-      </div>
-      <div class="shadow overflow-y rounded">
+      <div class="shadow overflow-x-auto rounded contentreport">
+        <div class="Titel hidden">
+            <h1 class="text-center font-khmer text-yellow-700 underline -mb-2 mt-2 text-lg">{{ $t('Rany Online Shop') }}</h1>
+            <h1 class="text-center font-khmer  text-yellow-700 underline py-5 text-md">{{ $t('Sale Report') }}</h1>
+        </div>
         <Table class="w-full">
           <template #header>
             <TableRow>

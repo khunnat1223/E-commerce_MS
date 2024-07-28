@@ -68,11 +68,18 @@ const notificationShowDelete = ref(false);
 const showingNavigationDropdown = ref(false);
 </script>
 
+<style>
+@media print {
+  .navbar, .sidebar {
+    display: none !important;
+  }
+}
+</style>
 
 <template>
   <div class="antialiased bg-gray-50 dark:bg-gray-900 font-sans">
     <nav
-      class="bg-white border-b border-gray-200 px-2 py-2 dark:bg-gray-800 dark:shadow-md dark:shadow-gray-700 dark:border-gray-700 fixed left-0 md:left-72 right-0 md:right-8 top-0 z-50 shadow-md rounded-md"
+      class=" navbar btn-primary bg-white border-b border-gray-200 px-2 py-2 dark:bg-gray-800 dark:shadow-md dark:shadow-gray-700 dark:border-gray-700 fixed left-0 md:left-72 right-0 md:right-8 top-0 z-50 shadow-md rounded-md"
     >
       <div class="flex flex-wrap justify-between items-center">
         <div class="flex justify-start items-center">
@@ -130,7 +137,7 @@ const showingNavigationDropdown = ref(false);
               />
             </svg>
           </a>
-          <span class="text-yellow-700 dark:text-yellow-500"
+          <span class=" hidden md:block text-yellow-700 dark:text-yellow-500"
             >{{ $t("Hello") }}! : {{ $page.props.auth.user.name }}</span
           >
           <div v-if="(notificationShow && $page.props.flash.success) || (notificationShowDelete && $page.props.flash.dsuccess)">
@@ -188,7 +195,7 @@ const showingNavigationDropdown = ref(false);
           >
             <span
               v-if="contnitification != 0"
-              class="-mt-5 absolute -mr-6 px-1 text-xs font-bold text-white bg-red-500 border-2 border-red-500 rounded-full lg:top-6 lg:end-40 dark:border-gray-900 2xl:end-auto"
+              class="-mt-2 md:-mt-4 absolute -mr-6 px-1 text-xs font-bold text-white bg-red-500 border-2 border-red-500 rounded-full lg:top-6 lg:end-40 dark:border-gray-900 2xl:end-auto"
             >
               {{ contnitification }}
             </span>
@@ -551,7 +558,7 @@ const showingNavigationDropdown = ref(false);
     <!-- Sidebar -->
 
     <aside
-      class="fixed overflow-auto top-14 md:top-0 left-0 shadow-xl z-40 w-64 h-full pt-4 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+      class="sidebar fixed overflow-auto top-14 md:top-0 left-0 shadow-xl z-40 w-64 h-full pt-4 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
       aria-label="Sidenav"
       id="drawer-navigation"
     >

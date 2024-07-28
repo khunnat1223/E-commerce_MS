@@ -59,6 +59,7 @@ const filterRecords = () => {
     end_date: end_date.value,
   });
 };
+
 </script>
 
 <template>
@@ -66,7 +67,7 @@ const filterRecords = () => {
 
   <AdminLayout>
     <div class="px-8 w-full">
-      <div class="flex justify-between pb-4">
+      <div class="block md:flex justify-between pb-4">
         <!-- Path for Back -->
         <div class="text-md font-sans cursor-pointer flex">
           <div
@@ -122,7 +123,7 @@ const filterRecords = () => {
 
         <!-- Filter Form -->
         <form @submit.prevent="filterRecords">
-          <div class="flex justify-end space-x-3">
+          <div class="block md:flex justify-end md:space-x-3 ">
             <div class="relative max-w-sm">
               <div
                 class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
@@ -259,7 +260,6 @@ const filterRecords = () => {
                     </svg>
                   </Link>
                   <span class="mx-1">||</span>
-
                   <button
                     v-if="hasPermission('Sale')"
                     @click="updateOrder(order.id)"

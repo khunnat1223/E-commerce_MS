@@ -118,7 +118,7 @@ form.delete(route('categorys.destroy', categoryID.value),{
       <div>
         <!-- <p>{{ $en.test }}</p> -->
       </div>
-      <div class="shadow overflow-hidden rounded border-b border-gray-200">
+      <div class="shadow overflow-x-auto rounded border-b border-gray-200">
         <Table class="w-full bg-white dark:bg-slate-300">
           <template #header>
             <TableRow>

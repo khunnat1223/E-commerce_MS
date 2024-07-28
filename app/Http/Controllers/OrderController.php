@@ -7,7 +7,10 @@ use App\Models\Order;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Notification;
+use App\Models\Product;
 // use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class OrderController extends Controller
 {
@@ -69,6 +72,7 @@ public function update(Request $request, $id)
     }
 
 }
+
 
 
 

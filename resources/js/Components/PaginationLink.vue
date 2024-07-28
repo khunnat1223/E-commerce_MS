@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps } from 'vue';
+// import { link } from '@inertiajs/vue3';
 
 defineProps({
   paginator: {
@@ -9,6 +10,7 @@ defineProps({
 });
 
 const makeLabel = (label) => {
+  if (!label) return '';
   if (label.includes("Previous")) {
     return "<<";
   } else if (label.includes("Next")) {
@@ -24,6 +26,7 @@ const makeLabel = (label) => {
     <div class="flex items-center rounded-md overflow-hidden shadow-lg">
       <div v-for="link in paginator.links" :key="link.label">
         <component
+          v-if="link"
           :is="link.url ? 'a' : 'span'"
           :href="link.url"
           v-html="makeLabel(link.label)"

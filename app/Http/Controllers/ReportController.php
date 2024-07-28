@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Products;
 // Excel
 use App\Exports\PaymentExport;
+use App\Exports\ProductReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Notification;
 // use Illuminate\Http\Request;
@@ -17,21 +18,6 @@ class ReportController extends Controller
 {
     public function index(Request $request)
     {
-        // $startDate = $request->query('start_date');
-        // $endDate = $request->query('end_date');
-        // $query = Payment::with('order.createdBy');
-        // if ($startDate && $endDate) {
-        //     $query->whereBetween('created_at', [$startDate, $endDate]);
-        // }
-        // $totalAmountQuery = clone $query;
-        // $payments = $query->get()->map(function ($payment) {
-        //     if ($payment->imagepay) {
-        //         $payment->imagepay = asset('storage/' . $payment->imagepay);
-        //     }
-        //     return $payment;
-        // });
-
-        // $totalAmount = $totalAmountQuery->sum('amount');
 
         return Inertia::render('Admin/Reports/ReportIndex', [
             'notifications' => Notification::get(),
@@ -40,8 +26,6 @@ class ReportController extends Controller
             'payment' =>Payment::Count(),
             'products' =>Product::Sum('total_price'),
             'product' =>Product::Count(),
-            // 'totalAmount' => $totalAmount,
-            // 'filters' => $request->only(['start_date', 'end_date']),
         ]);
     }
 
@@ -79,34 +63,32 @@ class ReportController extends Controller
         ]);
     }
 
-
     public function BuyReport(Request $request)
     {
-        $query = Product::with('order.createdBy');
+        $startDate = $request->query('start_date');
+        $endDate = $request->query('end_date');
+
+        $query = Product::with('product_images');
+
         if ($startDate && $endDate) {
-            $query->whereBetween('created_at', [$startDate, $endDate]);
+            $query->whereBetween('created_date', [$startDate, $endDate]);
         }
-        $totalAmountQuery = clone $query;
-        $payments = $query->get()->map(function ($payment) {
-            if ($payment->imagepay) {
-                $payment->imagepay = asset('storage/' . $payment->imagepay);
-            }
-            return $payment;
-        });
 
-        $totalAmount = $totalAmountQuery->sum('amount');
+        $products = $query->get(); // Execute the query to get the products
+        $totalCost = $products->sum('total_cost');
+        $totalPrice = $products->sum('total_price');  // Calculate the total amount
+        $productCount = $products->count(); // Count the products
 
-        $paymentCount = $query->count();
-
-        return Inertia::render('Admin/Reports/SaleReport', [
+        return Inertia::render('Admin/Reports/BuyReport', [
             'notifications' => Notification::get(),
             'contnitification' => Notification::count(),
-            'payments' => $payments,
-            'totalAmount' => $totalAmount,
-            'paymentCount' => $paymentCount,
+            'products' => $products,
+            'totalCost' => $totalCost,
+            'totalPrice' => $totalPrice,
             'filters' => $request->only(['start_date', 'end_date']),
         ]);
     }
+
 
 
 
@@ -142,4 +124,11 @@ public function update(Request $request, $id)
         $end_date = $request->input('end_date');
         return Excel::download(new PaymentExport($start_date, $end_date), 'SaleReport.xlsx');
     }
+
+ public function exportProduct(Request $request)
+ {
+     $start_date = $request->input('start_date');
+     $end_date = $request->input('end_date');
+     return Excel::download(new ProductReportExport($start_date, $end_date), 'ProductReport.xlsx');
+ }
 }

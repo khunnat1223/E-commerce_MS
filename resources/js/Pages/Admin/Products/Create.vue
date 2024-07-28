@@ -35,7 +35,7 @@ const form = useForm({
 
 const Cdiscount = () => {
   form.price = form.sellingprice - form.sellingprice * (form.discount / 100);
-  form.total_price = form.sellingprice * form.qty;
+  form.total_price = form.price * form.qty;
 };
 const CtotalCost = () => {
   form.total_cost = form.cost * form.qty;
@@ -272,7 +272,7 @@ const Addimage = async () => {
                         @mouseout="CtotalCost"
                         id="cost"
                         name="cost"
-                        type="number"
+                        type="text"
                         class="mt-1 mb-2 block w-full"
                         v-model="form.cost"
                         autocomplete="cost"
@@ -284,7 +284,7 @@ const Addimage = async () => {
                       <TextInput
                         @mouseout="Cdiscount"
                         id="sellingprice"
-                        type="number"
+                        type="text"
                         class="mt-1 w-full mb-2 block"
                         v-model="form.sellingprice"
                         autocomplete="sellingprice"
@@ -300,7 +300,7 @@ const Addimage = async () => {
                     <TextInput
                       @mouseout="Cdiscount"
                       id="discount"
-                      type="number"
+                      type="text"
                       class="mt-1 mb-2 block w-full"
                       v-model="form.discount"
                       autocomplete="discount"
@@ -325,7 +325,7 @@ const Addimage = async () => {
                   <span>{{ $t("Price") }}</span>
                   <TextInput
                     id="price"
-                    type="number"
+                    type="text"
                     class="mt-1 mb-2 block w-full"
                     v-model="form.price"
                     autocomplete="price"

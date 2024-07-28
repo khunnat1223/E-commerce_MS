@@ -20,10 +20,9 @@ return new class extends Migration
             $table->string('dob', 225)->nullable();
             $table->string('dop', 225)->nullable();
             $table->string('position', 225)->nullable();
-            // $table->decimal('salary', 100,200)->nullable();
             $table->decimal('salary')->nullable();
             $table->boolean('status')->nullable();
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->nullable();
             $table->timestamps();
         });
     }

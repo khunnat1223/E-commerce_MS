@@ -87,7 +87,7 @@ const mobileFiltersOpen = ref(false);
       <div>
         <main class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div
-            class="flex items-baseline justify-between pb-6 border-b border-gray-200 dark:border-gray-600"
+            class="flex mt-10 items-baseline justify-between pb-6 border-b border-gray-200 dark:border-gray-600"
           >
             <h1
               class="font-khmer tracking-tight text-gray-900 md:text-xl dark:text-slate-100"
@@ -128,7 +128,7 @@ const mobileFiltersOpen = ref(false);
                         @mouseleave="priceFilter()"
                         v-model="filterPrices.prices[0]"
                         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                      /><span class="mt-3 -ml-5">$</span>
+                      /><span class="mt-3 -ml-10">$</span>
                     </div>
                   </div>
                   <div class="basis-1/2">
@@ -147,7 +147,7 @@ const mobileFiltersOpen = ref(false);
                         @mouseleave="priceFilter()"
                         class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                       />
-                      <span class="mt-3 -ml-5">$</span>
+                      <span class="mt-3 -ml-10">$</span>
                     </div>
                   </div>
 
@@ -163,9 +163,9 @@ const mobileFiltersOpen = ref(false);
                 >
                   <h3 class="-my-3 flow-root mt-3">
                     <dev
-                      class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
+                      class="flex w-full items-center justify-between py-3 text-sm text-gray-400  hover:text-gray-500"
                     >
-                      <span class="font-medium border-t-2 w-full pt-2 text-gray-900 mb-2">{{
+                      <span class="font-medium border-t-2 w-full pt-2 text-gray-900 dark:text-white mb-2">{{
                         $t("Categories")
                       }}</span>
                     </dev>
@@ -186,7 +186,7 @@ const mobileFiltersOpen = ref(false);
                         />
                         <label
                           :for="`filter-${category.id}`"
-                          class="ml-3 text-sm text-gray-600"
+                          class="ml-3 text-sm dark:text-white "
                           >{{ category.category }}</label
                         >
                       </div>

@@ -31,7 +31,7 @@ class PaymentExport implements FromCollection, WithHeadings
             ->join('users', 'orders.created_by', '=', 'users.id');
 
         if ($this->start_date && $this->end_date) {
-            $query->whereBetween('payments.created_at', [$this->start_date, $this->end_date]);
+            $query->whereBetween('payments.created_date', [$this->start_date, $this->end_date]);
         }
 
         return $query->get();

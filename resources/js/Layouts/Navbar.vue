@@ -69,11 +69,11 @@ const changeLocale = (item) => {
         />
       </div>
 
-        <span class="font-khmer -mt-2">{{ $t("Rany Shop") }}</span>
+      <span class="hidden sm:block md:block font-khmer -mt-2">{{ $t("Rany Shop") }}</span>
 
       </a>
 
-      <div class="hidden w-4/12 md:inline-block">
+      <div class="w-80 ml-4 absolute mt-32 md:mt-0 md:relative  md:w-4/12 ">
         <form class="max-w-md mx-auto">
           <div class="relative">
             <input

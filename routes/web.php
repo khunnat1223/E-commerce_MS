@@ -80,6 +80,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
     Route::put('/products/update-to-public/{id}',[ProductController::class,'updateToPublished'])->name('products.updateToPublished');
     Route::put('/products/update-to-unpublic/{id}',[ProductController::class,'updateToUnpublished'])->name('products.updateToUnpublished');
     Route::get('/sale-report', [ReportController::class, 'SaleReport'])->name('SaleReport.SaleReport');
+    Route::get('/buy-report', [ReportController::class, 'BuyReport'])->name('BuyReport.BuyReport');
 });
 
 //Roles
@@ -92,6 +93,7 @@ Route::middleware(['auth', 'role:staff|admin'])->prefix('/admin')->group(functio
     Route::resource('/categorys', CategoryController::class);
     Route::resource('/orders', OrderController::class);
     Route::put('/orders/update-to-cancel/{id}',[OrderController::class,'updateToCancel'])->name('orders.updateToCancel');
+    Route::put('/orders/{id}',[OrderController::class,'show']);
     Route::resource('/banners', BannerController::class);
     Route::get('/clear/notification', [AdminController::class,'clear'])->name('clear.infor');
     //Product
@@ -100,10 +102,10 @@ Route::middleware(['auth', 'role:staff|admin'])->prefix('/admin')->group(functio
     Route::put('/products/update-to-public/{id}',[ProductController::class,'updateToPublished'])->name('products.updateToPublished');
     Route::put('/products/update-to-unpublic/{id}',[ProductController::class,'updateToUnpublished'])->name('products.updateToUnpublished');
 });
-// Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 // Excel
 Route::get('/products/download', [ProductController::class, 'export'])->name('products.export');
 Route::get('/reports/download', [ReportController::class, 'export'])->name('reports.export');
+Route::get('/reports/prdocts/download', [ReportController::class, 'exportProduct'])->name('reportProduct.exportProduct');
 
 Route::prefix('banner')->controller(BannerListController::class)->group(function ()  {
     Route::get('/','index')->name('banner.index');
@@ -133,6 +135,8 @@ Route::prefix('products')->controller(ProductListController::class)->group(funct
 Route::get('/auth/{provider}/redirect',[ProviderController::class,'redirect']);
 Route::get('/auth/{provider}/callback',[ProviderController::class,'callback']);
 
+
+
  //chekcout
  Route::prefix('checkout')->controller(CheckoutController::class)->group((function()  {
     Route::get('payment','view')->name('checkout.view');
@@ -141,4 +145,8 @@ Route::get('/auth/{provider}/callback',[ProviderController::class,'callback']);
     Route::get('cancel','cancel')->name('checkout.cancel');
 }));
 
+
+Route::get('/your-page', function () {
+    return Inertia::render('YourPage');
+});
 require __DIR__.'/auth.php';

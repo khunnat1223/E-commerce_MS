@@ -37,6 +37,6 @@ class AdminProfile extends Controller
         }
         // Update or create profile data
         $user->profile()->updateOrCreate([], $profileData);
-        return redirect()->route('Userprofile.edit')->with('success', 'Product updated successfully.');
+        return redirect()->route('profile.index')->with('success', 'Product updated successfully.');
     }
 }

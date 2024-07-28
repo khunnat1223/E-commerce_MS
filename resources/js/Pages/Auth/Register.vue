@@ -23,14 +23,14 @@ const submit = () => {
 <template>
     <GuestLayout>
         <Head title="Register" />
-        <div class="flex rounded-lg  bg-gray-200 shadow-slate-400 shadow-lg">
+        <div class="md:flex sm:block rounded-lg  bg-gray-200 shadow-slate-400 shadow-lg">
 
      <!-- Sign Up Section -->
      <div
         class="w-96 rounded-r-3xl rounded-lg bg-gradient-to-r text-center justify-center from-orange-400 to-yellow-400 text-white p-8"
       >
         <img
-          src="https://github.com/sa-sa-creator/Images/blob/main/RanyLogo.png?raw=true"
+          src="/RanyLogo.png"
           class="justify-center w-36 ml-20 mt-4"
           alt=""
         />

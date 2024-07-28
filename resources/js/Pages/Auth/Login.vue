@@ -39,7 +39,7 @@ const submit = () => {
       {{ status }}
     </div>
 
-    <div class="flex rounded-lg bg-gray-200 shadow-slate-400 shadow-lg">
+    <div class="md:flex sm:block rounded-lg bg-gray-200 shadow-slate-400 shadow-lg">
       <div class="w-96 p-7">
         <h2 class="text-3xl font-bold  mb-5 text-center">Sign In</h2>
         <form @submit.prevent="submit">
@@ -157,7 +157,7 @@ const submit = () => {
         class="w-96 rounded-l-3xl rounded-lg bg-gradient-to-r text-center justify-center from-orange-400 to-yellow-400 text-white p-8"
       >
         <img
-          src="https://github.com/sa-sa-creator/Images/blob/main/RanyLogo.png?raw=true"
+           src="/RanyLogo.png"
           class="justify-center w-36 ml-24 mt-4"
           alt=""
         />

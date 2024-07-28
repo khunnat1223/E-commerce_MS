@@ -47,9 +47,9 @@ const DeleteSupplier = () => {
 
   <AdminLayout>
     <div class="px-8 w-full">
-      <div class="flex justify-between pb-4">
+        <div class="block md:flex justify-between pb-4 mb-4 ">
         <!-- Path for Back -->
-        <div class="text-md font-sans cursor-pointer flex">
+        <div class="text-md font-sans cursor-pointer flex mb-4 md:mb-0">
           <div
             class="flex hover:text-yellow-700 dark:hover:text-yellow-500 dark:text-gray-200"
           >
