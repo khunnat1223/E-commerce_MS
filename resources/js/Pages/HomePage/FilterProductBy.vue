@@ -192,7 +192,7 @@ const mobileFiltersOpen = ref(false);
                       </div>
                     </div>
                 </dev>
-                </dev>
+            </dev>
 
                 <!-- end -->
               </form>

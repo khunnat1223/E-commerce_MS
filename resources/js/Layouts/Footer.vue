@@ -36,7 +36,7 @@
                     <nav class="flex flex-col gap-4">
                         <div>
                             <a
-                                href="#"
+                                href="https://www.facebook.com/share/pxKwERDNYvNQ7R5V/?mibextid=qi2Omg"
                                 class="flex items-center text-slate-400 transition duration-100 hover:text-yellow-300 active:text-yellow-600"
                                 ><svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +248,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                +855 10371277</a
+                                +855 093488883 / 012 30 59 18 / 088 9 138 138 </a
                             >
                         </div>
 
@@ -290,7 +290,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                +855 10371277</a
+                                +855 12 30 59 18 </a
                             >
                         </div>
                         <div>
@@ -330,7 +330,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                                sarithlovekh@gmail.com</a
+                                ranyshop@gmail.com</a
                             >
                         </div>
                     </nav>

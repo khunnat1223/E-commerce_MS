@@ -147,7 +147,7 @@ const staffs = () => {
               </div>
               <div class="flex w-full">
                 <div class="mb-2 mr-2 w-1/2">
-                  <span>{{ $t("Sex") }}</span>
+                  <span>{{ $t("sex") }}</span>
                   <select
                     v-model="form.sex"
                     id="sex"

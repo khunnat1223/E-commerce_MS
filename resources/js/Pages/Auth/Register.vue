@@ -152,7 +152,7 @@ const submit = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Fackebook
+                Facebook
               </a>
             </div>
             <a

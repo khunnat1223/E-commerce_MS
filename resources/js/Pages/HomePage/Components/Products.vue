@@ -1,7 +1,8 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
+// import { router } from '@inertiajs/vue3';
 import PaginationLink from "@/Components/PaginationLink.vue";
-
+// import Link from 'vendor/protonemedia/laravel-splade/lib/Components/Link.vue';
+import { Link, router } from "@inertiajs/vue3";
 defineProps({
     products: Array
 })
@@ -49,7 +50,7 @@ const addToCart = (product) => {
                 />
                 <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 cursor-pointer">
                     <div class="bg-yellow-700 opacity-80 p-2 rounded-full ml-2">
-                        <a href="detail">
+                        <Link :href="route('productDetail.show', product.id)">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -69,7 +70,7 @@ const addToCart = (product) => {
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                                 />
                             </svg>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div class="left-0 -mt-10 flex gap-2 bottom-2">

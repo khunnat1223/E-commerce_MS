@@ -3,7 +3,7 @@
     "dashbourd": "Dashboard",
 
     "user": "User",
-    "role": "role",
+    "role": "Role",
     "permission": "permission",
 
     "Create": "Create",
@@ -23,7 +23,7 @@
     "delete": "delete",
     "cancel": "cancel",
 
-    "Category": "Category of goods",
+    "Category": "Category",
     "Description": "Description",
     "Hello": "Hello",
 
@@ -50,7 +50,7 @@
 
     "Staff": "Staff",
     "staffs": "Staffs",
-    "sex": "sex",
+    "sex": "Gender",
     "pob": "Place of Birth",
     "dob": "Date of Birth",
     "Position": "Position",

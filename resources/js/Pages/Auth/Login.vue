@@ -102,7 +102,7 @@ const submit = () => {
                 type="button"
                 class="text-yellow-600 cursor-pointer"
               >
-                Signup</Link
+                Sign up</Link
               ></span
             >
           </div>
@@ -133,7 +133,7 @@ const submit = () => {
                     clip-rule="evenodd"
                   />
                 </svg>
-                Fackebook
+                Facebook
               </a>
             </div>
             <a
