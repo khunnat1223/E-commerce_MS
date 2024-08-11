@@ -19,7 +19,7 @@ defineProps({
 });
 
 const form = useForm({
-  email: "",
+  loginwith: "",
   password: "",
   remember: false,
 });
@@ -39,31 +39,33 @@ const submit = () => {
       {{ status }}
     </div>
 
-    <div class="md:flex sm:block rounded-lg bg-gray-200 shadow-slate-400 shadow-lg">
+    <div
+      class="md:flex sm:block rounded-lg bg-gray-200 shadow-slate-400 shadow-lg"
+    >
       <div class="w-96 p-7">
-        <h2 class="text-3xl font-bold  mb-5 text-center">Sign In</h2>
+        <h2 class="text-3xl font-bold mb-5 text-center">Sign In</h2>
         <form @submit.prevent="submit">
           <div>
             <TextInput
-              id="email"
-              type="email"
-              class=" block w-full"
-              v-model="form.email"
+              id="loginwith"
+              type="text"
+              class="block w-full"
+              v-model="form.loginwith"
               required
               autofocus
-               placeholder="Email or phone "
-              autocomplete="username"
+              placeholder="email or phone number"
+
             />
-            <InputError class="mt-2" :message="form.errors.email" />
+            <InputError class="mt-2" :message="form.errors.loginwith" />
           </div>
 
           <div class="mt-4">
             <TextInput
               id="password"
               type="password"
-              class=" block w-full"
+              class="block w-full"
               v-model="form.password"
-               placeholder="Password"
+              placeholder="Password"
               required
               autocomplete="current-password"
             />
@@ -107,11 +109,35 @@ const submit = () => {
             >
           </div>
           <div class="flex items-center justify-center my-4">
-    <div class="border-t  ms-2 border-gray-300 flex-grow mr-3"></div>
-    <span class="text-gray-500 ">or</span>
-    <div class="border-t border-gray-300 flex-grow ml-3"></div>
-</div>
+            <div class="border-t ms-2 border-gray-300 flex-grow mr-3"></div>
+            <span class="text-gray-500">or</span>
+            <div class="border-t border-gray-300 flex-grow ml-3"></div>
+          </div>
           <div class="block my-4 w-full">
+            <div class="mb-2">
+              <a
+                class="w-full justify-center h-12 rounded-md bg-green-600 text-white active:bg-blueGray-50 text-blueGray-700 px-4 py-2 outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-sm ease-linear transition-all duration-150"
+                type="button"
+                href="/phone-register"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-6 mr-3"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z"
+                  />
+                </svg>
+
+                Phone
+              </a>
+            </div>
             <div>
               <a
                 class="w-full justify-center h-12 rounded-md bg-blue-600 text-white active:bg-blueGray-50 text-blueGray-700 px-4 py-2 outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-sm ease-linear transition-all duration-150"
@@ -157,13 +183,14 @@ const submit = () => {
         class="w-96 rounded-l-3xl rounded-lg bg-gradient-to-r text-center justify-center from-orange-400 to-yellow-400 text-white p-8"
       >
         <img
-           src="/RanyLogo.png"
+          src="/RanyLogo.png"
           class="justify-center w-36 ml-24 mt-4"
           alt=""
         />
-        <h2 class="text-2xl font-bold  mb-5 text-center">Hello, Friend!</h2>
+        <h2 class="text-2xl font-bold mb-5 text-center">Hello, Friend!</h2>
         <p class="mb-6 text-center">
-          Enter your personal details and start <br> journey with us
+          Enter your personal details and start <br />
+          journey with us
         </p>
         <Link
           :href="route('register')"

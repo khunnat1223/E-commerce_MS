@@ -1,17 +1,18 @@
 {
-    "systemName": "Online Shopping Management System",
+    "systemName": "Online Shopping Management",
     "dashbourd": "Dashboard",
 
-    "user": "User",
-    "role": "Role",
-    "permission": "permission",
+    "user": "Users",
+    "role": "Roles",
+    "permission": "Permissions",
 
     "Create": "Create",
     "Update": "Update",
     "Delete": "Delete",
     "Save": "Save",
 
-    "ID": "Pro",
+    "ID": "ID",
+    "ProID": "ProID",
     "Name": "Name",
     "Email": "Email",
     "Action": "Action",
@@ -28,7 +29,7 @@
     "Hello": "Hello",
 
     "Image": "Image",
-    "Product": "Commodity",
+    "Product": "Products",
     "Cost": "Purchase Price",
     "Price": "Sales price",
     "Selling": "Selling price",
@@ -48,7 +49,7 @@
     "Phone": "Phone number",
     "Address": "Address",
 
-    "Staff": "Staff",
+    "Staff": "Staffs",
     "staffs": "Staffs",
     "sex": "Gender",
     "pob": "Place of Birth",

@@ -21,10 +21,10 @@ onMounted(() => {
 
 const profile = props.users.profile || {};
 const form = useForm({
-  name: props.users.name || "",
-  email: props.users.email || "",
-  phone: profile.phone || "",
-  address: profile.address || "",
+  name: props.users?.name || "",
+  email: props.users?.email || "",
+  phone: props.users?.phone || "",
+  address: profile?.address || "",
   current_password: "",
   password: "",
   password_confirmation: "",
@@ -206,7 +206,7 @@ const updatePassword = () => {
               <label
                 for="subject"
                 class="inline-block mb-2 text-sm text-gray-800 sm:text-base"
-                >{{$t('Name')}}</label
+                >{{ $t("Name") }}</label
               >
               <input
                 v-model="form.name"
@@ -219,7 +219,7 @@ const updatePassword = () => {
                 <label
                   for="subject"
                   class="inline-block mb-2 mt-2 text-sm text-gray-800 sm:text-base"
-                  >{{$t('Email')}}</label
+                  >{{ $t("Email") }}</label
                 >
                 <input
                   v-model="form.email"
@@ -231,7 +231,7 @@ const updatePassword = () => {
                 <label
                   for="subject"
                   class="inline-block mb-2 mt-2 text-sm text-gray-800 sm:text-base"
-                  >{{$t('Phone Number')}}</label
+                  >{{ $t("Phone Number") }}</label
                 >
                 <input
                   v-model="form.phone"
@@ -245,7 +245,7 @@ const updatePassword = () => {
               <label
                 for="message"
                 class="inline-block mb-2 mt-2 text-sm text-gray-800 sm:text-base"
-                >{{$t('Address')}}</label
+                >{{ $t("Address") }}</label
               >
               <textarea
                 name="address"
@@ -257,7 +257,7 @@ const updatePassword = () => {
             <div class="flex justify-center space-x-2 mt-3">
               <button
                 type="submit"
-                class="flex px-8 py-3 text-sm  text-center text-white transition duration-100 bg-yellow-500 rounded-lg outline-none ring-yellow-300 hover:bg-yellow-600 focus-visible:ring active:bg-yellow-700 md:text-base"
+                class="flex px-8 py-3 text-sm text-center text-white transition duration-100 bg-yellow-500 rounded-lg outline-none ring-yellow-300 hover:bg-yellow-600 focus-visible:ring active:bg-yellow-700 md:text-base"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -289,7 +289,7 @@ const updatePassword = () => {
                     ></path>
                   </g>
                 </svg>
-                {{$t('Update')}}
+                {{ $t("Update") }}
               </button>
               <button
                 class="bg-red-500 text-white px-10 rounded-lg"
@@ -359,19 +359,19 @@ const updatePassword = () => {
                 </span>
               </button>
               <div class="flex px-4 py-2">
-                <br /><strong>{{$t('Name')}}: </strong>
+                <br /><strong>{{ $t("Name") }}: </strong>
                 <p>&ensp;{{ auth.user.name }}</p>
               </div>
               <div class="flex px-4 py-2">
-                <br /><strong>{{$t('Email')}}: </strong>
+                <br /><strong>{{ $t("Email") }}: </strong>
                 <p>&ensp; {{ auth.user.email }}</p>
               </div>
               <div class="flex px-4 py-2">
-                <br /><strong>{{$t('Phone Number')}}: </strong>
+                <br /><strong>{{ $t("Phone Number") }}: </strong>
                 <p>&ensp; {{ users.profile ? users.profile.phone : "" }}</p>
               </div>
               <div class="flex px-4 py-2">
-                <br /><strong>{{$t('Address')}}: </strong>
+                <br /><strong>{{ $t("Address") }}: </strong>
                 <p>&ensp; {{ users.profile ? users.profile.address : "" }}</p>
               </div>
             </div>
@@ -488,7 +488,7 @@ const updatePassword = () => {
                   data-dropdown-toggle="language-dropdown-menu"
                   class="flex px-4 py-2 hover:text-yellow-600"
                 >
-                  <u>{{ $t("Language") }}  </u>
+                  <u>{{ $t("Language") }} </u>
                 </button>
                 <!-- Dropdown -->
                 <div
@@ -608,9 +608,11 @@ const updatePassword = () => {
                 </div>
               </div>
 
-              <Link :href="route('logout')"
-              method="post"
-               class="flex px-4 py-2 hover:text-yellow-600">
+              <Link
+                :href="route('logout')"
+                method="post"
+                class="flex px-4 py-2 hover:text-yellow-600"
+              >
                 <br /><u>{{ $t("Logout") }} </u>
               </Link>
             </div>
@@ -628,13 +630,13 @@ const updatePassword = () => {
             <h2
               class="text-2xl font-bold text-center text-gray-800 md:mb-6 lg:text-3xl"
             >
-              {{$t('Change Your Password')}}
+              {{ $t("Change Your Password") }}
             </h2>
             <div class="sm:col-span-2">
               <label
                 for="subject"
                 class="inline-block mb-2 text-sm text-gray-800 sm:text-base"
-                >{{$t('Current Password')}}</label
+                >{{ $t("Current Password") }}</label
               >
               <input
                 type="password"
@@ -648,7 +650,7 @@ const updatePassword = () => {
               <label
                 for="subject"
                 class="inline-block mb-2 text-sm text-gray-800 sm:text-base"
-                >{{$t('New Password')}}</label
+                >{{ $t("New Password") }}</label
               >
               <input
                 type="password"
@@ -662,7 +664,7 @@ const updatePassword = () => {
               <label
                 for="subject"
                 class="inline-block mb-2 text-sm text-gray-800 sm:text-base"
-                >{{$t('Comfirm Password')}}</label
+                >{{ $t("Comfirm Password") }}</label
               >
               <input
                 type="password"
@@ -707,7 +709,7 @@ const updatePassword = () => {
                     ></path>
                   </g>
                 </svg>
-                {{$t('Update')}}
+                {{ $t("Update") }}
               </button>
               <button
                 class="bg-red-500 text-white px-10 rounded-lg"

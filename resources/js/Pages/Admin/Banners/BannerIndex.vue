@@ -46,7 +46,7 @@ const DeleteBanner = () => {
 
   <AdminLayout>
     <div class="px-8 w-full">
-      <div class="block md:flex justify-between pb-4 mb-4 ">
+      <div class="block md:flex justify-between pb-4 mb-4">
         <!-- Path for Back -->
         <div class="text-md font-sans cursor-pointer flex mb-4 md:mb-0">
           <div
@@ -118,8 +118,10 @@ const DeleteBanner = () => {
         <Table class="w-full bg-white dark:bg-slate-300">
           <template #header>
             <TableRow>
-              <TableHeaderCell>{{ $t("ID") }}</TableHeaderCell>
-              <TableHeaderCell class="text-center">{{ $t("Banner") }}</TableHeaderCell>
+              <!-- <TableHeaderCell>{{ $t("ID") }}</TableHeaderCell> -->
+              <TableHeaderCell class="text-center">{{
+                $t("Banner")
+              }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Description") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Action") }}</TableHeaderCell>
             </TableRow>
@@ -130,11 +132,11 @@ const DeleteBanner = () => {
               :key="Banner.id"
               class="border-b"
             >
-              <TableDataCell>{{ Banner.id }}</TableDataCell>
-              <TableDataCell >
+              <!-- <TableDataCell>{{ Banner.id }}</TableDataCell> -->
+              <TableDataCell class="flex justify-center">
                 <img
                   v-if="Banner.image.length > 0"
-                  class="w-80 h-28 rounded"
+                  class="w-96 h-28 rounded"
                   :src="Banner.image"
                   alt=""
                 />
@@ -209,17 +211,14 @@ const DeleteBanner = () => {
                         {{ $t("comfimdelete") }}
                       </p>
 
-                        <DangerButton
-                         @click="DeleteBanner">
-                          {{ $t("delete") }}
-                        </DangerButton>
-                        <SecondaryButton @click="closeModal">
-                          {{ $t("cancel") }}</SecondaryButton
-                        >
-
+                      <DangerButton @click="DeleteBanner">
+                        {{ $t("delete") }}
+                      </DangerButton>
+                      <SecondaryButton @click="closeModal">
+                        {{ $t("cancel") }}</SecondaryButton
+                      >
                     </div>
                   </Modal>
-
                 </span>
               </TableDataCell>
             </TableRow>

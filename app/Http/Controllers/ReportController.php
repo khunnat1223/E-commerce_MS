@@ -89,11 +89,6 @@ class ReportController extends Controller
         ]);
     }
 
-
-
-
-
-
 public function show($id)
 {
     $order = Order::with(['order_items.product.category', 'order_items.product.product_images','createdBy','user_address_id','payment'])
@@ -130,5 +125,40 @@ public function update(Request $request, $id)
      $start_date = $request->input('start_date');
      $end_date = $request->input('end_date');
      return Excel::download(new ProductReportExport($start_date, $end_date), 'ProductReport.xlsx');
+ }
+
+
+ public function CustomerReport(Request $request)
+ {
+     $startDate = $request->query('start_date');
+     $endDate = $request->query('end_date');
+
+     $query = Payment::with('order.createdBy');
+
+     if ($startDate && $endDate) {
+         $query->whereBetween('created_at', [$startDate, $endDate]);
+     }
+
+     $totalAmountQuery = clone $query;
+
+     $payments = $query->get()->map(function ($payment) {
+         if ($payment->imagepay) {
+             $payment->imagepay = asset('storage/' . $payment->imagepay);
+         }
+         return $payment;
+     });
+
+     $totalAmount = $totalAmountQuery->sum('amount');
+
+     $paymentCount = $query->count();
+
+     return Inertia::render('Admin/Reports/CustomerReport', [
+         'notifications' => Notification::get(),
+         'contnitification' => Notification::count(),
+         'payments' => $payments,
+         'totalAmount' => $totalAmount,
+         'paymentCount' => $paymentCount,
+         'filters' => $request->only(['start_date', 'end_date']),
+     ]);
  }
 }

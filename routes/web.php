@@ -57,7 +57,6 @@ Route::get('/language/{language}',function($language){
     return redirect()->back();
    })->name('language');
 
-
 Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
     Route::resource('/notification',NotificationController::class);
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
@@ -81,6 +80,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->group(function () {
     Route::put('/products/update-to-unpublic/{id}',[ProductController::class,'updateToUnpublished'])->name('products.updateToUnpublished');
     Route::get('/sale-report', [ReportController::class, 'SaleReport'])->name('SaleReport.SaleReport');
     Route::get('/buy-report', [ReportController::class, 'BuyReport'])->name('BuyReport.BuyReport');
+    Route::get('/customer-report', [ReportController::class, 'CustomerReport'])->name('CustomerReport.CustomerReport');
 });
 
 //Roles
@@ -101,6 +101,7 @@ Route::middleware(['auth', 'role:staff|admin'])->prefix('/admin')->group(functio
     Route::post('/products/store',[ProductController::class,'store'])->name('products.store');
     Route::put('/products/update-to-public/{id}',[ProductController::class,'updateToPublished'])->name('products.updateToPublished');
     Route::put('/products/update-to-unpublic/{id}',[ProductController::class,'updateToUnpublished'])->name('products.updateToUnpublished');
+    Route::get('/customer-report', [ReportController::class, 'CustomerReport'])->name('CustomerReport.CustomerReport');
 });
 // Excel
 Route::get('/products/download', [ProductController::class, 'export'])->name('products.export');
@@ -118,8 +119,8 @@ Route::prefix('cart')->controller(CartController::class)->group(function () {
     Route::post('store/{product}','store')->name('cart.store');
     Route::patch('update/{product}','update')->name('cart.update');
     Route::delete('delete/{product}','delete')->name('cart.delete');
-     //chekcout
- Route::prefix('checkout')->controller(CheckoutController::class)->group((function()  {
+    //chekcout
+    Route::prefix('checkout')->controller(CheckoutController::class)->group((function()  {
     Route::get('payment','view')->name('checkout.view');
     Route::post('order','store')->name('checkout.store');
     Route::get('success','success')->name('checkout.success');

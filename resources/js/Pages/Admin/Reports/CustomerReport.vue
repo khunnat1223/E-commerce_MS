@@ -4,72 +4,61 @@ import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { Link, useForm } from "@inertiajs/vue3";
 import { usePermission } from "@/composables/permission";
+// import { usePage } from '@inertiajs/inertia-vue3';
 import { router } from "@inertiajs/vue3";
 import Table from "@/Components/Table.vue";
 import TableRow from "@/Components/TableRow.vue";
 import TableHeaderCell from "@/Components/TableHeaderCell.vue";
 import TableDataCell from "@/Components/TableDataCell.vue";
+// import PaginationLink from "@/Components/PaginationLink.vue";
 import moment from "moment";
-
+// const notification = usePage().props.notifications;
 const props = defineProps({
-  products: Array,
+    payments: Object,
   filters: Object,
-  totalPrice: Object,
-  totalCost: Object,
+  totalAmount:Object,
 });
-const printPage = () => {
-  window.print();
+const ClearFilter = () => {
+  router.get(route("BuyReport.BuyReport"), {
+  });
 };
-
+const  printPage =() =>{
+      window.print();
+    }
 // Setup reactive form fields for dates
-const start_date = ref(props.filters.start_date || "");
-const end_date = ref(props.filters.end_date || "");
+const start_date = ref(props.filters.start_date || '');
+const end_date = ref(props.filters.end_date || '');
 
 // Function to filter records
 const filterRecords = () => {
-  router.get(route("BuyReport.BuyReport"), {
+  router.get(route('SaleReport.SaleReport'), {
     start_date: start_date.value,
     end_date: end_date.value,
   });
 };
-const ClearFilter = () => {
-  router.get(route("BuyReport.BuyReport"), {});
-};
 
-const formatDate = (date) => moment(date).format("DD/MMM/YYYY");
-const formatNumber = (number) => number.toString().padStart(4, "0");
+const formatDate = (date) => moment(date).format('DD/MMM/YYYY');
+const formatNumber = (number) => number.toString().padStart(4, '0');
 
 const { hasPermission } = usePermission();
 
-// Function to export products
-const exportProducts = () => {
-  window.location.href = `/reports/prdocts/download?start_date=${start_date.value}&end_date=${end_date.value}`;
+// Function to export payments
+const exportPayments = () => {
+  window.location.href = `/reports/download?start_date=${start_date.value}&end_date=${end_date.value}`;
 };
 
 // Function to toggle image scaling
-const toggleImageScale = (product) => {
-  product.isScaled = !product.isScaled;
+const toggleImageScale = (payment) => {
+  payment.isScaled = !payment.isScaled;
 };
-
-// Calculate profit for each product
-const productsWithProfit = props.products.map((product) => {
-  const price = parseFloat(product.total_price) || 0;
-  const cost = parseFloat(product.total_cost) || 0;
-  const profit = price - cost;
-  return {
-    ...product,
-    profit,
-  };
-});
 </script>
-
 
 <template>
   <Head title="Report" />
 
   <AdminLayout>
     <div class="px-8 w-full">
-      <div class="md:flex block justify-between pb-4">
+        <div class="md:flex block justify-between pb-4">
         <!-- Path for Back -->
         <div class="md:flex block font-sans cursor-pointer navbar">
           <div
@@ -145,7 +134,7 @@ const productsWithProfit = props.products.map((product) => {
             </svg>
             <span class="m-1">
               <Link>
-                <span class="font-sans">{{ $t("Buy Reports") }}</span>
+                <span class="font-sans">{{ $t("Sale Report") }}</span>
               </Link>
             </span>
           </div>
@@ -153,7 +142,7 @@ const productsWithProfit = props.products.map((product) => {
         <div class="flex space-x-3">
           <div class=" ">
             <button
-              @click="exportProducts"
+              @click="exportPayments"
               class="middle navbar none center flex items-center justify-center rounded-lg w-24 h-11 hover:scale-110 hover:skew-y-3 border-2 border-green-600 font-sans text-green-600 shadow-md transition-all hover:shadow-lg hover:shadow-green-700"
               data-ripple-light="true"
             >
@@ -201,10 +190,7 @@ const productsWithProfit = props.products.map((product) => {
           </div>
         </div>
       </div>
-
-      <div
-        class="py-2 navbar px-6 bg-white dark:bg-gray-800 rounded-md shadow-lg"
-      >
+      <div class="py-2 mb-5 navbar px-6 bg-white dark:bg-gray-800 rounded-md shadow-lg">
         <form @submit.prevent="filterRecords" class="flex space-x-2">
           <div class="flex flex-col space-y-1">
             <label
@@ -232,6 +218,7 @@ const productsWithProfit = props.products.map((product) => {
               type="date"
               class="dark:bg-gray-500 h-11 text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-200 bg-transparent px-3 py-2.5 font-sans text-sm outline-none border border-gray-500 rounded-[7px] transition-all focus:border-yellow-500 focus:outline-none"
               v-model="end_date"
+
               name="end_date"
               id="end_date"
               required
@@ -259,85 +246,50 @@ const productsWithProfit = props.products.map((product) => {
         </form>
       </div>
 
-      <div
-        class="contentBuyReport overflow-auto text-sm bg-white dark:bg-gray-800 shadow-lg rounded-lg mt-6"
-      >
+      <div class="shadow overflow-x-auto rounded contentreport">
         <div class="Titel hidden">
-          <h1
-            class="text-center font-khmer text-yellow-700 underline -mb-2 mt-2 text-lg"
-          >
-            {{ $t("Rany Online Shop") }}
-          </h1>
-          <h1
-            class="text-center font-khmer text-yellow-700 underline py-5 text-md"
-          >
-            {{ $t("Buy Reports") }}
-          </h1>
+            <h1 class="text-center font-khmer text-yellow-700 underline -mb-2 mt-2 text-lg">{{ $t('Rany Online Shop') }}</h1>
+            <h1 class="text-center font-khmer  text-yellow-700 underline py-5 text-md">{{ $t('Sale Report') }}</h1>
         </div>
-        <Table class="bg-white dark:bg-slate-100">
+        <Table class="w-full">
           <template #header>
             <TableRow>
-              <TableHeaderCell>{{ $t("ID") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("Parcel ID") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Image") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("Name") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Date") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Product") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Quantity") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Unit Cost") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Unit Selling") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Total Cost") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Total Selling") }}</TableHeaderCell>
-              <TableHeaderCell>{{ $t("Profit") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("Type") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("TotalAmoun") }}</TableHeaderCell>
             </TableRow>
           </template>
           <template #default>
-            <TableRow
-              v-for="product in productsWithProfit"
-              :key="product.id"
-              :class="{
-                'dark:bg-gray-700': product.isScaled,
-                'bg-gray-200': product.isScaled,
-              }"
-              @click="toggleImageScale(product)"
-            >
-              <TableDataCell>P-{{ formatNumber(product.id) }}</TableDataCell>
+            <TableRow v-for="payment in payments" :key="payment.id" class="border-b">
+              <TableDataCell># {{ formatNumber(payment.id) }}</TableDataCell>
               <TableDataCell>
-                <img
-                  v-if="product.product_images.length > 0"
-                  class="w-10 h-10 rounded"
-                  :src="`/${product.product_images[0].image}`"
-                  alt="" />
-                <img
-                  v-else
-                  class="w-10 h-10 rounded"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
-                  alt=""
-              /></TableDataCell>
-              <TableDataCell>{{
-                formatDate(product.created_date)
-              }}</TableDataCell>
-              <TableDataCell>{{ product.title }}</TableDataCell>
-              <TableDataCell>{{ product.qty }}</TableDataCell>
-              <TableDataCell>${{ product.cost }}</TableDataCell>
-              <TableDataCell>${{ product.price }}</TableDataCell>
-              <TableDataCell>${{ product.total_cost }}</TableDataCell>
-              <TableDataCell>${{ product.total_price }}</TableDataCell>
-              <TableDataCell>${{ product.profit.toFixed(2) }}</TableDataCell>
+                <img v-if="payment.imagepay" :src="payment.imagepay"  class="w-14 h-14 rounded bg-gray-200 text-sm text-center"
+                :class="{ 'w-14 h-14 rounded bg-gray-200 text-sm text-center  scaled-image': payment.isScaled }"
+                @click="toggleImageScale(payment)"
+                 alt="No Image">
+            </TableDataCell>
+              <TableDataCell>{{ payment.order.created_by.name }}</TableDataCell>
+              <TableDataCell>{{ formatDate(payment.created_date) }}</TableDataCell>
+              <TableDataCell>{{ payment.type }}</TableDataCell>
+              <TableDataCell>${{ payment.amount }}</TableDataCell>
             </TableRow>
-            <TableRow class="bg-gray-200">
+            <TableRow class="border-b bg-gray-200">
               <TableDataCell></TableDataCell>
               <TableDataCell></TableDataCell>
               <TableDataCell></TableDataCell>
               <TableDataCell></TableDataCell>
-              <TableDataCell></TableDataCell>
-              <TableDataCell></TableDataCell>
-              <TableDataCell>{{ $t("Total") }}</TableDataCell>
-              <TableDataCell>${{ totalCost }}</TableDataCell>
-              <TableDataCell>${{ totalPrice }}</TableDataCell>
-              <TableDataCell>${{ totalPrice - totalCost }}</TableDataCell>
+              <TableDataCell class="font-bold">{{$t('Total')}}</TableDataCell>
+              <TableDataCell>${{ totalAmount}}</TableDataCell>
             </TableRow>
           </template>
         </Table>
+
+
       </div>
     </div>
+
   </AdminLayout>
 </template>

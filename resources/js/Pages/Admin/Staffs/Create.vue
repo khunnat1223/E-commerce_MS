@@ -7,9 +7,11 @@ import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
 import DateInput from "@/Components/DateInput.vue";
 import { ref } from "vue";
-
+defineProps({
+  roles: Array,
+});
 const form = useForm({
-  user_id: "",
+  //   user_id: "",
   name: "",
   sex: "",
   phone: "",
@@ -35,8 +37,7 @@ const handleFileChange = (event) => {
   }
 };
 const staffs = () => {
-  form.post("/admin/staffs", {
-  });
+  form.post("/admin/staffs", {});
 };
 </script>
 
@@ -200,7 +201,7 @@ const staffs = () => {
             <div class="w-full sm:w-full md:w-1/2">
               <div class="flex w-full">
                 <div class="w-full block pr-2">
-                    <div class="mb-2 w-full">
+                  <!-- <div class="mb-2 w-full">
                         <span>{{ $t("ID") }}</span>
                         <TextInput
                         id="user_id"
@@ -211,33 +212,37 @@ const staffs = () => {
                         autocomplete="0"
                         />
                         <InputError :message="form.errors.dob" class="mt-2" />
-                    </div>
-                    <div class="mb-2 w-full">
-                  <span>{{ $t("Position") }}</span>
-                  <select
-                    v-model="form.position"
-                    id="position"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option disabled value="">{{ $t("Select") }}</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Staff">Staff</option>
-                    <option value="Staff">Sale</option>
-                  </select>
-                  <InputError class="mt-2" :message="form.errors.name" />
-                </div>
-                <div class="mb-2 w-full">
-                        <span>{{ $t("Salary") }}</span>
-                        <TextInput
-                        id="salary"
-                        type="text"
-                        class="mt-1 block w-full"
-                        placeholder="$500, $1000"
-                        v-model="form.salary"
-                        autocomplete="0"
-                        />
-                        <InputError :message="form.errors.dob" class="mt-2" />
-                    </div>
+                    </div> -->
+                  <div class="mb-2 w-full">
+                    <span>{{ $t("Position") }}</span>
+                    <select
+                      v-model="form.position"
+                      id="position"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option disabled value="">{{ $t("Select") }}</option>
+                      <option
+                        v-for="role in roles"
+                        :key="role.id"
+                        :value="role.name"
+                      >
+                        {{ role.name }}
+                      </option>
+                    </select>
+                    <InputError class="mt-2" :message="form.errors.name" />
+                  </div>
+                  <div class="mb-2 w-full">
+                    <span>{{ $t("Salary") }}</span>
+                    <TextInput
+                      id="salary"
+                      type="text"
+                      class="mt-1 block w-full"
+                      placeholder="$500, $1000"
+                      v-model="form.salary"
+                      autocomplete="0"
+                    />
+                    <InputError :message="form.errors.dob" class="mt-2" />
+                  </div>
                 </div>
 
                 <div class="mb-2 md:ml-2 w-full">
@@ -258,7 +263,7 @@ const staffs = () => {
                       v-else
                       class="mt-1 w-44 h-48 bg-slate-400 rounded-md flex justify-center items-center"
                     >
-                     <span>4 X 6</span>
+                      <span>4 X 6</span>
                     </div>
 
                     <div class="flex items-center w-full">
@@ -296,7 +301,6 @@ const staffs = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
 

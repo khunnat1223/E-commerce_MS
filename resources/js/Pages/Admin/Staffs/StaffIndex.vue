@@ -17,12 +17,13 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const props = defineProps({
   staffs: Array,
-  profile:[]
-
+  profile: [],
 });
 const form = useForm({});
 const staffid = ref("");
-
+const formatNumber = (number) => {
+  return number.toString().padStart(3, "0");
+};
 const showComfirmDeleteStaffModel = ref(false);
 
 const { hasPermission } = usePermission();
@@ -116,7 +117,7 @@ const DeleteStaff = () => {
       <div>
         <!-- <p>{{ $en.test }}</p> -->
       </div>
-      <div class="shadow overflow-auto rounded ">
+      <div class="shadow overflow-auto rounded">
         <Table class="w-full">
           <template #header>
             <TableRow>
@@ -130,26 +131,21 @@ const DeleteStaff = () => {
             </TableRow>
           </template>
           <template #default>
-            <TableRow
-              v-for="staff in staffs"
-              :key="staff.id"
-              class="border-b"
-            >
-              <TableDataCell>{{ staff.id }}</TableDataCell>
+            <TableRow v-for="staff in staffs" :key="staff.id" class="border-b">
+              <TableDataCell>Staf-{{ formatNumber(staff.id) }}</TableDataCell>
               <TableDataCell>
                 <img
-                    v-if="staff.profile.length > 0"
-                      class="w-10 h-10 rounded"
-                      :src="staff.profile"
-                      alt="No Image"
-                    />
-                    <img
-                    v-else
-                      class="w-10 h-10 rounded"
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
-                      alt=""
-                    />
-
+                  v-if="staff.profile.length > 0"
+                  class="w-10 h-10 rounded"
+                  :src="staff.profile"
+                  alt="No Image"
+                />
+                <img
+                  v-else
+                  class="w-10 h-10 rounded"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                  alt=""
+                />
               </TableDataCell>
               <TableDataCell>{{ staff.name }}</TableDataCell>
               <TableDataCell>{{ staff.sex }}</TableDataCell>
@@ -218,14 +214,12 @@ const DeleteStaff = () => {
                         {{ $t("comfimdelete") }}
                       </p>
 
-                        <DangerButton
-                         @click="DeleteStaff">
-                          {{ $t("delete") }}
-                        </DangerButton>
-                        <SecondaryButton @click="closeModal">
-                          {{ $t("cancel") }}</SecondaryButton
-                        >
-
+                      <DangerButton @click="DeleteStaff">
+                        {{ $t("delete") }}
+                      </DangerButton>
+                      <SecondaryButton @click="closeModal">
+                        {{ $t("cancel") }}</SecondaryButton
+                      >
                     </div>
                   </Modal>
                 </span>

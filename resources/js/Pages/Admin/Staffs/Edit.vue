@@ -8,16 +8,15 @@ import TextInput from "@/Components/TextInput.vue";
 import TextArea from "@/Components/TextArea.vue";
 
 import { ref } from "vue";
-import { Plus } from "@element-plus/icons-vue";
-import { router } from "@inertiajs/vue3";
 
 const props = defineProps({
   staff: Object,
+  roles: Array,
   profile: [],
 });
 
 const form = useForm({
-    user_id: props.staff.user_id,
+  // user_id: props.staff.user_id,
   name: props.staff.name,
   sex: props.staff.sex,
   phone: props.staff.phone,
@@ -25,34 +24,36 @@ const form = useForm({
   dop: props.staff.dop,
   position: props.staff.position,
   salary: props.staff.salary,
-  profile:[],
-  _method: 'PUT'
+  profile: [],
+  _method: "PUT",
 });
 
-const preview = ref('');
+const preview = ref("");
 
 const handleFileChange = (event) => {
-      const file = event.target.files[0];
-      if (file) {
-        form.profile = file;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          preview.value = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
+  const file = event.target.files[0];
+  if (file) {
+    form.profile = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      preview.value = e.target.result;
     };
+    reader.readAsDataURL(file);
+  }
+};
 
 const staffUpdate = () => {
-      form.post(`/admin/staffs/${props.staff.id}`, {
-        onFinish: () => {
-        //   form.reset();
-          preview.value = props.staff.profile ? `/storage/${props.staff.profile}` : null;
-        },
-        preserveScroll: true,
-        preserveState: true,
-      });
-    };
+  form.post(`/admin/staffs/${props.staff.id}`, {
+    onFinish: () => {
+      //   form.reset();
+      preview.value = props.staff.profile
+        ? `/storage/${props.staff.profile}`
+        : null;
+    },
+    preserveScroll: true,
+    preserveState: true,
+  });
+};
 </script>
 
 <template>
@@ -217,7 +218,7 @@ const staffUpdate = () => {
             <div class="w-full sm:w-full md:w-1/2">
               <div class="flex w-full">
                 <div class="w-full block pr-2">
-                    <div class="mb-2 w-full">
+                  <!-- <div class="mb-2 w-full">
                         <span>{{ $t("ID") }}</span>
                         <TextInput
                         id="user_id"
@@ -228,33 +229,37 @@ const staffUpdate = () => {
                         autocomplete="0"
                         />
                         <InputError :message="form.errors.dob" class="mt-2" />
-                    </div>
-                    <div class="mb-2 w-full">
-                  <span>{{ $t("Position") }}</span>
-                  <select
-                    v-model="form.position"
-                    id="position"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  >
-                    <option disabled value="">{{ $t("Select") }}</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Staff">Staff</option>
-                    <option value="Staff">Sale</option>
-                  </select>
-                  <InputError class="mt-2" :message="form.errors.name" />
-                </div>
-                <div class="mb-2 w-full">
-                        <span>{{ $t("Salary") }}</span>
-                        <TextInput
-                        id="salary"
-                        type="text"
-                        class="mt-1 block w-full"
-                        placeholder="$500, $1000"
-                        v-model="form.salary"
-                        autocomplete="0"
-                        />
-                        <InputError :message="form.errors.dob" class="mt-2" />
-                    </div>
+                    </div> -->
+                  <div class="mb-2 w-full">
+                    <span>{{ $t("Position") }}</span>
+                    <select
+                      v-model="form.position"
+                      id="position"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                      <option disabled value="">{{ $t("Select") }}</option>
+                      <option
+                        v-for="role in roles"
+                        :key="role.id"
+                        :value="role.name"
+                      >
+                        {{ role.name }}
+                      </option>
+                    </select>
+                    <InputError class="mt-2" :message="form.errors.name" />
+                  </div>
+                  <div class="mb-2 w-full">
+                    <span>{{ $t("Salary") }}</span>
+                    <TextInput
+                      id="salary"
+                      type="text"
+                      class="mt-1 block w-full"
+                      placeholder="$500, $1000"
+                      v-model="form.salary"
+                      autocomplete="0"
+                    />
+                    <InputError :message="form.errors.dob" class="mt-2" />
+                  </div>
                 </div>
 
                 <div class="mb-2 md:ml-2 w-full">
@@ -271,7 +276,7 @@ const staffUpdate = () => {
                       />
                     </div>
                     <div
-                     v-else-if="profile"
+                      v-else-if="profile"
                       class="mt-1 w-44 h-48 bg-slate-400 rounded-md"
                     >
                       <img
@@ -281,13 +286,11 @@ const staffUpdate = () => {
                       />
                     </div>
                     <div
-                    v-else
-                        class="mt-1 w-44 h-48 bg-slate-400 rounded-md flex justify-center items-center"
-                        >
-                        <span>4 X 6</span>
-                        </div>
-
-
+                      v-else
+                      class="mt-1 w-44 h-48 bg-slate-400 rounded-md flex justify-center items-center"
+                    >
+                      <span>4 X 6</span>
+                    </div>
 
                     <div class="flex items-center w-full">
                       <label
@@ -324,7 +327,6 @@ const staffUpdate = () => {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -334,7 +336,6 @@ const staffUpdate = () => {
             </PrimaryButton>
           </div>
         </form>
-
       </div>
     </div>
   </AdminLayout>

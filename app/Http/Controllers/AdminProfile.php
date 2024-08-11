@@ -27,7 +27,8 @@ class AdminProfile extends Controller
         // Update user information
         $user->update([
             'name' => $request->input('name'),
-            'email' => $request->input('email')
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone')
         ]);
         // Handle profile picture upload
         $profileData = $request->only('phone', 'address');

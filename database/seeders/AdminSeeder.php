@@ -124,18 +124,18 @@ class AdminSeeder extends Seeder
             'company' => 'ឡានឈ្នួល',
             'description'=>"None",
         ]);
-        Banner::create([
-            'image' => 'Shose Banner.jpg',
-            'description'=>"None",
-        ]);
-        Banner::create([
-            'image' => 'Banner1.jpg',
-            'description'=>"None",
-        ]);
-        Banner::create([
-            'image' => 'Fashion-sale-web-banner.jpg',
-            'description'=>"None",
-        ]);
+        // Banner::create([
+        //     'image' => 'banner_images/Shose Banner.jpg',
+        //     'description'=>"None",
+        // ]);
+        // Banner::create([
+        //     'image' => 'banner_images/Banner1.jpg',
+        //     'description'=>"None",
+        // ]);
+        // Banner::create([
+        //     'image' => 'banner_images/Fashion-sale-web-banner.jpg',
+        //     'description'=>"None",
+        // ]);
     }
 
 }

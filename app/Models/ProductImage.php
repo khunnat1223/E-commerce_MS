@@ -12,7 +12,8 @@ class ProductImage extends Model
     protected $appends =['src'];
     protected $fillable = [
         'product_id',
-        'image'];
+        'image'
+    ];
 
     public function product()
     {

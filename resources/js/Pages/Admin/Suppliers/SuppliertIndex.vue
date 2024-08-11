@@ -17,8 +17,11 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 
 const props = defineProps({
   suppliers: Array,
-
 });
+
+const formatNumber = (number) => {
+  return number.toString().padStart(3, "0");
+};
 const form = useForm({});
 const supplierId = ref("");
 
@@ -47,7 +50,7 @@ const DeleteSupplier = () => {
 
   <AdminLayout>
     <div class="px-8 w-full">
-        <div class="block md:flex justify-between pb-4 mb-4 ">
+      <div class="block md:flex justify-between pb-4 mb-4">
         <!-- Path for Back -->
         <div class="text-md font-sans cursor-pointer flex mb-4 md:mb-0">
           <div
@@ -110,9 +113,8 @@ const DeleteSupplier = () => {
           {{ $t("Create") }}
         </Link>
       </div>
-      <div>
-      </div>
-      <div class="shadow overflow-auto rounded ">
+      <div></div>
+      <div class="shadow overflow-auto rounded">
         <Table class="w-full">
           <template #header>
             <TableRow>
@@ -131,15 +133,15 @@ const DeleteSupplier = () => {
               :key="Supplier.id"
               class="border-b"
             >
-              <TableDataCell>{{ Supplier.id }}</TableDataCell>
+              <TableDataCell>{{ formatNumber(Supplier.id) }}</TableDataCell>
               <TableDataCell>
-             <img
-                v-if="Supplier.supplier_profile.length > 0"
+                <img
+                  v-if="Supplier.supplier_profile.length > 0"
                   class="w-10 h-10 rounded"
-                  :src="Supplier.supplier_profile"
+                  :src="`/${Supplier.supplier_profile}`"
                   alt=""
                 />
-                 <img
+                <img
                   v-else
                   class="w-10 h-10 rounded"
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
@@ -213,14 +215,12 @@ const DeleteSupplier = () => {
                         {{ $t("comfimdelete") }}
                       </p>
 
-                        <DangerButton
-                         @click="DeleteSupplier">
-                          {{ $t("delete") }}
-                        </DangerButton>
-                        <SecondaryButton @click="closeModal">
-                          {{ $t("cancel") }}</SecondaryButton
-                        >
-
+                      <DangerButton @click="DeleteSupplier">
+                        {{ $t("delete") }}
+                      </DangerButton>
+                      <SecondaryButton @click="closeModal">
+                        {{ $t("cancel") }}</SecondaryButton
+                      >
                     </div>
                   </Modal>
                 </span>

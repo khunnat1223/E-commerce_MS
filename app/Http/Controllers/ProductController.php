@@ -95,8 +95,8 @@ if ($request->has('inStock')) {
         $product->sellingprice = $request->sellingprice;
         $product->total_price = $request->total_price;
         $product->total_cost = $request->total_cost;
-        $product->created_date = now()->format('d-m-y');
-        $product->updated_date = now()->format('d-m-y');
+        $product->created_date = now();
+        $product->updated_date = now();
         $product->save();
 
         if ($request->hasFile('product_images')) {

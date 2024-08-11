@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('position', 225)->nullable();
             $table->decimal('salary')->nullable();
             $table->boolean('status')->nullable();
-            $table->foreignId('user_id')->references('id')->on('users')->nullable();
+            // $table->foreignId('user_id')->references('id')->on('users')->nullable();
             $table->timestamps();
         });
     }

@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import { ref } from "vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import { Link, useForm } from "@inertiajs/vue3";
@@ -13,30 +13,27 @@ import Modal from "@/Components/Modal.vue";
 import DangerButton from "@/Components/DangerButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 
-const idnum = 1;
-
 defineProps(["permission"]);
 
 const form = useForm({});
-const PermissionID = ref('');
+const PermissionID = ref("");
 
+const showComfirmDeletePermissionModel = ref(false);
 
-const showComfirmDeletePermissionModel= ref(false);
-
-const ComfimDeletePermission =(id)=>{
-showComfirmDeletePermissionModel.value=true;
-PermissionID.value=id;
-}
+const ComfimDeletePermission = (id) => {
+  showComfirmDeletePermissionModel.value = true;
+  PermissionID.value = id;
+};
 
 const closeModal = () => {
-  showComfirmDeletePermissionModel.value=false;
-}
+  showComfirmDeletePermissionModel.value = false;
+};
 
 const deletePermission = (id) => {
-form.delete(route('permissions.destroy', PermissionID.value),{
-  onSuccess: () => closeModal()
-});
-}
+  form.delete(route("permissions.destroy", PermissionID.value), {
+    onSuccess: () => closeModal(),
+  });
+};
 </script>
 
 <template>
@@ -111,9 +108,21 @@ form.delete(route('permissions.destroy', PermissionID.value),{
         <Table class="min-w-full bg-white dark:bg-slate-300">
           <template #header>
             <TableRow>
-              <th class="w-1/3 text-left py-3 px-4  text-md text-green-950 bg-gray-200 dark:bg-yellow-700 dark:text-white">{{ $t("ID") }}</th>
-              <th class="w-1/2 text-left py-3 px-4  text-md text-green-950 bg-gray-200 dark:bg-yellow-700 dark:text-white">{{ $t("permission") }}</th>
-              <th class="w-1/3 text-left py-3 px-4  text-md text-green-950 bg-gray-200 dark:bg-yellow-700 dark:text-white">{{ $t("Action") }}</th>
+              <th
+                class="w-1/3 text-left py-3 px-4 text-md text-green-950 bg-gray-200 dark:bg-yellow-700 dark:text-white"
+              >
+                {{ $t("ID") }}
+              </th>
+              <th
+                class="w-1/2 text-left py-3 px-4 text-md text-green-950 bg-gray-200 dark:bg-yellow-700 dark:text-white"
+              >
+                {{ $t("permission") }}
+              </th>
+              <th
+                class="w-1/3 text-left py-3 px-4 text-md text-green-950 bg-gray-200 dark:bg-yellow-700 dark:text-white"
+              >
+                {{ $t("Action") }}
+              </th>
             </TableRow>
           </template>
           <template #default>
@@ -122,7 +131,7 @@ form.delete(route('permissions.destroy', PermissionID.value),{
               :key="permissions.id"
               class="border-b"
             >
-              <TableDataCell>{{ idnum++ }}</TableDataCell>
+              <TableDataCell>{{ permissions.id }}</TableDataCell>
               <TableDataCell>{{ permissions.name }}</TableDataCell>
               <TableDataCell>
                 <span class="text-yellow-500 flex">
@@ -143,9 +152,7 @@ form.delete(route('permissions.destroy', PermissionID.value),{
                       />
                     </svg>
                   </Link>
-                  <button
-                    @click="ComfimDeletePermission(permissions.id)"
-                  >
+                  <button @click="ComfimDeletePermission(permissions.id)">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5 text-red-600 hover:text-red-900"
@@ -162,14 +169,34 @@ form.delete(route('permissions.destroy', PermissionID.value),{
 
                   <!-- <button @click="ComfimDeleteUser" class="text-red-800 border-2 px-5 rounded-md  font-sans" >{{ $t('delete') }}</button> -->
 
-                  <Modal :show="showComfirmDeletePermissionModel" @click="closeModal">
-                      <div class="relative p-4 text-center  rounded-lg">
-                        <svg class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
-                        <p class="mb-4 text-gray-500 dark:text-gray-300">{{ $t('comfimdelete') }}</p>
-                        <DangerButton @click="deletePermission">{{ $t('delete') }}</DangerButton>
-                        <SecondaryButton @click="closeModal">{{ $t('cancel') }}</SecondaryButton>
-                      </div>
-
+                  <Modal
+                    :show="showComfirmDeletePermissionModel"
+                    @click="closeModal"
+                  >
+                    <div class="relative p-4 text-center rounded-lg">
+                      <svg
+                        class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                      <p class="mb-4 text-gray-500 dark:text-gray-300">
+                        {{ $t("comfimdelete") }}
+                      </p>
+                      <DangerButton @click="deletePermission">{{
+                        $t("delete")
+                      }}</DangerButton>
+                      <SecondaryButton @click="closeModal">{{
+                        $t("cancel")
+                      }}</SecondaryButton>
+                    </div>
                   </Modal>
                 </span>
               </TableDataCell>

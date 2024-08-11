@@ -19,7 +19,9 @@ defineProps({
   products: Array,
 });
 
-const id = 1;
+const formatNumber = (number) => {
+  return number.toString().padStart(4, "0");
+};
 const form = useForm({});
 const ProductID = ref("");
 
@@ -63,10 +65,9 @@ watch(
 );
 const filters = ref({
   published: "",
-
 });
 const filtersStock = ref({
-  inStock: '',
+  inStock: "",
 });
 
 const applyFilter = () => {
@@ -175,14 +176,14 @@ const applyFilterStock = () => {
         </div>
       </div>
 
-      <form class="mx-auto ">
+      <form class="mx-auto">
         <div class="flex justify-between">
           <div class="relative w-1/3 mb-2 hidden md:block">
             <input
               type="search"
               v-model="search"
               id="search-dropdown"
-              class="block w-full rounded-lg  h-10 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-2 border border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+              class="block w-full rounded-lg h-10 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-2 border border-gray-300 focus:ring-yellow-500 focus:border-yellow-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
               placeholder="Search Shoes, Bags, Electronic,..."
               required
             />
@@ -212,7 +213,7 @@ const applyFilterStock = () => {
             <div class="flex items-center mt-5">
               <label
                 for="yellow-checkbox"
-                class=" ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >{{ $t("Filter By Pub") }}:</label
               >
             </div>
@@ -242,7 +243,7 @@ const applyFilterStock = () => {
               />
               <label
                 for="yellow-checkbox"
-                class=" ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >{{ $t("Unpublish") }}</label
               >
             </div>
@@ -289,7 +290,7 @@ const applyFilterStock = () => {
         <Table class="bg-white dark:bg-slate-100">
           <template #header>
             <TableRow>
-              <TableHeaderCell>{{ $t("ID") }}</TableHeaderCell>
+              <TableHeaderCell>{{ $t("ProID") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Image") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Products") }}</TableHeaderCell>
               <TableHeaderCell>{{ $t("Cost") }}</TableHeaderCell>
@@ -306,7 +307,7 @@ const applyFilterStock = () => {
               :key="Product.id"
               class="border-b"
             >
-              <TableDataCell>P-{{ id++ }}</TableDataCell>
+              <TableDataCell>P-{{ formatNumber(Product.id) }}</TableDataCell>
               <TableDataCell>
                 <img
                   v-if="Product.product_images.length > 0"
@@ -360,9 +361,7 @@ const applyFilterStock = () => {
               <TableDataCell>
                 <span class="text-yellow-500 flex">
                   <span class="text-yellow-500 flex justify-end">
-                    <Link
-                      :href="route('products.show', Product.id)"
-                    >
+                    <Link :href="route('products.show', Product.id)">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"

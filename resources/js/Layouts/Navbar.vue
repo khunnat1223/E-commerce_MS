@@ -372,7 +372,7 @@ const changeLocale = (item) => {
                 v-if="hasRoles(['staff', 'view'])"
                 :href="route('categorys.index')"
                 :active="route().current('categorys.index')"
-                class="pr-2"
+                class="pr-2 text-white"
               >
                 Dashboard
               </NavLink>

@@ -59,7 +59,10 @@ const addToCart = (product) => {
           data-carousel="slide"
         >
           <!-- Carousel wrapper -->
-          <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+          <div
+            v-if="banners != 0"
+            class="relative overflow-hidden rounded-lg h-56 md:h-96"
+          >
             <!-- Item 1 -->
             <div
               class="hidden duration-1000 ease-in-out"
@@ -138,10 +141,16 @@ const addToCart = (product) => {
         </div>
       </div>
       <div class="mt-10 text-center">
-        <h2 class="text-lg md:text-3xl font-khmer  text-yellow-500">{{$t('Welcome to Rany Shop!')}}</h2>
-        <p class=" mx-4 md:mx-72 pt-2 text-sm md:text-lg dark:text-white">{{$t('Discover the best deals and newest arrivals at RANY SHOP. We offer a wide range of products to meet all your needs and desires. Browse through our extensive catalog and find exactly what you’re looking for.')}}
-
-</p>
+        <h2 class="text-lg md:text-3xl font-khmer text-yellow-500">
+          {{ $t("Welcome to Rany Shop!") }}
+        </h2>
+        <p class="mx-4 md:mx-72 pt-2 text-sm md:text-lg dark:text-white">
+          {{
+            $t(
+              "Discover the best deals and newest arrivals at RANY SHOP. We offer a wide range of products to meet all your needs and desires. Browse through our extensive catalog and find exactly what you’re looking for."
+            )
+          }}
+        </p>
       </div>
 
       <!-- product-grid - start -->
